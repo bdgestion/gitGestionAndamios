@@ -1,0 +1,57 @@
+#contenedor{
+    margin-left: 300px;
+}
+#razoncss{
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+table{
+    margin-top: 40px;
+    width: 100%;
+}
+table th {
+  background-color: #D3D3D3;
+font-size: 16px;
+   }
+table tr:nth-child(odd) {background-color:   #F5F5F5;}
+table tr:nth-child(even) {background-color: #ADD8E6;}
+#div1{
+     overflow:scroll;
+     height:200px;
+     width: 950px;
+     margin: auto;
+}
+.nota{
+    margin-left: 200px;
+}
+.btnregistro{
+    margin-top: 20px;
+    margin-left: 70px;
+    width: 10%;
+    padding: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #1883ba;
+    border-radius: 6px;
+    border: 2px solid #0016b0;
+    cursor: pointer;
+}
+#menu{
+    margin-top: 100px;
+}
+.comb1,.comb2,.comb3,.comb4{
+    margin-left: 10px;
+    width: 10%;
+}
+.btnfiltrar{
+     width: 10%;
+    text-decoration: none;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #1883ba;
+    border-radius: 6px;
+    border: 2px solid #0016b0;
+    cursor: pointer;
+}

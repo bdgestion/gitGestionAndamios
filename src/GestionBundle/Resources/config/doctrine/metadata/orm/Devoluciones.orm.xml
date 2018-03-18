@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Devoluciones" table="devoluciones">
+    <indexes>
+      <index name="IDX_DA538C63C4EC16CE" columns="pedido"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="id_dev" columns="id_dev"/>
+    </unique-constraints>
+    <id name="idDev" type="bigint" column="id_dev">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="pedido" type="integer" column="pedido" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="cuenta" type="string" column="cuenta" length="200" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="cliente" type="string" column="cliente" length="100" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="folio" type="string" column="folio" length="100" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="fechaDevolucion" type="string" column="fecha_devolucion" length="100" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="fechaActual" type="string" column="fecha_actual" length="100" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="statusPedido" type="string" column="status_pedido" length="200" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="cantidadEntregados" type="integer" column="cantidad_entregados" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="claveEquipo" type="string" column="clave_equipo" length="200" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="nombEquipo" type="string" column="nomb_equipo" length="200" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="cantDevueltos" type="integer" column="cant_devueltos" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="pendienteDev" type="integer" column="pendiente_dev" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="detalles" type="string" column="detalles" length="500" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="cantDina" type="integer" column="cant_dina" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="folioPedido" type="string" column="folio_pedido" length="100" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>

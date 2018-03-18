@@ -1,0 +1,39 @@
+almacen_usuarios:
+    resource: "@GestionBundle/Resources/config/routing/usuario.yml"
+    prefix:   /usuario
+almacen_equipos:
+    resource: "@GestionBundle/Resources/config/routing/equipos.yml"
+    prefix:   /equipos
+almacen_clientes:
+    resource: "@GestionBundle/Resources/config/routing/clientes.yml"
+    prefix:   /clientes
+almacen_reportes:
+    resource: "@GestionBundle/Resources/config/routing/reportes.yml"
+    prefix:   /reportes
+almacen_pagos:
+    resource: "@GestionBundle/Resources/config/routing/pagos.yml"
+    prefix:   /pagos
+almacen_devoluciones:
+    resource: "@GestionBundle/Resources/config/routing/devoluciones.yml"
+    prefix:   /devoluciones
+almacen_recolecciones:
+    resource: "@GestionBundle/Resources/config/routing/recolecciones.yml"
+    prefix:   /recolecciones
+almacen_home:
+    resource: "@GestionBundle/Resources/config/routing/pedidos.yml"
+    prefix:   /pedidos
+usuario_login:
+    path:     /
+    defaults: { _controller: "GestionBundle:Usuario:login" }
+    methods:  [GET, POST]
+usuario_logout:
+    path:     /logout
+    defaults: { _controller: "GestionBundle:Usuario:logout" }
+    methods:  [GET, POST]
+devoluciones:
+    path:     /dev
+    defaults: { _controller: "GestionBundle:Devoluciones:devoluciones" }
+    methods:  [GET, POST]
+index:
+    path:     /index
+    defaults: { _controller: GestionBundle:Devoluciones:index }

@@ -1,0 +1,225 @@
+{% extends 'menu/menu.html.twig' %}
+ {% block estilos %}
+ 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <Link rel="stylesheet" href="{{ asset('css/csscatalogo.css')}}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+ 
+   {%endblock%}
+
+{% block body %}
+<script type="text/javascript">
+  
+  function buscarcatalogo() {
+        var clave = document.getElementById('flclave').value;
+        var categoria = document.getElementById('flcategoria').value;
+        var equipo = document.getElementById('flequipo').value;
+        var status = document.getElementById('cmbstatus').value;
+         $("#tabla_catalogo").find("tr:gt(0)").remove();     
+
+         $.post("{{ path('filtrar_catalogo') }}", {clave: clave,categoria:categoria,equipo:equipo,status:status},
+               function(mensaje) {
+                 $("#inp4").html(mensaje);
+                  for (var i=0, total = mensaje.length; i < total; i++) {
+                    $("#tabla_catalogo").append("<tr class='dev'><td style='text-align: center';><a href=#myModal_equipo data-toggle=modal data-target=#myModal_equipo>Editar</td><td style='text-align: center'>"+mensaje[i]["clave"]+"</td><td style='text-align: center'>"+mensaje[i]["equipo"]+"</td><td style='text-align: center'>"+mensaje[i]["categoria"]+"</td><td style='text-align: center'>"+mensaje[i]["precio"]+"</td><td style='text-align: center'>"+mensaje[i]["status"]+"</td></tr>");
+                   }
+                });
+      }
+
+      function eliminar() {
+        var statusConfirm =(confirm("Desea Eliminar este Equipo?"))
+        if (statusConfirm == true){ 
+          var clave = document.getElementById('inp1').value;
+           $.post("{{ path('eliminar_catalogo') }}", {clave: clave},
+                function(mensaje) {
+                $("#inp4").html(mensaje);          
+                });
+           alert('Registro Eliminado');
+             location.reload();
+          }else{
+            alert('Procedimiento Cancelado');
+          }
+      }
+
+      function modificar() {
+        var statusConfirm =(confirm("Desea Enviar las Modificaciones?"))
+        if (statusConfirm == true){ 
+          var clave = document.getElementById('inp1').value;
+          var categoria = document.getElementById('inptcategoria').value;
+          var equipo = document.getElementById('inp3').value;
+          var precio = document.getElementById('inp4').value;
+
+            if (document.getElementById("chek").checked==true){
+              var status='Activo';
+            }else{
+              var status='Inactivo';
+            }
+
+             $.post("{{ path('modificar_catalogo') }}", {clave: clave,categoria:categoria,equipo:equipo,precio:precio,status:status},
+                function(mensaje) {
+                $("#inp4").html(mensaje);          
+                });
+             alert('Registro Modificado');
+             location.reload();
+           }else{
+            alert('Procedimiento Cancelado');
+           }
+      }
+      function abrirmodalrg() {
+        document.getElementById('inp1').value='';
+        document.getElementById('inptcategoria').value='';
+        document.getElementById('inp3').value='';
+        document.getElementById('inp4').value='';
+        document.getElementById('regs').disabled=false;
+        document.getElementById('eliminar').disabled=true;
+        document.getElementById('modificar').disabled=true;
+        $('#myModal_equipo').modal('show');
+      }
+
+      function registrarct() {
+        var statusConfirm =(confirm("Desea Enviar este Registro?"))
+      if (statusConfirm == true){ 
+          var clave = document.getElementById('inp1').value;
+          var categoria = document.getElementById('inptcategoria').value;
+          var equipo = document.getElementById('inp3').value;
+          var precio = document.getElementById('inp4').value;
+
+                  if (document.getElementById("chek").checked==true){
+                    var status='Activo';
+                  }else{
+                    var status='Inactivo';
+                  }
+          if (clave=='' && categoria=='' && equipo=='' && precio==''){
+             alert('Debe Completar todos los Campos');
+          }else{
+            $.post("{{ path('registro_catalogo') }}", {clave: clave,categoria:categoria,equipo:equipo,precio:precio,status:status},
+              function(mensaje) {
+              $("#inp4").html(mensaje);
+             for (var i=0, total = mensaje.length; i < total; i++) {
+              if(mensaje[i]['clave'] !=''){
+                 alert('Este Equipo ya se encuentra registrado');
+                 exit();
+               }
+             }
+             alert('Registro Realizado');      
+                 $('#myModal_equipo').modal('hide');
+                  location.reload();    
+              });
+          }
+          
+        }else{
+          alert('Procedimiento Cancelado');
+        }
+      }
+       document.getElementById("tabla_catalogo").onclick=function(e){ 
+              document.getElementById('regs').disabled=true;
+            if(!e)e=window.event; 
+            if(!e.target) e.target=e.srcElement; 
+            var TR=e.target;
+            while( TR.nodeType==1 && TR.tagName.toUpperCase()!="TR" )
+            TR=TR.parentNode;
+            var celdas=TR.getElementsByTagName("TD");
+            if( celdas.length!=0 )
+               var clave=( celdas[1].innerHTML );
+               var equipo=( celdas[2].innerHTML );
+               var categoria=( celdas[3].innerHTML );
+               var precio=( celdas[4].innerHTML );
+               var status=( celdas[5].innerHTML );
+              document.getElementById('inp1').value=clave;
+              document.getElementById('inptcategoria').value=categoria;
+              document.getElementById('inp3').value=equipo;
+              document.getElementById('inp4').value=precio;
+              document.getElementById('regs').disabled=true;
+              document.getElementById('eliminar').disabled=false;
+              document.getElementById('modificar').disabled=false;
+            
+     } 
+</script>
+
+
+{% set rol = '' %}
+   {% set rol=app.session.get('myrol') %}
+
+   {% set estado = '' %}
+   {% if rol == 'Limitado' %}    
+    {% set estado = 'disabled="true"' %}           
+   {% else %}  
+    {% set estado = '' %}           
+   {% endif %}
+
+    <form name="filtro" action="" method="POST">
+         <div class="inputs">
+            <label>Equipo</label><input id="flequipo" type="text" name="xequipo" class="comb1">
+            <label>Categoria</label><input id="flcategoria" type="text" name="xcategoria" class="comb2">
+            <label>Status</label><select id="cmbstatus" class="comb3" name="xstatus">
+              <option ></option>
+              <option >Activo</option>
+              <option >Inactivo</option>
+            </select>
+            <label>Clave</label>
+            <input id="flclave" class="clv" type="text" name="xclave"></input>
+            <button onclick="buscarcatalogo();" name="buscar" type="button">Buscar</button>
+          </div>
+        <form  id="catalogo" action="" method="get">
+          <div id="div1">
+            <table id="tabla_catalogo" width="100%" align="center" style="margin-top: 5px;">
+              <thead>
+                 <tr id="columna_categoria" align="center">
+                     <th style="text-align: center;">Editar</th>
+                     <th style="text-align: center;">Clave</th>
+                     <th style="text-align: center;">Equipo</th>
+                     <th style="text-align: center;">Categoria</th>
+                     <th style="text-align: center;">Precio</th>
+                     <th style="text-align: center;">Status</th>
+                 </tr>
+              </thead>
+                    <tr align="center">
+                <TBODY>
+                      {% for catalogo in dtscatalogo %}
+                    <tr align="center" style="text-align: left;">
+                      <td style="text-align: center;" ><a href="#myModal_equipo" data-toggle="modal" data-target="#myModal_equipo">Editar</td>
+                       <td  style="text-align: center;">{{ catalogo.clave }}</td>
+                       <td  style="text-align: center;">{{ catalogo.equipo }}</td>
+                       <td  style="text-align: center;">{{ catalogo.categoria }}</td>
+                       <td  style="text-align: center;">{{ catalogo.precio }}</td>
+                       <td  style="text-align: center;"> {{catalogo.status }}</td>
+                    </tr>
+                  {% endfor %}
+                    </tr>  
+                </TBODY>
+          </table> 
+
+      </div>
+        <button type="button" style="display: block;margin: auto;" class="btn btn-info btn-lg" onclick="abrirmodalrg();" name="btnregistrar" {{estado}}>REGISTRAR EQUIPO NUEVO</button>
+        </form>
+   </form>
+
+   <div class="modal fade" id="myModal_equipo" role="dialog" onchange="">
+    <div class="modal-dialog" style="  width: 100%;">
+      <div class="modal-content">
+        <div>
+          <h2 align="center" id="lblop">REGISTRAR EQUIPO</h2>
+        </div>
+          <br>
+          <label style="margin-left: 150px;" id="lbl1">Clave</label><input id="inp1" type="text" name="clave" >
+          <label id="lbl2">Categoria</label>
+          <input type="text" id="inptcategoria" autocomplete="off" list="categoryname1" onkeyup=""  onchange="" value=""></input>
+          <datalist id="categoryname1">
+          </datalist>
+            <label id="lbl3">Equipo</label><input id="inp3" type="text" name="equipo">
+            <label id="lbl4">Precio</label><input id="inp4" type="text" name="precio">
+            Status:   <input id="chek" type="checkbox">   Activo
+            <br>
+            <br>
+          <div class="boton">
+            <button id="regs" style="margin-left: 500px;" class="btn btn-info btn-lg" type="button" name="Registrar" onclick="registrarct();" {{estado}}>Registrar</button>
+            <button id="eliminar" style="" class="btn btn-info btn-lg" type="button" name="eliminar" onclick="eliminar();" {{estado}}>Eliminar</button>
+            <button id="modificar" style="" class="btn btn-info btn-lg" type="button" name="modificar" onclick="modificar();" {{estado}}>Modificar</button>
+          </div>  
+          <br>
+          <br>
+        </div>
+      </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,75 @@
+<?php
+
+namespace GestionBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * DetallesDevoluciones
+ *
+ * @ORM\Table(name="detalles_devoluciones", uniqueConstraints={@ORM\UniqueConstraint(name="id", columns={"id"})})
+ * @ORM\Entity
+ */
+class DetallesDevoluciones
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pedidosistema", type="integer", nullable=false)
+     */
+    private $pedidosistema;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="foliopadre", type="integer", nullable=false)
+     */
+    private $foliopadre;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="foliodevolucion", type="integer", nullable=false)
+     */
+    private $foliodevolucion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fechamovimiento", type="string", length=100, nullable=false)
+     */
+    private $fechamovimiento;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="cantidad", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $cantidad;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="claveequipo", type="string", length=100, nullable=false)
+     */
+    private $claveequipo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="equipo", type="string", length=100, nullable=false)
+     */
+    private $equipo;
+
+
+}
+

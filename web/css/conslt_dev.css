@@ -1,0 +1,127 @@
+h2{
+	margin-left: 610px;
+	margin-top: -38px;
+}
+#pedido{
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+div.div1{
+	margin-left: -12px;
+	margin-top: 60px;
+    text-align: center;
+}
+
+.contenedor{
+	margin-left: 15px;
+}
+
+.status{
+	margin-left: 10px;
+	margin-top: -20px;
+}
+
+.combstatus{
+	margin-left: 60px;
+	margin-top: -17px;
+}
+
+.statusfi{
+	margin-left: 10px;
+}
+
+.combstatusfi{
+	margin-left: 210px;
+	margin-top: -20px;
+}
+
+table th {
+  background-color: #D3D3D3;
+font-size: 16px;
+   }
+table tr:nth-child(odd) {background-color:   #F5F5F5;}
+table tr:nth-child(even) {background-color: #ADD8E6;}
+#div1{
+	margin-top: 20px;
+     overflow:scroll;
+     height:400px;
+     width: 950px;
+	margin-left: 220px;
+
+}
+table{
+	width: 100%;
+}
+
+.filtrarbtn{
+    margin-left: 150px;
+    margin-top: -18px;
+}
+
+.devueltos{
+	 margin-left: 175px;
+}
+
+.devueltostxt{
+     margin-left: 5px;
+
+}
+
+.pedido{
+	margin-left: 22px;
+}
+
+.pedtxt{
+	margin-left: 10px;
+}
+
+.folio{
+	margin-left: 16px;
+}
+
+.foltxt{
+	margin-left: 10px;
+}
+
+.cliente{
+	margin-left: 16px;
+}
+
+.clientxt{
+	margin-left: 10px;
+}
+
+.cuenta{
+	margin-left: 16px;
+}
+
+.cuentxt{
+	margin-left: 10px;
+}
+
+.desde{
+	margin-left: 16px;
+}
+
+.desdetxt{
+	margin-left: 12px;
+}
+
+.hasta{
+	margin-left: 18px;
+}
+
+.hastatxt{
+	margin-left: 14px;
+}
+
+.foliodev{
+    margin-left: 115px;
+    margin-top: 20px;
+}
+
+.boton{
+	text-align: center;
+	margin-top: -21px;
+}

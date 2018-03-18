@@ -1,0 +1,20 @@
+detalles_catalogo:
+    path:     /detalles
+    defaults: { _controller: "GestionBundle:Catalogo:detallescatalogo" }
+    methods:  [POST, GET]
+registro_catalogo:
+    path:     /registro
+    defaults: { _controller: "GestionBundle:Catalogo:registrocatalogo" }
+    methods:  [POST, GET]
+modificar_catalogo:
+    path:     /modificar
+    defaults: { _controller: "GestionBundle:Catalogo:modificar" }
+    methods:  [POST, GET] 
+eliminar_catalogo:
+    path:     /eliminar
+    defaults: { _controller: "GestionBundle:Catalogo:eliminar" }
+    methods:  [POST, GET]
+filtrar_catalogo:
+    path:     /fl
+    defaults: { _controller: "GestionBundle:Catalogo:filtrar" }
+    methods:  [POST, GET] 

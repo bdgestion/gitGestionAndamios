@@ -1,0 +1,88 @@
+<?php
+
+namespace GestionBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * HomeTemp
+ *
+ * @ORM\Table(name="home_temp", indexes={@ORM\Index(name="status_pedido", columns={"status_pedido"}), @ORM\Index(name="status_pago", columns={"status_pago"})})
+ * @ORM\Entity
+ */
+class HomeTemp
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pedido", type="integer", nullable=false)
+     */
+    private $pedido;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="folio", type="string", length=20, nullable=false)
+     */
+    private $folio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fecha_pedido", type="string", length=500, nullable=false)
+     */
+    private $fechaPedido;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fecha_dev", type="string", length=500, nullable=false)
+     */
+    private $fechaDev;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cliente", type="string", length=500, nullable=false)
+     */
+    private $cliente;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="saldo", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $saldo;
+
+    /**
+     * @var \StatusEntrega
+     *
+     * @ORM\ManyToOne(targetEntity="StatusEntrega")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="status_pedido", referencedColumnName="id")
+     * })
+     */
+    private $statusPedido;
+
+    /**
+     * @var \StatusSaldos
+     *
+     * @ORM\ManyToOne(targetEntity="StatusSaldos")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="status_pago", referencedColumnName="id")
+     * })
+     */
+    private $statusPago;
+
+
+}
+

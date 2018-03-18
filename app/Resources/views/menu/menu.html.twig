@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user- scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+   <Link rel="stylesheet" href="{{ asset('css/fontello.css')}}">
+   <Link rel="stylesheet" href="{{ asset('css/estilonuevohome.css')}}">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+     
+{% block estilos %}
+   {% endblock %}
+
+</head>
+<style type="text/css">
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+  }
+  header{
+    height: 40px;
+    background:#87CEEB;
+    color: #fff;
+    display: block;
+    margin: auto;
+
+  }
+  #btn-menu{
+    display: none;
+  }
+  header label{
+    font-size: 30px;
+    cursor: pointer;
+    display: none;
+
+  }
+  .menu ul{
+    background: #87CEEB;
+    display: flex;
+    list-style: none;
+
+  }
+  .menu ul ul{
+    display: none;
+
+  }
+.menu a{
+  display: block;
+  padding: 5px 30px;
+  color: #fff;
+  text-decoration: none;
+}
+.menu a:hover{
+  background-color: rgba(0,0,0,0.3);
+}
+.menu a span{
+  margin-left: 10px;
+}
+
+.menu ul li:hover ul{
+  display: block;
+  position: absolute;
+}
+
+</style>
+<body>
+  <header>
+    <nav class="menu" >
+      <ul>
+        <li><a href="{{ path('inicio_detalles')}}">Home<span class="glyphicon glyphicon-home"></span></a></li>
+        <li class="submenu"><a href="#">Gestion de Rentas <span class="glyphicon glyphicon-chevron-down"></span></a>
+          <ul>
+            <li><a href="{{ path('pedidos_detalles', { 'id': 0 }) }}">Crear Pedido</a></li>
+            <li><a href="{{ path('consultas_pedidos') }}">Buscar Pedidos</a></li>
+            <li><a href="{{ path('consultas_dev2') }}">Buscar Devoluciones</a></li>
+          </ul>
+        </li>
+
+         <li><a href="#">Gestión de Pagos <span class="glyphicon glyphicon-chevron-down"></span></a>
+           <ul>
+            <li><a href="#">Saldos</a></li>
+            <li><a href="#">Pagos Individuales</a></li>
+          </ul>
+         </li>
+        <li><a href="#">Reportes <span class="glyphicon glyphicon-chevron-down"></span></a>
+           <ul>
+            <li><a href="{{ path('reportes_saldos') }}">Saldos</a></li>
+          </ul>
+         </li>
+          <li><a href="">Panel de Control<span class="glyphicon glyphicon-chevron-down"></span></a>
+              <ul>
+                <li><a href="{{ path('detalles_clientes') }}">Clientes</a></li>
+                <li><a href="{{ path('detalles_catalogo') }}">Catálogos</a></li>
+                <li><a href="{{ path('detalles_usuarios') }}">Usuarios</a></li>
+                  <li><a href="{{ path('usuario_conf') }}">Mi Perfil</a></li>
+              </ul>
+         </li>
+
+         <li><a href="">Recolecciones<span class="glyphicon glyphicon-chevron-down"></span></a>
+              <ul>
+                <li><a href="{{ path('crear_recolecciones') }}">Programar Recolecciones</a></li>
+              </ul>
+         </li>
+
+         <li><a href="{{ path('usuario_logout')}}">Cerrar Sesión <span class="glyphicon glyphicon-log-in"></span></a></li>
+      </ul>
+    </nav>
+  </header>
+<div>
+      <img style="display:block;margin: auto; width: 13%; margin-top: 0.3%; " class="logo" src="{{ asset('img/logo.bmp')}}">   
+      </div>
+</body>
+ {%block body%}
+{%endblock%}
+</html>

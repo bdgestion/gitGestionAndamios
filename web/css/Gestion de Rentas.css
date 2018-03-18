@@ -1,0 +1,22 @@
+h1
+{
+text-align: center;
+}
+
+
+
+div.contenedor{
+text-align: center;
+}
+
+.ConsPed{
+	position: relative;
+   margin-top: 10px;
+}
+
+.ConsDev{
+	position: relative;
+   margin-top: 10px;
+}
+
+

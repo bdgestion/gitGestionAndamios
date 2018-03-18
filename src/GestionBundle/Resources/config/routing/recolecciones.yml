@@ -1,0 +1,32 @@
+crear_recolecciones:
+    path:     /crear
+    defaults: { _controller: "GestionBundle:Recolecciones:crearrecolecciones" }
+    methods:  [POST, GET]
+registro_recolecciones:
+    path:     /registro
+    defaults: { _controller: "GestionBundle:Recolecciones:registrorecolecciones" }
+    methods:  [POST, GET]
+modificar_recolecciones:
+    path:     /modificar
+    defaults: { _controller: "GestionBundle:Recolecciones:modificar" }
+    methods:  [POST, GET] 
+eliminar_recolecciones:
+    path:     /eliminar
+    defaults: { _controller: "GestionBundle:Recolecciones:eliminarrecoleccion" }
+    methods:  [POST, GET]
+filtrar_recolecciones:
+    path:     /fl
+    defaults: { _controller: "GestionBundle:Recolecciones:filtrar" }
+    methods:  [POST, GET] 
+pedidos:
+    path:     /pedidos
+    defaults: { _controller: "GestionBundle:Recolecciones:dtpd" }
+    methods:  [POST, GET]
+domicilio:
+    path:     /dom
+    defaults: { _controller: "GestionBundle:Recolecciones:domicilio" }
+    methods:  [POST, GET]
+imprimir:
+    path:     /imprimirrec/{fecha}
+    defaults: { _controller: "GestionBundle:Recolecciones:imprimirrecoleccion" }
+    methods:  [POST, GET] 

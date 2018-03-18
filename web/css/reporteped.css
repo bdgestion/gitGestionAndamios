@@ -1,0 +1,87 @@
+h2{
+	margin-left: 410px;
+	margin-top: -35px;
+}
+
+.div1{
+	text-align: center;
+}
+
+.clientetxt{
+	margin-left: 15px;
+}
+
+.cuenta{
+	margin-left: 50px;
+}
+
+.cuentatxt{
+	margin-left: 15px;
+}
+
+.creados{
+	margin-left: 50px;
+}
+
+.creadostxt{
+	margin-left: 15px;
+}
+
+.hasta{
+	margin-left: 50px;
+}
+
+.hastatxt{
+	margin-left: 15px;
+}
+
+.grupo1{
+	margin-left: 385px;
+	margin-top: 20px;
+}
+
+.grupo3{
+	margin-left: 680px;
+	margin-top: -141px;
+}
+
+.botones1{
+	margin-top: 10px;
+	margin-left: 600px;
+}
+
+.limpiar{
+	margin-left: 10px;
+}
+
+.boton{
+	text-align: center;
+}
+
+.tabreporte{
+	margin-left: 3px;
+	margin-top: 8px;
+}
+
+.div2{
+	 overflow:scroll;
+     height:150px;
+     width: 950px;
+     margin: auto;
+}
+
+table th {
+
+  background-color: #D3D3D3;
+  font-size: 12px;
+   }
+table tr:nth-child(odd) {background-color:   #F5F5F5;}
+table tr:nth-child(even) {background-color: #ADD8E6;}
+
+table{
+  width: 1000px;
+
+}
+#menu-bar:checked ~ div{
+  opacity: 0;
+}

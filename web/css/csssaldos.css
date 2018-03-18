@@ -1,0 +1,101 @@
+h2{
+	text-align: center;
+}
+
+.div1{
+	margin-left: 100px;
+	margin-top: 40px;
+}
+
+.clientetxt{
+	margin-left: 5px;
+}
+
+.cuenta{
+	margin-left: 15px;
+}
+
+.cuentatxt{
+	margin-left: 5px;
+}
+
+.pedidosdel{
+	margin-left: 15px;
+}
+
+.pedidosdeltxt{
+	margin-left: 5px;
+}
+
+.hasta{
+	margin-left: 15px;
+}
+
+.hastatxt{
+	margin-left: 5px;
+}
+
+
+div.grupo{
+	position: absolute;
+	margin-left: 870px;
+	margin-top: -30px;
+}
+
+div.chboxadeudo{
+     margin-left: 5px;   
+}
+
+
+
+.grupo2{
+     margin-left: 0px;
+}
+
+div#botones1{
+	text-align: center;
+	margin-top: 5px;
+}
+
+.limpiar{
+	margin-left: 10px;
+}
+
+table th {
+
+  background-color: #D3D3D3;
+  font-size: 16px;
+   }
+table tr:nth-child(odd) {background-color:   #F5F5F5;}
+table tr:nth-child(even) {background-color: #ADD8E6;}
+
+table{
+	margin-top: 20px;
+  width: 1000px;
+
+}
+
+.lblsuma{
+	margin-left: 900px;
+	margin-top: 30px;
+}
+
+#btnverhoja{
+	text-align: center;
+	margin-top: 100px;
+}
+#divtb {
+     overflow:scroll;
+     height:240px;
+     width: 1025px;
+     margin: auto;
+     margin-top: 10px;
+}
+#pedidotd{
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+
+

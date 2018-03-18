@@ -1,0 +1,11 @@
+gestion_usuario:
+    resource: "@GestionBundle/Controller/UsuarioController.php"
+    type:     annotation
+
+gestion:
+    resource: "@GestionBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

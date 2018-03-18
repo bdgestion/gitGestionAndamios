@@ -1,0 +1,483 @@
+{% extends 'menu/menu.html.twig' %}
+{% block estilos %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <Link rel="stylesheet" href="{{ asset('css/usuario_sist.css')}}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+         {%endblock%}
+         {% block body %}
+  <script type="text/javascript">
+         var cuent='', ub='', ctaid2='',tp='',fiscal='',ciudad='', comentarios='',correo='', tl1='',tl2 ='',cliente ='', clientetabla ='', fila='', paso='';
+          $(document).ready(function() {
+            if(document.getElementById('inp1').value==''){
+              document.getElementById('inp1').value=0;
+          }
+              $("#tabla_cuentas").delegate("tr", "click", function(e) {
+               fila=($(e.currentTarget).index() + 1);
+               });
+               $("#dtagregarcta").click(function(){
+                  document.getElementById('btnmodificarcta').disabled=true;
+                  document.getElementById('btncrearct').disabled=false;
+                  $('#myModal_cuenta').modal('show');
+                });
+               $("#btn2").click(function(){
+                  document.getElementById('clt').value='';
+                  document.getElementById('inp2').value='';
+                  document.getElementById('inp3').value='';
+                  document.getElementById('inp4').value='';
+                  document.getElementById('inp5').value='';
+                  document.getElementById('inp6').value='';
+                  document.getElementById('inp7').value='';
+                  document.getElementById('inp10').value='';
+                $('#myModal_cliente').modal('show');
+              });
+            });
+           function llenardatalist(){
+                $.post("{{ path('datalist2') }}", function(mensaje) {
+                  $("#txt3").html(mensaje);
+                    for (var i=0, total = mensaje.length; i < total; i++) {
+                      $("#categoryname2").append("<option value="+mensaje[i]['razonsocial']+">"+mensaje[i]['razonsocial']+"</option>");
+                    }
+                });
+              }
+          function modificardetalles() {
+            var tp='Normal';
+              $("input[type=checkbox]:checked").each(function(){
+                tp='Restringido';
+              });
+              var razon= document.getElementById('dtrazon').value;
+               fiscal= document.getElementById('dtdomicilio').value;
+               ciudad= document.getElementById('dtciudad').value;
+               comentarios= document.getElementById('dtcomentarios').value;
+               correo = document.getElementById('dtcorreo').value;
+               tl1 = document.getElementById('dttl1').value;
+               tl2 = document.getElementById('tdtl2').value;
+               cliente = document.getElementById('dtcliente').value;
+               rfc = document.getElementById('dtrfc').value;
+                var statusConfirm =(confirm("Desea Enviar las Modificaciones?"));
+                if (statusConfirm == true){ 
+                  $.post("{{ path('modificar_detalles') }}", {cliente:cliente,fiscal:fiscal,ciudad:ciudad,comentarios:comentarios,correo:correo,tlf1:tl1,tlf2:tl2,rest:tp,razon:razon,rfc:rfc}, function(mensaje) {
+                     $("#inp11").html(mensaje);
+                  });
+                   document.getElementById('dtdomicilio').value=fiscal;
+                   document.getElementById('dtciudad').value=ciudad;
+                   document.getElementById('dtcomentarios').value=comentarios;
+                   document.getElementById('dtcorreo').value=correo;
+                   document.getElementById('dttl1').value=tl1;
+                   document.getElementById('tdtl2').value=tl2;
+                   alert('Cliente Actualizado');
+                   location.reload();
+                 }else{
+                  alert('Procedimiento Cancelado');
+                 }
+              }
+
+          function cerrardetallescliente() {
+            location.reload();
+          }
+          function modificarcta() {
+            var statusConfirm =(confirm("Desea Enviar las Modificaciones?"));
+            if (statusConfirm == true){ 
+            var comentarios= document.getElementById('ctacoment').value;
+            var ctaid2= document.getElementById('ctaid').value;
+            var domicilio = document.getElementById('cuentadom').value;
+             if (document.getElementById("chekcta").checked==true){
+               var tp='Inactiva';
+              }else{
+                var tp='Normal';
+              }
+             $.post("{{ path('modificar_cuenta') }}", {ctaact:cuent, ctaid:ctaid2,domicilio:domicilio,comentarios:comentarios,status:tp}, function(mensaje) {
+                 $("#inp11").html(mensaje);
+              });
+              alert('Obra Actualizada');
+              location.reload()
+           }else{
+            alert('Procedimiento Cancelado');
+           }
+          }
+        function crearcta2() {
+
+          var statusConfirm =(confirm("Esta Seguro de Agregar esta Obra?"));
+          if (statusConfirm == true){ 
+              var cliente=document.getElementById('dtcliente').value;
+              document.getElementById('clienteid').value=cliente;
+              var cuentaid= document.getElementById('ctaid').value;
+              var comentarios= document.getElementById('ctacoment').value;
+              var domicilio = document.getElementById('cuentadom').value;
+              document.getElementById('btnmodificarcta').disabled=true;
+              if (document.getElementById("chekcta").checked==true){
+               var tp='Inactiva';
+              }else{
+                var tp='Normal';
+              }
+
+              if(domicilio==''){
+                alert('Todos los Campos deben estar Completos');
+              }else{
+                 $.post("{{ path('registro_cuenta') }}", {clienteid:clienteid,cuentaid:cuentaid,comentarios:comentarios,domicilio:domicilio,status:tp}, function(mensaje) {
+                 $("#inp11").html(mensaje);
+              });
+                alert('Obra Registrada');
+                $("#tabla_cuentas").append("<tr class='dev'><tr class='dev'><td style='text-align: center';><a href=#myModal_cuenta data-toggle=modal data-target=#myModal_cuenta >Editar</td><td style='text-align: center'>"+cuentaid+"</td><td style='text-align: center'>"+comentarios+"</td><td style='text-align: center'>"+domicilio+"</td><td style='text-align: center'>"+tp+"</td></tr>");
+          }
+        }else{
+            alert('Procedimiento Cancelado');
+            $('#myModal_cuenta').modal('hide');
+          }
+      }
+            function crearcta() {
+              if(paso!=''){
+                var clienteid= clientetabla;
+              }else{
+                var clienteid= document.getElementById('clienteid').value;  
+              } 
+              var cuentaid= document.getElementById('ctaid').value;
+              var comentarios= document.getElementById('ctacoment').value;
+              var domicilio = document.getElementById('cuentadom').value;
+              document.getElementById('btnmodificarcta').disabled=true;
+              if (document.getElementById("chekcta").checked==true){
+               var tp='Inactiva';
+              }else{
+                var tp='Normal';
+              }
+
+              if(domicilio==''){
+                alert('Todos los Campos deben estar Completos');
+              }else{
+                 $.post("{{ path('registro_cuenta') }}", {clienteid:clienteid,cuentaid:cuentaid,comentarios:comentarios,domicilio:domicilio,status:tp}, function(mensaje) {
+                   $("#cuentadom").html(mensaje);
+                   if(mensaje=='Registrado'){
+                    alert('Cuenta ya esta Registrado para este Cliente');
+                   }else{
+                    alert('Obra Registrada');   
+                   }
+                 });
+                 location.reload();
+              }
+         }            
+            function registrar() {
+              var cliente= document.getElementById('inp1').value;
+              var razon= document.getElementById('inp2').value;
+              var rfc= document.getElementById('inp3').value;
+              var domicilio = document.getElementById('inp4').value;
+              var ciudad = document.getElementById('inp5').value;
+              var comentarios = document.getElementById('inp6').value;
+              var correo = document.getElementById('inp7').value;
+              var razonrest = document.getElementById('inp10').value;
+
+              if (document.getElementById("chek").checked==true){
+                tp='Restringido';
+              }else{
+                 tp='Normal';
+              }
+              var tlf1 = document.getElementById('inp9').value;
+              var tlf2 = document.getElementById('inp11').value;
+               if(razon=='' && rfc=='' && domicilio=='' && ciudad==''){
+                alert('Debe Completar todos los Campos');
+               }else{
+                if(document.getElementById('inp3').value==''){
+                  rfc='No Ingresado';
+                } 
+
+                $.post("{{ path('registro_clientes') }}", {cliente:cliente,razon:razon,rfc:rfc,domicilio:domicilio,ciudad:ciudad,comentarios:comentarios,correo:correo,estado:tp,telf1:tlf1,telf2:tlf2,razonrest:razonrest}, function(mensaje) {
+                 $("#inp11").html(mensaje);
+                  document.getElementById('inp1').value= parseFloat(document.getElementById('inp1').value)+ parseFloat(1);
+                  document.getElementById('clienteid').value= parseFloat(document.getElementById('clienteid').value)+ parseFloat(1);
+                  var statusConfirm =(confirm("Debe Agregar una Obra al Cliente"));
+                  document.getElementById('btnmodificarcta').disabled=true;
+                  if (statusConfirm == true){ 
+                      $('#myModal_cliente').modal('hide');
+                        document.getElementById('btncrearct').disabled=false;
+                        document.getElementById('cuentadom').value='';
+                        document.getElementById('ctaid').value='';
+                        document.getElementById('ctacoment').value='';
+                      $('#myModal_cuenta').modal('show');
+                  }else{
+                     var cliente= document.getElementById('inp1').value;
+                      tp='Restringido';
+                     $.post("{{ path('modf_cliente') }}", {cliente:cliente}, function(mensaje) {
+                     $("#inp11").html(mensaje);
+                   });
+                     alert('Cliente Restringido Por No Registrar su Obra');
+                  }
+               var id=0;
+                 $.post("{{ path('id_detalles') }}", {cliente:cliente}, function(mensaje) {
+                 $("#inp11").html(mensaje);
+                 id= parseInt(mensaje[0]['cliente']);
+                document.getElementById('clienteid').value=mensaje[0]['cliente'];
+                $("#tabla_clientes").append("<tr class='dev'><tr class='dev'><td style='text-align: center';><a href=#myModal_detalles data-toggle=modal data-target=#myModal_detalles>Editar</td><td style='text-align: center'>"+id+"</td><td style='text-align: center'>"+razon+"</td><td style='text-align: center'>"+rfc+"</td><td style='text-align: center'>"+tp+"</td></tr>");
+                });
+             });
+           }
+         }
+             function filtros() {
+                  var cliente= document.getElementById('clt').value;
+                  var razon= document.getElementById('razon_social').value;
+                  var rfc= document.getElementById('rfc').value;
+                  var status = document.getElementById('status').value;
+                  var valor='';
+                  if(status=='1'){
+                    valor='';
+                  }if(status=='2'){
+                    valor='Normal';
+                  }if(status=='3'){
+                    valor='Restringido';
+                  }
+                   $("#tabla_clientes").find("tr:gt(0)").remove(); 
+             $.post("{{ path('filtros_clientes') }}",{cliente:cliente,razon:razon,rfc:rfc,status:valor},
+                   function(mensaje) {
+                   $("#rfc").html(mensaje);
+                   for (var i=0, total = mensaje.length; i < total; i++) {
+                      $("#tabla_clientes").append("<tr><tr><td style='text-align: center';><a href=#myModal_detalles data-toggle=modal data-target=#myModal_detalles>Editar</td><td style='text-align: center'>"+mensaje[i]["cliente"]+"</td><td style='text-align: center'>"+mensaje[i]["razon_social"]+"</td><td style='text-align: center'>"+mensaje[i]["rfc"]+"</td><td style='text-align: center'>"+mensaje[i]["restringir"]+"</td></tr>");
+                    }
+                   });
+                  }
+          </script>
+
+{% set ultid  = '' %}
+{% for clientes in datosclientes %}
+  {% set ultid = clientes.cliente + 1 %}
+{% endfor %}
+
+{% set rol = '' %}
+   {% set rol=app.session.get('myrol') %}
+
+   {% set estado = '' %}
+   {% if rol == 'Limitado' %}    
+    {% set estado = 'disabled="true"' %}           
+   {% else %}  
+    {% set estado = '' %}           
+   {% endif %}
+<form class="ctl_clientes" style="margin-top: 1%;">
+  <h1 style="display: block;margin: auto;" class="text-cliente" align="center">Clientes</h1>
+  <div id="contenedor" style="margin-left: 370px;">
+    <label class="label3" for="cliente" style="margin-left: -125px;" >Cliente</label>
+     <input type="text" id="clt" name="clt" autocomplete="off" list="categoryname" onkeyup="validar();" onchange="validar();" ></input>
+       <label class="label3">Razón Social</label>
+       <input name="razon_social" type="text" id="razon_social" autocomplete="off" list="categoryname2" onkeyup="validar();" onchange="validar();"></input>
+                <datalist id="categoryname2">
+                  <script type="text/javascript">
+                      llenardatalist();
+                  </script>
+                </datalist>
+     <label>RFC</label>
+    <input type="text" id="rfc" name="rfc" autocomplete="off" list="categoryname3" onkeyup="validar();"></input>
+      <label id="lbl2">Status</label><select id="status" name="status">
+        <option value="1">Todos</option>
+        <option value="2">Normal</option>
+        <option value="3">Restringidos</option>
+      </select> 
+  </div>
+  <div>
+    <button style="margin-top: 5px; margin-left: 40%;" id="btn1"  class ="btn btn-info btn-lg" type="button" onclick="filtros();">Filtrar</button>
+     <button style="margin-top: 5px; margin-left: 1%; color: red;" id="btn2" class="btn btn-info btn-lg" name="btnregistrar" type="button" {{estado}}>REGISTRAR</button>
+</div>
+
+  <form  id="cat_clt" action="" method="get">
+
+  <div style="margin-top: 15px;" id="div1">
+    <table id="tabla_clientes" width="70%"  align="center" style="margin-top: -2px; ">
+      <thead>
+         <tr id="tbl_cl" align="center">
+            <th style="text-align: center;">Editar</th>
+             <th style="text-align: center;">Cliente</th>
+             <th style="text-align: center;">Razon Social</th>
+             <th style="text-align: center;">RfC</th>
+             <th style="text-align: center;">Status</th>
+         </tr>
+       </thead>      
+           <tbody>
+                  {% for clientes in datosclientes %}
+                    <tr align="center" >
+                       <td ><a href="#myModal_detalles" data-toggle="modal" data-target="#myModal_detalles">Editar</td>
+                        <td  >{{ clientes.cliente }}</td>
+                        <td >{{ clientes.razon_social }}</td>
+                        <td >{{ clientes.rfc }}</td>
+                        <td >{{ clientes.restringir }}</td>
+                    </tr>
+                  {% endfor %}
+            </tbody>
+        <script type="text/javascript">
+            document.getElementById("tabla_clientes").onclick=function(e){ 
+              if(!e)e=window.event; 
+              if(!e.target) e.target=e.srcElement; 
+              var TR=e.target;
+              while( TR.nodeType==1 && TR.tagName.toUpperCase()!="TR" )
+              TR=TR.parentNode;
+              var celdas=TR.getElementsByTagName("TD");
+              if( celdas.length!=0 )
+                 var cliente=( celdas[1].innerHTML );
+                 clientetabla=( celdas[1].innerHTML );
+                paso='activo';
+                $.post("{{ path('consultar_cuenta') }}",{clienteid:cliente},
+                       function(mensaje) {
+                      $("#rfc").html(mensaje);
+                  document.getElementById('dtcliente').value=cliente;
+                  document.getElementById('dtrazon').value=mensaje[0]['razonsocial'];
+                  document.getElementById('dtrfc').value=mensaje[0]['rfc'];
+                  document.getElementById('dtdomicilio').value=mensaje[0]['domicilio'];
+                  document.getElementById('dtcomentarios').value=mensaje[0]['comentarios'];
+                  document.getElementById('dtciudad').value=mensaje[0]['ciudad'];
+                  document.getElementById('dtcorreo').value=mensaje[0]['correo'];
+                  document.getElementById('dttl1').value=mensaje[0]['tlf1'];
+                  document.getElementById('tdtl2').value=mensaje[0]['tlf2'];
+                  document.getElementById('dtrazonrest').value=mensaje[0]['razonrestr'];
+
+                  if (mensaje[0]['restringir']=='Restringido'){
+                    $("#restriccion").show();
+                    document.getElementById("dtchek").checked=true;
+                  }else{
+                    $("#restriccion").css("display", "none");
+                    document.getElementById("dtchek").checked=false;
+                  }
+                 });
+
+                $.post("{{ path('detalles_cuenta') }}",{clienteid:cliente},
+                       function(mensaje) {
+                        $("#rfc").html(mensaje);
+                        $("#tabla_cuentas").find("tr:gt(0)").remove(); 
+                         for (var i=0, total = mensaje.length; i < total; i++) {
+                          $("#tabla_cuentas").append("<tr class='dev'><tr class='dev'><td style='text-align: center';><a href=#myModal_cuenta data-toggle=modal data-target=#myModal_cuenta>Editar</td><td style='text-align: center'>"+mensaje[i]["cuentaid"]+"</td><td style='text-align: center'>"+mensaje[i]["comentarios"]+"</td><td style='text-align: center'>"+mensaje[i]["domicilio"]+"</td><td style='text-align: center'>"+mensaje[i]["status"]+"</td></tr>");
+                        }
+                    });
+            }
+
+        </script>
+    </table>
+  </div>
+   
+
+
+    </form>
+   </form>
+   <!-- REGISTRAR CUENTA CLIENTE -->
+
+ 
+          <!-- VENTANA MODAL REGISTRO CLIENTES -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <div class="modal fade" id="myModal_cliente" role="dialog" onchange="">
+    <div class="modal-dialog" style="  width: 100%;">
+      <div class="modal-content">
+        <div>
+         <h2 align="center" id="lblop">REGISTRAR CLIENTE</h2>
+        </div>
+        <br>
+          <label style="margin-left: 60px;"># Cliente</label><input id="inp1" type="text" name="clienteinpt" value="{{ultid}}" disabled="true">
+          <label>Razón Social</label><input id="inp2" type="text" name="razon_social">
+          <label>RFC</label><input id="inp3" type="text" name="rfc">
+          
+          <label>Ciudad</label><input id="inp5" type="text" name="ciudad">
+          <label>Comentarios</label><input id="inp6" type="text" name="comentarios">   
+            <div id="contenedor3"  style="margin-left: 60px; margin-top: 5px;">
+              
+              <label>Correo</label><input id="inp7" type="text" name="correo">
+              <label id="lbl1">¿Restringir?</label><input id="chek" type="checkbox" name="restringir"><input id="inp10" type="text" name="razon_restriccion" placeholder="Describa la Razón">
+              <label>Telf1</label><input id="inp9" type="text" name="telf1">
+              <label>Telf2</label><input id="inp11" type="text" name="telf2" size="28">
+              <label>Domicilio</label><textarea style="margin-left: 1.8%; width: 10.5%;" id="inp4" type="text" name="domicilio"></textarea> 
+            </div>
+
+              
+          <br>
+          <br>
+          <input class="btn btn-info btn-lg"  id="inp12" type="submit" value="Registrar" style="display: block;margin: auto;" onclick="registrar();">
+          <br>
+          <br>
+        </div>
+      </div>
+    </div>
+
+   
+    <!-- DETALLES DEL CLIENTE -->
+
+<div class="modal fade" id="myModal_detalles" role="dialog" onchange="">
+    <div class="modal-dialog" style="  width: 100%;">
+      <div class="modal-content">
+        <div>
+         <h2 align="center">DETALLES DEL CLIENTE</h2>
+        </div>
+        <br>
+          <label style="margin-left: 70px;">Cliente</label><input id="dtcliente" name="cliente" class="inp1" type="text" value="">
+          <label>Razón Social</label><input id="dtrazon" class="inp2" type="text" name="razon_social"  value="">
+          <label>RFC</label><input id="dtrfc" class="inp3" type="text" name="rfc" value="">
+
+          <label>Comentarios</label><input id="dtcomentarios" class="inp5" type="text" name="comentarios" value="">  
+          
+          <br>
+          <div id="contenedor3" style="margin-top: 2%;">
+           <label style="margin-left: 70px;">Ciudad</label><input id="dtciudad" class="inp7" type="text" name="ciudad" value="">
+           <label>Correo</label><input id="dtcorreo" class="inp8" type="text" name="correo" value="">
+           
+           <label>Telf</label><input id="dttl1" class="inp9" type="text" name="telf1" value="">
+           <label>Telf</label><input id="tdtl2" class="inp10" type="text" name="telf2" value="">
+           <label class="lbl1"> Restringir</label><input id="dtchek" type="checkbox" name="Restringir" class="inp12">
+           <input id="dtrazonrest" class="inp6" type="text" name="restringir" placeholder="Describa la Razón" value="">
+
+           <br>
+           <br>
+           <label style="margin-left: 5%;">Domicilio</label><textarea style="margin-left: 1.8%; width: 10.5%;" id="dtdomicilio" type="text" name="domicilio"></textarea>
+            <div id="contenedor5" style="margin-left: 600px;">
+              <button id="dtbtn1" class="btn btn-info btn-lg" type="button" name="modificar" onclick="modificardetalles();" {{estado}}>Modificar</button>
+              <button id="dtbtn2" class="btn btn-info btn-lg" type="submit" name="cerrar" onclick="cerrardetallescliente();">Cerrar</button>
+            </div>
+            <span  id="restriccion" style="background-color:red; margin-left: 600px; font-size: 30px;">RESTRINGIDO</span>
+            <h3 style="margin-left: 170px;" class="lbl2"> Obras: </h3>
+            <div id="div1" style="height: 150px;">
+              <table id="tabla_cuentas" width="80%" align="center" style="margin-top: -2px;">
+                       <tr  id="columna_categoria" align="center">
+                           <th style="text-align: center">Detalles</th>
+                           <th style="text-align: center">Obra</th>
+                           <th style="text-align: center">Descripción</th>
+                           <th style="text-align: center">Ubicación</th>
+                           <th style="text-align: center">Status</th>
+                       </tr>
+               <script>
+                          
+               document.getElementById("tabla_cuentas").onclick=function(e){ 
+                if(!e)e=window.event; 
+                if(!e.target) e.target=e.srcElement; 
+                var TR=e.target;
+                while( TR.nodeType==1 && TR.tagName.toUpperCase()!="TR" )
+                TR=TR.parentNode;
+                var celdas=TR.getElementsByTagName("TD");
+                if( celdas.length!=0 )
+                  cuent =( celdas[1].innerHTML);
+                  ub =( celdas[2].innerHTML);
+                  document.getElementById("ctaid").value=cuent;
+                  document.getElementById("cuentadom").value=ub;
+                  document.getElementById("btncrearct").disabled=true;
+                  document.getElementById("btnmodificarcta").disabled=false;
+              }
+              </script>
+              </table>
+             
+              </div>
+              <button style="display: block;margin: auto;" id="dtagregarcta" class="btn btn-info btn-lg" type="button" name="cerrar" onclick="" {{estado}}>Agregar Obra</button>
+        <br>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <div class="modal fade" id="myModal_cuenta" role="dialog" onchange="">
+    <div class="modal-dialog" style="width: 80%;">
+      <div class="modal-content">
+        <div>
+         <h2 align="center" id="lblop">REGISTRAR Obra</h2>
+        </div>
+        <br>
+          <label style="margin-left: 150px;">Obra ID</label><input id="ctaid" class="inp1" type="text" name="cuenta">
+          <label>Domicilio</label><input id="cuentadom" class="inp2" type="text" name="domicilio">
+          <label>Comentarios</label><input id="ctacoment" class="inp3" type="text" name="comentarios">
+          <label>Obra Inactiva</label><input id="chekcta" type="checkbox" name="status_cta"> 
+          <input id="clienteid" type="text" name="id" style="visibility:hidden" value="{{ultid}}"> 
+          <br>
+          <button style="margin-left: 450px;" id="btncrearct" class="btn btn-info btn-lg" type="button" name="crear" onclick="crearcta();">Crear</button> 
+          <button  id="btnmodificarcta" class="btn btn-info btn-lg" type="button" name="crear" onclick="modificarcta();" >Modificar</button>
+          <br>
+           <br>
+        </div>
+     </div>
+  </div>
+{% endblock %}
+

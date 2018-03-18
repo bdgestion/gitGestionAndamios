@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Pedidos list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Pedido</th>
+                <th>Folio</th>
+                <th>Cliente</th>
+                <th>Cuenta</th>
+                <th>Fecha</th>
+                <th>Devolucion</th>
+                <th>Statuspedido</th>
+                <th>Cant</th>
+                <th>Clave</th>
+                <th>Equipo</th>
+                <th>Dias</th>
+                <th>Pu</th>
+                <th>Importe</th>
+                <th>Direccionentrega</th>
+                <th>Comentarios</th>
+                <th>Descuento</th>
+                <th>Impuesto</th>
+                <th>Total</th>
+                <th>Statuspago</th>
+                <th>Subtotal</th>
+                <th>Subtotal2</th>
+                <th>Id</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pedido in pedidos %}
+            <tr>
+                <td><a href="{{ path('pedidos_show', { 'id': pedido.id }) }}">{{ pedido.pedido }}</a></td>
+                <td>{{ pedido.folio }}</td>
+                <td>{{ pedido.cliente }}</td>
+                <td>{{ pedido.cuenta }}</td>
+                <td>{{ pedido.fecha }}</td>
+                <td>{{ pedido.devolucion }}</td>
+                <td>{{ pedido.statusPedido }}</td>
+                <td>{{ pedido.cant }}</td>
+                <td>{{ pedido.clave }}</td>
+                <td>{{ pedido.equipo }}</td>
+                <td>{{ pedido.dias }}</td>
+                <td>{{ pedido.pu }}</td>
+                <td>{{ pedido.importe }}</td>
+                <td>{{ pedido.direccionEntrega }}</td>
+                <td>{{ pedido.comentarios }}</td>
+                <td>{{ pedido.descuento }}</td>
+                <td>{{ pedido.impuesto }}</td>
+                <td>{{ pedido.total }}</td>
+                <td>{{ pedido.statusPago }}</td>
+                <td>{{ pedido.subtotal }}</td>
+                <td>{{ pedido.subtotal2 }}</td>
+                <td>{{ pedido.id }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('pedidos_show', { 'id': pedido.id }) }}">show</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}

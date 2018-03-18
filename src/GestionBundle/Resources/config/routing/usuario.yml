@@ -1,0 +1,48 @@
+usuario_index:
+    path:     /
+    defaults: { _controller: "GestionBundle:Usuario:index" }
+    methods:  GET
+
+usuario_show:
+    path:     /{id}/show
+    defaults: { _controller: "GestionBundle:Usuario:show" }
+    methods:  GET
+
+usuario_new:
+    path:     /new
+    defaults: { _controller: "GestionBundle:Usuario:new" }
+    methods:  [GET, POST]
+
+usuario_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "GestionBundle:Usuario:edit" }
+    methods:  [GET, POST]
+
+usuario_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "GestionBundle:Usuario:delete" }
+    methods:  DELET
+usuario_conf:
+    path:     /confusuario
+    defaults: { _controller: "GestionBundle:Usuario:detalles" }
+    methods:  [GET, POST]
+modficar_usuario:
+    path:     /modf
+    defaults: { _controller: "GestionBundle:Usuario:modificar" }
+    methods:  [GET, POST]
+detalles_usuarios:
+    path:     /usuarios
+    defaults: { _controller: "GestionBundle:Usuario:datosusuarios" }
+    methods:  [GET, POST]
+registro_usuario:
+    path:     /rg
+    defaults: { _controller: "GestionBundle:Usuario:registrousuario" }
+    methods:  [GET, POST]
+eliminar_usuario:
+    path:     /eliminar
+    defaults: { _controller: "GestionBundle:Usuario:eliminarusuario" }
+    methods:  [GET, POST]
+modificar_usuario2:
+    path:     /modificar
+    defaults: { _controller: "GestionBundle:Usuario:modificarusuario" }
+    methods:  [GET, POST]

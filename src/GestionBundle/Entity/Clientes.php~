@@ -1,0 +1,96 @@
+<?php
+
+namespace GestionBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Clientes
+ *
+ * @ORM\Table(name="clientes", uniqueConstraints={@ORM\UniqueConstraint(name="id", columns={"cliente"})})
+ * @ORM\Entity
+ */
+class Clientes
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cliente", type="bigint", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $cliente;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="razon_social", type="string", length=500, nullable=false)
+     */
+    private $razonSocial;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rfc", type="string", length=500, nullable=false)
+     */
+    private $rfc;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="domicilio_fiscal", type="string", length=500, nullable=false)
+     */
+    private $domicilioFiscal;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ciudad", type="string", length=100, nullable=false)
+     */
+    private $ciudad;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comentarios", type="string", length=500, nullable=false)
+     */
+    private $comentarios;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="correo", type="string", length=100, nullable=false)
+     */
+    private $correo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="telefono", type="string", length=100, nullable=false)
+     */
+    private $telefono;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="telefono_2", type="string", length=100, nullable=false)
+     */
+    private $telefono2;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="restringir", type="string", length=20, nullable=true)
+     */
+    private $restringir;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="razon_restriccion", type="string", length=500, nullable=false)
+     */
+    private $razonRestriccion;
+
+
+}
+

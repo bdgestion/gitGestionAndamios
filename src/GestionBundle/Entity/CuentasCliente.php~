@@ -1,0 +1,61 @@
+<?php
+
+namespace GestionBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * CuentasCliente
+ *
+ * @ORM\Table(name="cuentas_cliente", uniqueConstraints={@ORM\UniqueConstraint(name="id", columns={"id"}), @ORM\UniqueConstraint(name="cuenta_id", columns={"cuenta_id"})})
+ * @ORM\Entity
+ */
+class CuentasCliente
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="bigint", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cliente", type="integer", nullable=false)
+     */
+    private $cliente;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comentarios", type="string", length=120, nullable=true)
+     */
+    private $comentarios;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=100, nullable=true)
+     */
+    private $status;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="domicilio", type="string", length=120, nullable=false)
+     */
+    private $domicilio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cuenta_id", type="string", length=10, nullable=false)
+     */
+    private $cuentaId;
+
+
+}
+

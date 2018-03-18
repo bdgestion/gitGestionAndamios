@@ -1,0 +1,61 @@
+<?php
+
+namespace GestionBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Catalogo
+ *
+ * @ORM\Table(name="catalogo", uniqueConstraints={@ORM\UniqueConstraint(name="id", columns={"id"})})
+ * @ORM\Entity
+ */
+class Catalogo
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="bigint", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="equipo", type="string", length=200, nullable=false)
+     */
+    private $equipo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="categoria", type="string", length=200, nullable=false)
+     */
+    private $categoria;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=200, nullable=true)
+     */
+    private $status;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="clave", type="string", length=200, nullable=false)
+     */
+    private $clave;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="precio", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $precio;
+
+
+}
+

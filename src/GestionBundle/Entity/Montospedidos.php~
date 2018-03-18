@@ -1,0 +1,57 @@
+<?php
+
+namespace GestionBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Montospedidos
+ *
+ * @ORM\Table(name="montospedidos", uniqueConstraints={@ORM\UniqueConstraint(name="id", columns={"id"}), @ORM\UniqueConstraint(name="pedido", columns={"pedido"})}, indexes={@ORM\Index(name="statussaldo", columns={"statussaldo"})})
+ * @ORM\Entity
+ */
+class Montospedidos
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="montopedido", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $montopedido;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pedido", type="integer", nullable=false)
+     */
+    private $pedido;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="saldorestante", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $saldorestante;
+
+    /**
+     * @var \StatusSaldos
+     *
+     * @ORM\ManyToOne(targetEntity="StatusSaldos")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="statussaldo", referencedColumnName="id")
+     * })
+     */
+    private $statussaldo;
+
+
+}
+

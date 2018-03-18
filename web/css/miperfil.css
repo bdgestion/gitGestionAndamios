@@ -1,0 +1,79 @@
+.content::-webkit-scrollbar { 
+  display: none;
+}
+#lbl_cnt{
+display: block;
+text-align: center;
+}
+#menu-bar:checked ~ h1{
+  opacity: 0;
+}
+h1{
+position:absolute;
+left:650px;
+top: 100px;
+}
+
+div.div1{
+	margin-left: 70px;
+	margin-right: 80px;
+	margin-top: 60px;
+}
+fieldset {
+    display: block;
+    margin-left: 70px;
+    margin-right: 70px;
+    padding-top: 0.35em;
+    padding-bottom: 5.625em;
+    padding-left: 1.75em;
+    padding-right: 1.75em;
+    border: 2px groove (internal value);
+}
+.lbl_4{
+
+}
+div.grupo{
+  position: absolute;
+  margin-left: 60px;
+  margin-top: 22px;
+}
+
+div.actual{
+  top: 1px;
+  left: 30px;
+}
+
+div.nueva{
+    top: 1px;
+  left: 30px;
+}
+
+div.confirmar{
+    position: relative;
+    top: 10px;
+    left: 30px;
+}
+
+div.grupo2{
+	margin-left: 70px;
+	margin-top: 40px;
+}
+
+div.grupo3{
+	margin-left: 70px;
+	margin-top: 1px;
+}
+
+div.btn{
+	text-align: center;
+	margin-top: -35px;
+}
+
+div.nota{
+	margin-left: 70px;
+	margin-top: 20px;
+	font-size: 12px;
+}
+
+
+

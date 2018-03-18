@@ -1,0 +1,37 @@
+h2{
+	margin-left: 610px;
+	margin-top: 10px;
+}
+
+#cta_comb{
+	margin-top: 40px;
+    text-align: center;
+    padding: 10px;
+}
+.label3{
+margin-left: 160px;
+}
+table th {
+
+  background-color: #D3D3D3;
+  font-size: 16px;
+   }
+table tr:nth-child(odd) {background-color:   #F5F5F5;}
+table tr:nth-child(even) {background-color: #ADD8E6;}
+
+table{
+	margin-top: 15px;
+  width: 1000px;
+
+}
+#div1 {
+     overflow:scroll;
+     height:350px;
+     width: 1025px;
+     margin: auto;
+}
+#pedido{
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}

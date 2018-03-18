@@ -1,0 +1,42 @@
+div.contenedor1{
+	margin-left: 35px;
+	padding: 5px;
+}
+#lbl1,#lbl2,#lbl3,#lbl4{
+	padding: 20px;
+}
+div.contenedor2{
+	margin-left: 23px;
+	padding:9px;
+}
+#inp4{
+	margin-left: 22px;
+}
+div.contenedor3{
+	margin-left: 50px;
+}
+input.boton{
+	margin-top: 10px;
+	margin-left: 250px;
+	 text-decoration: none;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #1883ba;
+    border-radius: 6px;
+    border: 2px solid #0016b0;
+    cursor: pointer;
+}
+div.grupo2_btn{
+	margin-left: 100px;
+	margin-top: 20px;
+}
+input.boton1,input.boton2,input.boton3{
+ text-decoration: none;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #1883ba;
+    border-radius: 6px;
+    border: 2px solid #0016b0;
+    cursor: pointer;
+    width: 30%;
+}

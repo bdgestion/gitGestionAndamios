@@ -1,0 +1,437 @@
+{% extends 'menu/menu.html.twig' %}
+{% block body %}
+
+{% set pd = '' %}
+{% set cuenta = '' %}        
+{% set folio = '' %}
+{% set cliente = '' %}
+{% set status = '' %}
+           {% for pedido in pedido %}
+              {% set pd = pedido.pedido %}
+              {% set cuenta = pedido.cuenta %}
+              {% set folio = pedido.folio %}
+              {% set cliente = pedido.cliente %}
+              {% set status = pedido.status %}
+             {%endfor%}
+   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"></link>
+   <link rel="stylesheet" href="/resources/demos/style.css"></link>
+   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+<style type="text/css">
+#div2{
+  text-align: center;
+  overflow: scroll;
+     width: 100%;
+     height: 250px;
+
+     
+}
+#div1{
+  text-align: center;
+     overflow: scroll;
+     width: 100%;
+     height: 250px;
+}
+#div3{
+     overflow: scroll;
+     height:220px;
+}
+#div4{
+     overflow:scroll;
+     height:220px;
+     width: 80%;
+     margin: auto;
+     display: block;
+     margin-top: -2%;
+     margin: auto;
+}
+</style>
+<script type="text/javascript">
+	var folio='';
+	query=window.location.search.substring(1);
+	q=query.split("?");
+	vars=[];
+	var pedid;
+	for(i=0;i<q.length;i++){
+	    x=q[i].split("=");
+	    k=x[0];
+	    v=x[1];
+	    vars[k]=v;
+	   pedid=v;
+} 
+
+$( function() {
+  
+       $.datepicker.regional['es'] = {
+        closeText: 'Cerrar',
+        prevText: '< Ant',
+        nextText: 'Sig >',
+        currentText: 'Hoy',
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+        dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+        weekHeader: 'Sm',
+        dateFormat: 'dd/mm/yy',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: ''
+ };
+ $.datepicker.setDefaults($.datepicker.regional['es']);
+ $("#fechadev" ).datepicker();
+});
+ 
+
+// CARGAR DATOS DEVOLUCIONES
+ $(document).ready(function() {
+
+ 	 var pedido = document.getElementById("pedido_padre").value;
+ 	 var cliente = document.getElementById("cliente").value;
+     var cuenta = document.getElementById("cuenta").value;
+
+ 	$("#btn_registrodev").click(function(){
+    
+ 		$("#tbl_registrodv").find("tr:gt(0)").remove();
+      $.post("{{ path('filtros_dev') }}", {pedid:pedido}, function(mensaje) {
+           $("#txt3").html(mensaje);
+           //var columnas = mensaje.length - 1;
+
+        for (var i=0, total = mensaje.length; i < total; i++) {
+          $("#tbl_registrodv").append("<tbody><tr><td style='text-align: center;text-align: center;word-wrap: break-word;'>"+mensaje[i]["clave"]+"</td><td style='text-align: center; text-align: center;word-wrap: break-word;'>"+mensaje[i]["equipo"]+"</td><td style='text-align: center;text-align: center;word-wrap: break-word;'>"+mensaje[i]["pendiente"]+"</td><td contenteditable='true' style='text-align: center;text-align: center;word-wrap: break-word;'>-</td></tr></tbody>");
+        }
+      });
+ 	});
+ 	 $("#btn_registrodev").click(function(){
+ 		$("#tbls").css("display", "none");
+ 		$("#btn_registrodev").css("display", "none");
+ 		$("#btn_eliminardev").css("display", "none");
+    $("#btn_detallespd").css("display", "none");
+ 		$("#lblstatus").css("display", "none");
+ 		$("#status_pedido").css("display", "none");
+ 		$("#lblcliente").css("display", "none");
+ 		$("#cliente").css("display", "none");
+ 		$("#lblcuenta").css("display", "none");
+ 		$("#cuenta").css("display", "none");
+ 		$("#registro_dev").css("display", "block");
+ 		$("#btn_atras").css("display", "block");
+ 		$("#dt3").css("display", "block");
+     });
+    var tpendi=0;
+      $("#tblresumen").find("tr:gt(0)").remove();
+        
+      $.post("{{ path('filtros_dev') }}", {pedid:pedido}, function(mensaje) {
+           $("#txt3").html(mensaje);
+           //var columnas = mensaje.length - 1;
+        for (var i=0, total = mensaje.length; i < total; i++) {
+          
+          $("#tblresumen").append("<tr><td style='text-align: center;text-align: center;word-wrap: break-word;'>"+mensaje[i]["clave"]+"</td><td style='text-align: center; text-align: center;word-wrap: break-word;'>"+mensaje[i]["equipo"]+"</td><td style='text-align: center;text-align: center;word-wrap: break-word;'>"+mensaje[i]["cantidad"]+"</td><td style='text-align: center;text-align: center;word-wrap: break-word;'>"+mensaje[i]["devuelto"]+"</td><td style='text-align: center;text-align: center;word-wrap: break-word;'>"+mensaje[i]["pendiente"]+"</td></tr>");
+        }
+        var cantidad=0;
+        var ct=0;
+        $('#tblresumen tbody tr').each(function(){
+          ct=ct+1;
+          if (ct>1){
+            var Referencia = $(this).find("td").eq(4).html();
+            tpendi= (parseInt(tpendi)+parseInt(Referencia));  
+          }
+        });
+          if (tpendi==0){
+            var estado=2;
+          }else{
+            var estado=1;
+          }
+           $.post("{{ path('act_dev') }}", {pedido:pedido,estado:estado}, function(mensaje) {
+             $("#txt3").html(mensaje);
+             //alert(mensaje[0]['status']);
+             document.getElementById('status_pedido').value=mensaje[0]['status'];
+              });
+          
+
+      });
+      $("#tbldevoluciones").find("tr:gt(0)").remove();
+      $.post("{{ path('consultas_devfolio') }}", {pedid:pedido}, function(mensaje) {
+      $("#txt3").html(mensaje);
+      var foliotemp='';
+      for (var i=0, total = mensaje.length; i < total; i++) {
+        if (foliotemp!=mensaje[i]["folio"]){
+          $('#tbldevoluciones').append("<tr><td style='text-align: center; cursor:pointer;' onclick=consultafolio();><a>Detalles</td><td  style='text-align: center;' >"+mensaje[i]["folio"]+"</td><td style='text-align: center;'>"+mensaje[i]["fecha_devolucion"]+"</td><td style='text-align: center;'><input id='chekid' type='checkbox' value="+mensaje[i]["folio"]+" name='chek1' onclick=activarcasilla(this)></td><td style='text-align:center;'><button id='btn_eliminardev' type='button' class='btn btn-danger' onclick=recorrercheck()>Eliminar Devolución</button></td><tr>");
+          foliotemp= mensaje[i]["folio"];   
+        }
+       
+        }
+      });
+      
+      
+    });
+
+ function consultafolio(){
+ 	 $("#dt3").css("display", "block");
+ 	 $("#btn_atras").css("display", "block");
+ 	 $("#tbls").css("display", "none");
+ 	 $("#tbldetalles").css("display", "block");
+ 	 $("#btn_registrodev").css("display", "none");
+   $("#btn_detallespd").css("display", "none");
+ 	 $("#btn_eliminardev").css("display", "none");
+ 	 $("#lblstatus").css("display", "none");
+ 	 $("#status_pedido").css("display", "none");
+ 	 $("#lblcliente").css("display", "none");
+ 	 $("#cliente").css("display", "none");
+ 	 $("#lblcuenta").css("display", "none");
+ 	 $("#cuenta").css("display", "none");
+ }
+
+ function recorrercheck(){
+  var statusConfirm =(confirm("Desea borrar el registro?"))
+  if (statusConfirm == true){ 
+   	var i = 0;
+   	var fila=0;
+    var paso='';
+   	 $("input[name=chek1]").each(function () { 
+         if($(this).is(':checked')){
+          var folio=($(this).val());
+          paso='pase';
+         	 document.getElementById("tbldevoluciones").deleteRow(fila);
+            $.post("{{ path('eliminardev') }}", {folio: folio}, function(mensaje) {
+              $("#txt3").html(mensaje);
+              });
+         }
+
+      });
+      if(paso==''){
+        alert('Debe Seleccionar una Fila o mas'); 
+      }else{
+          alert('Registro Eliminado');
+         location.reload();
+      }
+         
+
+    }
+ }
+
+ function activarcasilla(check){
+
+	if(check.checked==true){
+		document.getElementById("btn_eliminardev").disabled=false;
+	}else{
+		document.getElementById("btn_eliminardev").disabled=true;
+	}
+ }
+ 
+ function registrardevolucion(){
+  var paso=0;
+  var cantidad=0;
+  var pordevolver =0;
+  var folio_padre = document.getElementById('folio_padre').value;
+  var folio_dev = document.getElementById('inptfolio').value;
+ 	var statusConfirm =(confirm("Desea Enviar el registro?"))
+    if (statusConfirm == true){ 
+
+      if(folio_dev.trim()==folio_padre.trim()){
+        alert('El Folio De Entrega no debe ser igual al Folio de Devoluciones');
+      }else{
+        if(document.getElementById("inptfolio").value=='' && document.getElementById("fechadev").value=='' ){
+    alert('Debe Completar todos los campos');
+    }else{
+      var contar = 0;
+
+      $.post("{{ path('buscar_folio') }}", {folio:folio_dev}, 
+      function(mensaje) {
+            $("#txtpu").html(mensaje); 
+
+            if(mensaje!='Este Folio ya Existe'){
+              $('#tbl_registrodv tbody tr').each(function(){
+               contar = contar +1;
+                if(contar > 1){
+                   cantidad  = $(this).find("td").eq(3).html();
+                   var clave = $(this).find("td").eq(0).html();
+                   var equipo = $(this).find("td").eq(1).html();
+                   pordevolver= $(this).find("td").eq(2).html();
+                if (cantidad !=''){
+                  if (cantidad != '-'){
+                    if (Number(cantidad) > Number(pordevolver)){
+                      alert('La Cantidad Excede al Total de Equipos Entregados');
+                    }else{
+                      var pedido = document.getElementById('pedido_padre').value;
+                      var fecha_mov = document.getElementById('fechadev').value;
+                      
+                      $.post("{{ path('registrar_devoluciones') }}", {pedido:pedido,fecha_mov: fecha_mov,folio_padre:folio_padre,folio_entrega:folio_dev,cantidad:cantidad,clave:clave,equipo:equipo}, 
+                      function(mensaje) {
+                            $("#txtpu").html(mensaje);  
+                         });
+                        }
+                       }
+                     }else{
+                      alert('Escriba la Cantidad a Devolver');
+                      Exit();
+                     }
+                    }
+                  });
+              alert('Devolución Realizada');
+              location.reload();
+            }else{
+              alert('Este Folio ya Existe');
+            }
+      });
+
+        
+       }
+      }
+	  }else{
+	  	alert('Procedimiento Cancelado');
+	  }
+	}
+	function atras(){
+		location.reload();
+	}
+
+  function eliminarfoliodev(){
+    var folio=document.getElementById('inptfolio').value;
+    var statusConfirm =(confirm("Desea borrar el registro "+folio+"?"))
+    if (statusConfirm == true){ 
+       $.post("{{ path('eliminardev') }}", {folio: folio}, function(mensaje) {
+                $("#txt3").html(mensaje);
+                }); 
+       alert('El Folio de Devolucion número '+folio+' Ha sido Eliminado');
+     }else{
+      alert('Procedimiento Cancelado');
+     }
+   location.reload();
+  }
+
+  function detallespedido(){
+
+    var pedid = document.getElementById("pedido_padre").value;
+    var url=("{{ path('pedidos_detalles', { 'id':'xxx' }) }}");
+     url = url.replace("xxx", pedid);
+        $.ajax({
+            dataType: "html",
+            url: url,
+            type: "GET",
+            data: {id: pedid},
+            success: function(data)
+            {
+             location.href=url;   
+            }
+        });    
+  }
+
+</script>
+<form id="datos_pedidos" style="margin-top: -1%;">
+	<fieldset style="display: block;margin: auto; width:80%; height:20%; text-align: center;margin-top: 1%;">
+		<legend style="text-align: center; ">Detalles Pedido</legend>
+		<div id="dt1">
+		   <label id="lblpedido" class="label1" for="pedido">Pedido</label>&nbsp;<input id="pedido_padre" type="text" name="pedido" value="{{pd}}" disabled="true">
+		   <label id="lblfolio" class="label1" for="pedido">Folio de Entrega</label>&nbsp;<input id="folio_padre" type="text" name="folio" value="{{folio}}" disabled="true">
+		   <label id="lblstatus" class="label6">Status</label>&nbsp;<input id="status_pedido" type="text" name="" value="{{status}}" disabled="true">
+		</div>
+
+		<div id="dt3" hidden="hidden" style="margin-left: -12%; margin-top: 2%;">
+			<label id="lbldevolucion" style="text-align: left; margin-left: 9%;">
+		   Folio Devolucion</label>
+		   <input id="inptfolio" type="text" style="text-align: center;">
+           <label id="lblfechadev">Fecha</label>
+           <input id="fechadev" type="text" style="margin: auto;">
+		</div>
+
+		<div id="dt2" style="margin-top: 1%;">
+		   <label id="lblcliente" class="label2" for="cliente">Cliente</label>&nbsp;<input id="cliente" type="text" name="" value="{{cliente}}" disabled="true">
+           <label id="lblcuenta" class="label3" for="cuenta">Obra</label>&nbsp;<input id="cuenta" type="text" name="" value="{{cuenta}}" disabled="true">
+        </div>
+        <div id="botones" style="margin-top: 2%;">
+			 <button id="btn_registrodev" type="button" class="btn btn-info btn-lg">Registrar Devolución</button> 
+       <button id="btn_detallespd" type="button" class="btn btn-info btn-lg" onclick="detallespedido();">Detalles del Pedido</button>
+			 <button class="btn btn-info btn-lg" id="btn_atras" style="display: none;" onclick="atras();">ATRAS</button>         	
+	    </div>
+
+	</fieldset>
+</form>
+	<form id="tbls" >
+           <div id="div1" class="table-responsive">
+            <table class="table table-striped" id="tblresumen" width="100%" align="left" style="">
+            	<caption style="text-align: center; font-size: 30px;width: 100%; color: blue;"">SITUACION ACTUAL</caption>
+              <tr id="colresumen" align="center" style="border-color: blue;">
+                   <th style="text-align: center;">Clave</th>
+                   <th style="text-align: center;">Equipo</th>
+                   <th style="text-align: center;">Entregados</th>
+                   <th style="text-align: center;">Devueltos</th>
+                   <th style="text-align: center;">Pendiente </th>
+               </tr>
+            </table>
+        </div>
+        <br>
+        <br>
+          <div id="div2" class="table-responsive" style="">
+            <table class="table table-striped" id="tbldevoluciones" width="100%" align="left" style="">
+          		<caption style="text-align: center; font-size: 30px;width: 100%; color: blue;"">DEVOLUCIONES</caption>
+              
+              <tr id="colresumen" align="center">
+              	<th style="text-align: center;">Detalles</th>
+                   <th style="text-align: center;">Folio</th>
+                   <th style="text-align: center;">Fecha</th>
+                   <th style="text-align: center;">Seleccionar</th>
+                   <th style="text-align: center;">Eliminar</th>
+               </tr>
+
+                <script>
+          document.getElementById("tbldevoluciones").onclick=function(e){ 
+              if(!e)e=window.event; 
+              if(!e.target) e.target=e.srcElement; 
+              var TR=e.target;
+              while( TR.nodeType==1 && TR.tagName.toUpperCase()!="TR" )
+              TR=TR.parentNode;
+              var celdas=TR.getElementsByTagName("TD");
+              if( celdas.length!=0 )
+                var folio=( celdas[1].innerHTML);
+                var fecha=( celdas[2].innerHTML);
+                document.getElementById('inptfolio').value=folio;
+                document.getElementById('fechadev').value=fecha;
+                document.getElementById('pedido_padre').value=pedidop;
+
+      	 $.post("{{ path('consultas_folios') }}", {folio:folio,pedido:pedidop}, function(mensaje) {
+	      $("#txt3").html(mensaje);
+      		for (var i=0, total = mensaje.length; i < total; i++) {
+         		$('#tbleliminar').append("<tr><td style='text-align: center;'>"+mensaje[i]["claveequipo"]+"</td><td style='text-align: center;''>"+mensaje[i]["equipo"]+"</td><td style='text-align: center;'>"+mensaje[i]["cantidad"]+"</td><tr>");
+         	}
+      	});
+    	 document.getElementById('inptfolio').disabled='true';
+    	 document.getElementById('fechadev').disabled='true';
+       }
+              </script>
+            </table>
+          </div>
+        </form>
+        <form id="registro_dev" hidden="true" >
+          <button style="display: block; margin: auto; color: blue;" class="btn btn-info btn-lg" onclick="registrardevolucion();" type="button">Registrar Devolución</button>
+        	<div id="div3" class="table-responsive">
+            <table id="tbl_registrodv" width="60%" align="center"  style="table-layout: fixed; margin-top: 1%; " class="table table-striped">
+            	<caption style="text-align: center; font-size: 30px;width: 100%; color: blue;"">DETALLES</caption>
+              <tr id="rgv_dev" align="center" style="border-color: blue;">
+                   <th style="text-align: center;">Clave</th>
+                   <th style="text-align: center;">Equipo</th>
+                   <th style="text-align: center;">Por Devolver</th>
+                   <th style="text-align: center;">Cantidad a Devolver</th>
+               </tr>
+            </table>
+          </div>
+        </form>
+
+        <form id="tbldetalles" hidden="hidden">
+        	<div id="div4">
+            <table id="tbleliminar" width="60%" align="center"  style="table-layout: fixed; margin-top: 1%; " class="table table-striped">
+            	<caption style="text-align: center; font-size: 30px;width: 100%; color: blue;"">DETALLES DE DEVOLUCIÓN</caption>
+              <tr id="rgv_dev" align="center" style="border-color: blue;">
+                   <th style="text-align: center;">Clave</th>
+                   <th style="text-align: center;">Equipo</th>
+                   <th style="text-align: center;">Por Devolver</th>
+               </tr>
+            </table>
+          </div>
+            <button id="btneliminar2" style="color: blue;margin-left: 50%;margin-top: 5%;  margin-top: 1%;" class="btn btn-info btn-lg" onclick="eliminarfoliodev();" type="button">Eliminar</button>   
+        </form>
+{% endblock %}

@@ -1,0 +1,285 @@
+.content::-webkit-scrollbar { 
+  /* solo oculta su visualizacion */
+  display: none;
+}
+div img{
+  display: block;
+    margin: auto;
+}
+#menu-bar{
+  display: none;
+}
+.icon-menu,.icon-cancel-circled{
+  float: right;
+  cursor: pointer;
+  font-size: 50px;
+}
+label.icon-cancel-circled{
+  opacity: 0;
+}
+ .texto{
+  display: block;
+  color: white;
+
+}
+#menu {
+     transform: translateX(-100%);
+}
+#menu-bar:checked ~ label.icon-cancel-circled{
+  opacity: 1;
+}
+#menu-bar:checked ~ h1{
+  opacity: 0;
+}
+#menu-bar:checked ~ form{
+  opacity: 0;
+}
+#menu-bar:checked ~ label.icon-menu{
+  opacity: 0;
+}
+#menu-bar:checked ~ #menu{
+ left:300px;
+  top: -500px;
+  text-align:center;
+  display: block;
+  list-style-type: none;
+    margin: auto;
+    padding: 0px;
+    width: 300px;
+    font-family: Arial, sans-serif;
+    font-size: 15pt;
+    position: relative;
+}
+#menu-bar:checked ~ label.texto{
+ text-align: center;
+  display: block;
+  text-transform: uppercase;
+  padding: 10px 10px 10px 135px;
+  font-size: 30px;
+  color: black;
+}
+
+#menu li{
+  background-color: #C0C0C0;
+  list-style-position: inside;
+}
+#menu li a {
+   text-align: center;
+    color: black;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: block;
+    padding: 10px 10px 10px 20px;
+}
+#menu li a:hover {
+    background: #000;
+    border-left: 10px solid #333;
+    color: #fff;
+}
+#restr{
+    width: 30%;
+
+ display: block;
+ margin: auto;
+ margin-top: 4px;
+ /*margin-left: 500px;*/
+    text-align: center;
+    border: red 5px solid;
+}
+#contenedor{
+  margin-left: 300px;
+  margin-top: 5px;
+}
+.inp3{
+  margin-left: 30px;
+}
+.inp1{
+  width: 19%;
+  margin-left: 10px;
+
+}
+.inp2{
+  width: 19%;
+  margin-left: 10px;  
+}
+
+#contenedor2{
+  margin-left: 240px;
+  margin-top: 5px;
+}
+.inp4,.inp5{
+  margin-left: 10px;
+  padding: 15px;
+}
+.lbl1{
+  margin-left: 60px;
+}
+#contenedor3{
+  margin-left: 300px;
+
+}
+.inp7{
+  margin-left: 11px;
+  margin-top: 5px;
+  width: 19%;
+}
+.inp8{
+  margin-left: 47px;
+  margin-top: 5px;
+  width: 19%;
+}
+.inp6{
+  margin-left: 47px;
+  margin-top: 5px;
+  width: 19%;
+  padding: 15px;
+}
+#contenedor4{
+  margin-left: 300px;
+}
+.inp9{
+  margin-left: 31px;
+  margin-top: 5px;
+  width: 19%;
+}
+.inp10{
+margin-left: 65px;
+  margin-top: 5px;
+  width: 19%; 
+}
+#contenedor5{
+  margin-left: 550px;
+  margin-top: 20px;
+}
+.btn1,.btn2,.btn3{
+  width: 20%;
+    padding: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #1883ba;
+    border-radius: 6px;
+    border: 2px solid #0016b0;
+
+}
+
+#cuenta{
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+table th {
+  background-color: #D3D3D3;
+font-size: 16px;
+   }
+table tr:nth-child(odd) {background-color:   #F5F5F5;}
+table tr:nth-child(even) {background-color: #ADD8E6;}
+#div1{
+  margin-top: 20px;
+     overflow:scroll;
+     height:100px;
+     width: 950px;
+  margin-left: 220px;
+
+}
+table{
+  width: 100%;
+}
+.lbl2{
+  margin-left: 220px;
+  font-size: 25px;
+}
+.btn3{
+  margin-left: 570px;
+  margin-top: 10px;
+  cursor: pointer;
+
+}
+
+/* y los siguientes */
+.breadcrumb li:first-child a {padding-left: 10px;}
+.breadcrumb li:nth-child(2) a {background-color: #808991;}
+.breadcrumb li:nth-child(2) a:after {border-left-color: #808991;}
+.breadcrumb li:nth-child(3) a {background-color: #606971;}
+.breadcrumb li:nth-child(3) a:after {border-left-color: #606971;}
+.breadcrumb li:nth-child(4) a {background-color: #404951;}
+.breadcrumb li:nth-child(4) a:after {border-left-color: #404951;}
+.breadcrumb li:last-child a {
+  background: none repeat scroll 0 0 transparent !important;
+  color: #DEF;
+  cursor: default;
+}
+/* el efecto hover */
+.breadcrumb li:last-child a:after {border: none;}
+.breadcrumb li:last-child a:before {border: none;}
+.breadcrumb li a:hover {background-color: #501921;}
+.breadcrumb li a:hover:after  {border-left-color: #501921 !important;}
+.breadcrumb { /* el rectángulo con la lista */
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+}
+.breadcrumb li { /* cada item de la lista */
+  float: left;
+}
+.breadcrumb li a { /* cada item es un enlace */
+  color: #FFF;
+  display: block;
+  float: left;
+  font-family: Helvetica;
+  font-size: 18px;
+  text-decoration: none;
+  padding: 10px 0 10px 50px;
+  position: relative; 
+  /* el color de fondo del item que está a la izquierda */
+  background-color: #A0A9B1;
+}
+.breadcrumb li a:after {
+  content: " "; 
+  display: block; 
+  left: 100%;
+  height: 0;
+  margin-top: -50px; 
+  position: absolute;
+  top: 50%;
+  width: 0; 
+  z-index: 2;
+  /* esto creará el primer triángulo */
+  border-bottom: 50px solid transparent;
+  border-left: 30px solid #A0A9B1;
+  border-top: 50px solid transparent;
+} 
+.breadcrumb li a:before { /* el siguiente enlace */
+content: " "; 
+  display: block; 
+  height: 0;
+  left: 100%;
+  margin-top: -50px; 
+  margin-left: 1px;
+  position: absolute;
+  top: 50%;
+  width: 0; 
+  z-index: 1;
+  /* el color de fondo del segundo item */
+  border-bottom: 50px solid transparent;
+  border-left: 30px solid #DEF;
+  border-top: 50px solid transparent;
+}
+/* y los siguientes */
+.breadcrumb li:first-child a {padding-left: 10px;}
+.breadcrumb li:nth-child(2) a {background-color: #808991;}
+.breadcrumb li:nth-child(2) a:after {border-left-color: #808991;}
+.breadcrumb li:nth-child(3) a {background-color: #606971;}
+.breadcrumb li:nth-child(3) a:after {border-left-color: #606971;}
+.breadcrumb li:nth-child(4) a {background-color: #404951;}
+.breadcrumb li:nth-child(4) a:after {border-left-color: #404951;}
+.breadcrumb li:last-child a {
+  background: none repeat scroll 0 0 transparent;
+  color: #DEF;
+  cursor: default;
+}
+/* el efecto hover */
+.breadcrumb li:last-child a:after {border: none;}
+.breadcrumb li:last-child a:before {border: none;}
+.breadcrumb li a:hover {background-color: #501921;}
+.breadcrumb li a:hover:after  {border-left-color: #501921;}

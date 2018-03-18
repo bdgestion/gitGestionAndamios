@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Pedido</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Pedido</th>
+                <td>{{ pedido.pedido }}</td>
+            </tr>
+            <tr>
+                <th>Folio</th>
+                <td>{{ pedido.folio }}</td>
+            </tr>
+            <tr>
+                <th>Cliente</th>
+                <td>{{ pedido.cliente }}</td>
+            </tr>
+            <tr>
+                <th>Cuenta</th>
+                <td>{{ pedido.cuenta }}</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>{{ pedido.fecha }}</td>
+            </tr>
+            <tr>
+                <th>Devolucion</th>
+                <td>{{ pedido.devolucion }}</td>
+            </tr>
+            <tr>
+                <th>Statuspedido</th>
+                <td>{{ pedido.statusPedido }}</td>
+            </tr>
+            <tr>
+                <th>Cant</th>
+                <td>{{ pedido.cant }}</td>
+            </tr>
+            <tr>
+                <th>Clave</th>
+                <td>{{ pedido.clave }}</td>
+            </tr>
+            <tr>
+                <th>Equipo</th>
+                <td>{{ pedido.equipo }}</td>
+            </tr>
+            <tr>
+                <th>Dias</th>
+                <td>{{ pedido.dias }}</td>
+            </tr>
+            <tr>
+                <th>Pu</th>
+                <td>{{ pedido.pu }}</td>
+            </tr>
+            <tr>
+                <th>Importe</th>
+                <td>{{ pedido.importe }}</td>
+            </tr>
+            <tr>
+                <th>Direccionentrega</th>
+                <td>{{ pedido.direccionEntrega }}</td>
+            </tr>
+            <tr>
+                <th>Comentarios</th>
+                <td>{{ pedido.comentarios }}</td>
+            </tr>
+            <tr>
+                <th>Descuento</th>
+                <td>{{ pedido.descuento }}</td>
+            </tr>
+            <tr>
+                <th>Impuesto</th>
+                <td>{{ pedido.impuesto }}</td>
+            </tr>
+            <tr>
+                <th>Total</th>
+                <td>{{ pedido.total }}</td>
+            </tr>
+            <tr>
+                <th>Statuspago</th>
+                <td>{{ pedido.statusPago }}</td>
+            </tr>
+            <tr>
+                <th>Subtotal</th>
+                <td>{{ pedido.subtotal }}</td>
+            </tr>
+            <tr>
+                <th>Subtotal2</th>
+                <td>{{ pedido.subtotal2 }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ pedido.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('pedidos_index') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}

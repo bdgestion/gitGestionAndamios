@@ -1,0 +1,186 @@
+{% extends 'menu/menu.html.twig' %}
+ {% block estilos %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"></link>
+  <link rel="stylesheet" href="/resources/demos/style.css"></link>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <Link rel="stylesheet" href="{{ asset('css/conslpedido.css')}}">
+            
+            <script type="text/javascript">
+              var pedido=0;
+
+              $(document).ready(function() {
+                $('#clt').on('input', function() {
+                  var userText = $(this).val();
+                  limpiar();
+                  $("#categoryname").find("option").each(function() {
+                    if ($(this).val() == userText) {
+                      validar();
+                    }
+                  })
+                })
+              });
+              function limpiar() {
+              if (document.getElementById('clt').value=='') {
+                    clienterz='';
+                    var sel = document.getElementById("combocta");
+                    sel.remove(sel.selectedIndex);
+                   }
+              }
+              function filtrar() {
+                var pedido= document.getElementById('pedido').value;
+                var folio= document.getElementById('folio').value;
+                var cuenta= document.getElementById('combocta').value;
+                var cliente= document.getElementById('clt').value;
+                var hasta= document.getElementById('hasta').value;
+                var desde= document.getElementById('desde').value;
+               // var statusped= document.getElementById('status_ped').value;
+                var hastadev= document.getElementById('fechadevhasta').value;
+                var desdedev= document.getElementById('fechadevdesde').value;
+                
+                 $.post("{{ path('clt_pedidos') }}",{pedido:pedido,folio:folio,cuenta:cuenta,cliente:cliente,hasta:hasta,desde:desde,hastadev:hastadev,desdedev:desdedev},
+                     function(mensaje) {
+                      $("#tbla").find("tr:gt(0)").remove();
+                    $("#pedido").html(mensaje);
+
+                  for (var i=0, total = mensaje.length; i < total; i++) {
+                
+                   $("#tbla").append("<tr class='dev'><td style='text-align: center; color:blue; text-decoration: underline; cursor:pointer;'>"+mensaje[i]["pedido"]+"</td><td style='text-align: center'>"+mensaje[i]["folio"]+"</td><td style='text-align: center'>"+mensaje[i]["cliente"]+"</td><td style='text-align: center'>"+mensaje[i]["cuenta"]+"</td><td style='text-align: center'>"+mensaje[i]["fecha"]+"</td><td style='text-align: center'>"+mensaje[i]["devolucion"]+"</td><td style='text-align: center'>"+mensaje[i]["status"]+"</td></tr>");
+                  }
+                 });
+              }
+
+              function validar(e) {        
+                $("#restriccion").css("display", "none");
+                 var clienterz= document.getElementById("clt").value;
+                  if (clienterz != ''){
+                    $.post("{{ path('llenarcuentas2') }}", {clienterz:clienterz}, function(mensaje) {
+                  $("#txt3").html(mensaje);
+
+                    if(mensaje[0]['restringir'] =='Restringido'){
+                        $("#restriccion").show();
+                    }else{
+                    for (var i=0, total = mensaje.length; i < total; i++) {
+                      $("#categoryname2").append("<option>"+mensaje[i]['cuenta_Id']+"</option>");
+                    }
+                  }
+                    });
+                  }else{
+                    document.getElementById("combocta").value='';
+                  }
+              }
+                function llenardatalist(){
+                  $.post("{{ path('datalist') }}", function(mensaje) {
+                  $("#txt3").html(mensaje);
+                    for (var i=0, total = mensaje.length; i < total; i++) {
+                        $("#categoryname").append("<option>"+mensaje[i]['razonsocial']+"</option>");
+                    }
+                    });
+                  }
+
+            $( function() {
+               $.datepicker.regional['es'] = {
+                  closeText: 'Cerrar',
+                  prevText: '< Ant',
+                  nextText: 'Sig >',
+                  currentText: 'Hoy',
+                  monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                  monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+                  dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                  dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+                  dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+                  weekHeader: 'Sm',
+                  dateFormat: 'dd/mm/yy',
+                  firstDay: 1,
+                  isRTL: false,
+                  showMonthAfterYear: false,
+                  yearSuffix: ''
+           };
+           $.datepicker.setDefaults($.datepicker.regional['es']);
+                $( "#hasta" ).datepicker();
+                $( "#desde" ).datepicker();
+                $( "#fecha_emision_hasta" ).datepicker();
+                $( "#fecha_emision_desde" ).datepicker();
+                $( "#fechadevdesde" ).datepicker();
+                $( "#fechadevhasta" ).datepicker();
+                 $("#fecha_emision_desde").datepicker('option', { dateFormat: "mm/dd/yy" });
+                 $("#fecha_emision_hasta").datepicker('option', { dateFormat: "mm/dd/yy" });
+                 $("#fechadevdesde").datepicker('option', { dateFormat: "mm/dd/yy" });
+                 $("#fechadevhasta").datepicker('option', { dateFormat: "mm/dd/yy" });
+
+              });
+$(document).ready(function(){
+    $("#tbla").on("click", "td" , function(){
+           var pd = $(this).text();
+        var url=("{{ path('pedidos_detalles', { 'id':'xxx' }) }}");
+         url = url.replace("xxx", pd);
+        $.ajax({
+            dataType: "html",
+            url: url,
+            type: "GET",
+            data: {id: pd},
+            success: function(data)
+            {
+             location.href=url;   
+            }
+        });    
+    });
+});
+        
+  </script>
+  {%endblock%}
+
+{% block body %}
+<form method="post">
+  <fieldset>
+    <legend style="text-align: center;">Consultar Pedido</legend>
+    <div id="cta_comb" class="cmb-cta" style="margin-top: 0.5%;">
+       <label class="pedido">Pedido:</label><input id="pedido" class="pedtxt" type="text" name="inptpedido" size="10">
+       <label class="folio">Folio:</label><input id="folio" class="foltxt" type="text" name="inptfolio" size="10">
+       <span  id="restriccion" style="background-color:red; display: none">RESTRINGIDO</span>
+       <label class="label3" for="cliente" style="margin-left: -2px;">Cliente</label>
+
+       <input name="clt" type="text" id="clt" autocomplete="off" list="categoryname"></input>
+                <datalist id="categoryname">
+                  <script type="text/javascript">
+                      llenardatalist();
+                  </script>
+                </datalist>
+    <label id="lblcta" class="label4" for="cuenta">Obra</label>
+    <input type="text" id="combocta" autocomplete="off" list="categoryname2"> </input>
+        <datalist id="categoryname2">
+        </datalist>                
+   </div> 
+    <div>
+      <label style="margin-left: 20%;">Creados Desde:</label><input  id="desde" type="text" name="fecha_emision_desde">
+      <label class="hasta" style="">Hasta:</label><input id="hasta" class="hastatxt" type="text" name="fecha_emision_hasta" size="10"> 
+     <!--  <label class="status">Status:</label><SELECT name="status" id="status_ped" NAME="selCombo" SIZE=1 style="width: 80px">
+        <OPTION></OPTION>
+        <OPTION value="1">En Renta</OPTION>
+        <OPTION value="2">Devuelto</OPTION> 
+        <OPTION value="1">Cancelado</OPTION> 
+        </SELECT>  -->
+        <label id="lbldev" class="devueltos">Devueltos de:</label><input id="fechadevdesde" class="devueltostxt" type="text" name="fechadevdesde" size="10"> 
+       <label class="hasta">Hasta:</label><input id="fechadevhasta" class="hastatxt" type="text" name="fechadevhasta" size="10">
+    </div>  
+</fieldset>
+<div id="div1" style="height: 280px;" class="table table-striped">
+  <table id="tbla" width="100%" align="center" class="table">
+     <tr id="consul_pedido" align="center">
+         <th style="text-align: center;">Pedido</th>
+         <th style="text-align: center;">Folio</th>
+         <th style="text-align: center;">Cliente</th>
+         <th style="text-align: center;">Obra</th>
+         <th style="text-align: center;">Emision</th>
+         <th style="text-align: center;">Devolucion</th>
+         <th style="text-align: center;">Status Pedido</th>
+     </tr>
+  </table>  
+</div>
+<br>
+   <input style="display: block;margin: auto; width: 20%;" id="btnbuscar" class="btn btn-info btn-lg" type="button" value="Buscar" name="buscar" onclick="filtrar();">
+</form>
+{% endblock %}

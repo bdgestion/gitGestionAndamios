@@ -1,0 +1,106 @@
+{% extends 'menu/menu.html.twig' %}
+
+
+ {% block estilos %}
+
+            <Link rel="stylesheet" href="{{ asset('css/miperfil.css')}}">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            <script type="text/javascript">
+                function cerrar() {
+                  location.href=("{{ path('configuracion') }}");
+                }
+              function modificar() {
+                var nombre = document.getElementById("nomb").value;
+                var nvaclave = document.getElementById("nueva").value;
+                var confr_const= document.getElementById("confirmar").value;
+                var clave_actual = document.getElementById("actual").value;
+                var usuario = document.getElementById("usuario").value;
+                var status = document.getElementById("comb4").value;
+                var apellido = document.getElementById("apellido").value;
+                if (nvaclave != confr_const){
+                 alert('Las Contraseñas no coinciden');
+                 }else{
+                 $.post("{{ path('modficar_usuario') }}", {nombre: nombre,nvaclave:nvaclave,confr_const:confr_const,clave_actual:clave_actual,usuario:usuario,status:status,apellido:apellido}, function(mensaje) {
+                       $("#nomb").html(mensaje);
+                     });
+                     alert('Registros Modificados');
+                 }
+              }
+            </script>
+            {%endblock%}
+
+          {% block body %}
+
+        {% set nombre = '' %}
+        {% set nombreusuario = '' %}
+        {% set idusuario = 0 %}   
+        {% set apellido = '' %}
+        {% set status = '' %}
+        {% set tipo = '' %}
+        {% set seleccionar = '' %}        
+           {% for usuario in dtsusuario %}
+              {% set nombre = usuario.nombre %}
+              {% set nombreusuario = usuario.nombre_usuario %}
+              {% set idusuario = usuario.id %}
+              {% set apellido = usuario.apellido %}
+              {% set status = usuario.status %}
+              {% set tipo = usuario.tipo %}
+              {% endfor %}
+            {% if tipo == 'Limitado' %}    
+                {% set estado = 'disabled="true"' %}           
+            {% else %}  
+                {% set estado = '' %}           
+            {% endif %}
+
+              {% if status == 'Activo' %}
+                {% set seleccionar = 'selected="true"' %} 
+              {% else %}
+                {% set seleccionar = '' %}
+              {% endif %}  
+              {% if status == 'Inactivo' %}
+                {% set seleccionar = 'selected="true"' %} 
+              {% else %}
+                {% set seleccionar = '' %}
+              {% endif %}
+              {% if status == 'Prohibido' %}
+                {% set seleccionar = 'selected="true"' %} 
+              {% else %}
+                {% set seleccionar = '' %}
+              {% endif %}               
+        <h1 style="display: block;margin: auto; margin-top: 4%;">Mi Perfil</h1>
+<form style="padding-bottom: 20px">
+        <div class="div1" style="margin-left: 14%;">
+             <label>ID</label><input id="usuarioid" type="text" name="id" size="20" value="{{idusuario}}" disabled="true">
+             <label>Usuario</label><input type="text" id="usuario" name="usuario" size="20" value="{{nombreusuario}}" disabled="true">
+             <label>Nombre</label><input type="text" id="nomb" name="nombre" size="20" value="{{nombre}}">
+             <label>Apellido</label><input type="text" id="apellido" name="apellido" size="20" value="{{apellido}}">
+             <label>Status</label>
+             <select class="comb4" name="status_usu" id="comb4" {{estado}}>
+                <option {{seleccionar}}>Activo</option>
+                <option {{seleccionar}}>Prohibido</option>
+                <option {{seleccionar}}>Limitado</option></select>
+        </div>
+    <fieldset style="color: blue; margin-top: 1%;">
+    <legend style="text-align: center;">Gestión de Contraseña</legend>
+     <div class="grupo">
+         <label class=actual for="contraseña actual">Contraseña Actual</label><input type="password" id="actual" size="20" name="clave_actual"/><label for="apellidos">Nueva Contraseña</label><input type="password" id="nueva" size="20" name="nva_clave" /><label for="confirmar contraseña">Confirmar Contraseña</label><input type="password" id="confirmar" size="20" name="confr_const" />
+     </div>
+    </fieldset>
+    <label id="lbl_cnt" {{estado}}> Para Cambiar la Contraseña, debe Ingresar su Contraseña Actual </label>
+    <div class="grupo3">
+    <textarea id=text1 style="margin-left: 7%; width: 23%;" size=20 name=text1 disabled="true" placeholder="Comentarios"></textarea>
+    </div>
+    <div class="btn">
+
+<input class="btn btn-info btn-lg" type="button" name="button" value="Modificar" style="margin-left: 600px;" onclick="modificar();" />
+<input class="btn btn-info btn-lg" type="button" name="button" value="Cerrar" style="" onclick="cerrar();" />
+    </div>
+    <div class="nota">
+    <label id="lbl_4" >*No puede cambiar su status ni agregar comentarios a su propio usuario. Requiere de otro administrador.</label>
+    </div>
+</form>
+{% endblock %}
+
+
+
+

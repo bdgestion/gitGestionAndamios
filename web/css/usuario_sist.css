@@ -1,0 +1,44 @@
+#div1{
+     overflow:scroll;
+     height:300px;
+     width: 1050px;
+     margin: auto;
+}
+#bnt1{
+  text-decoration: none;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #1883ba;
+    border-radius: 6px;
+    border: 2px solid #0016b0;
+    cursor: pointer;
+    width: 20%;
+    padding: 15px;
+    display: block;
+    margin: auto;
+}
+
+#lblnota{
+    margin-left: 150px;
+}
+table{
+  margin-top: 50px;
+  width: 1000px;
+}
+table th {
+  background-color: #D3D3D3;
+font-size: 16px;
+   }
+table tr:nth-child(odd) {background-color:   #F5F5F5;}
+table tr:nth-child(even) {background-color: #ADD8E6;}
+#usuario{
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+#menu-bar:checked ~ input{
+ opacity: 0
+}
+#menu-bar:checked ~ #lblnota{
+ opacity: 0
+}

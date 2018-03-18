@@ -1,0 +1,81 @@
+table th {
+  background-color: #D3D3D3;
+font-size: 16px;
+   }
+table tr:nth-child(odd) {background-color:   #F5F5F5;}
+table tr:nth-child(even) {background-color: #ADD8E6;}
+#div1{
+	margin-top: 20px;
+	margin-left: 200px;
+     overflow:scroll;
+     height:300px;
+     width: 950px;
+
+}
+h2{
+	text-align: center;
+}
+
+.lblpedido{
+	margin-left: 40px;
+
+}
+
+.pedtxt{
+	margin-left: 5px;
+}
+
+.lblfolio{
+	margin-left: 10px;
+
+}
+
+.foltxt{
+	margin-left: 5px;
+}
+
+.lblcliente{
+	margin-left: 10px;
+}
+.clientxt{
+	margin-left: 5px;
+}
+.lblcuenta{
+	margin-left: 10px;
+}
+
+.cuentxt{
+	margin-left: 5px;
+}
+
+.lblregist{
+	margin-left: 10px;
+}
+
+.regtxt{
+	margin-left: 5px;
+}
+
+.lblhasta{
+	margin-left: 10px;
+}
+
+.hastatxt{
+	margin-left: 5px;
+}
+
+#contenedor{
+	margin-left: 40px;
+	margin-top: 30px;
+}
+
+.boton{
+	margin-left: 550px;
+	margin-top: -22px;
+}
+#pedidotd{
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+

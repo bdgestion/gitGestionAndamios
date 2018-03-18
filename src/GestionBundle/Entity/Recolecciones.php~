@@ -1,0 +1,68 @@
+<?php
+
+namespace GestionBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Recolecciones
+ *
+ * @ORM\Table(name="recolecciones")
+ * @ORM\Entity
+ */
+class Recolecciones
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pedidos", type="integer", nullable=false)
+     */
+    private $pedidos;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="clientes", type="string", length=500, nullable=false)
+     */
+    private $clientes;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="obra", type="string", length=500, nullable=false)
+     */
+    private $obra;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="domicilio", type="string", length=500, nullable=false)
+     */
+    private $domicilio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fecha", type="string", length=100, nullable=false)
+     */
+    private $fecha;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="hora", type="string", length=100, nullable=false)
+     */
+    private $hora;
+
+
+}
+

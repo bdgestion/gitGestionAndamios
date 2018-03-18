@@ -1,0 +1,138 @@
+/*div .label1,div .label2, div .label3, div .label4, div .label5, div .label6,#contenedor2, div .label7{
+	padding: 10px;
+}*/
+#btn_modificar,#btn5{
+ margin-top: 40px;
+}     
+#combocta{
+  width: 15%;
+
+}
+div.botones #btn,div.botones #btn2_entregar,div.botones #btn3_pagos,div.botones #btn4{
+ margin-top: 40px;
+}
+#fecha1{
+  width: 14.4%;
+}
+#fecha2{
+  width: 10.8%;
+}
+#inpst{
+  width: 14.3%;
+  margin-left: 4px;
+}
+#lblcta{
+  margin-left: 5px;
+}
+#pedidotxt{
+  margin-left: 144px;
+}
+#contenedor2{
+  margin-left: 150px;
+}
+#menu-bar{
+  display: none;
+}
+#menu li{
+  background-color: #C0C0C0;
+  list-style-position: inside;
+}
+#menu li a {
+  text-align: center;
+    color: black;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: block;
+    padding: 10px 10px 10px 20px;
+}
+#menu li a:hover {
+    background: #000;
+    border-left: 10px solid #333;
+    color: #fff;
+}
+
+div .comb{
+	margin-left: 10px;
+}
+div .btn4{
+margin-left: 50px;	
+}
+table th {
+  background-color: #D3D3D3;
+  font-size: 16px;
+   }
+table tr:nth-child(odd) {background-color:   #F5F5F5;}
+table tr:nth-child(even) {background-color: #ADD8E6;}
+
+table{
+  width: 1000px;
+
+}
+div.botones{
+	margin-left: 150px;
+	margin-top: -27px;
+
+}div.contenedor_btn #btnel,div.contenedor_btn #btnagr,div.contenedor_btn #btnmod{
+	 
+}
+div.contenedor_btn{
+	margin-left: 150px;
+	margin-top: 20px;
+}
+div.grupo1 #inpt1{
+	margin-left: 85px;
+  text-align: center;
+}
+form div.grupo2 #inpt2{
+margin-left: 53px;
+margin-top: 4px;
+text-align: center;
+}
+form div.grupo3 #inpt3{
+margin-left: 81px;
+margin-top: 4px;
+text-align: center;
+}
+form div.grupo4 #inpt4{
+margin-left: 22px;
+margin-top: 4px;
+text-align: center;
+}
+form div.grupo5 #inpt5{
+margin-left: 110px;
+margin-top: 4px;
+text-align: center;
+}
+form.form-horizontal{
+	margin-left: 820px;
+}
+#grupo4 input.check{
+	margin-left: 50;
+}
+form div.cont1{
+	margin-left: 500px;
+  margin-top: -80px;
+}
+form div.complemento #inpdir,form div.divinput #inpcom{
+  margin-top: -10px;
+	padding: 20px;
+}
+form div.cont2{
+	margin-left: 250px;
+	margin-top: -78px;
+}
+#menu-bar:checked ~ #pedidotxt,#menu-bar:checked ~ #contenedor2,#menu-bar:checked ~ div.botones,#menu-bar:checked ~ table,#menu-bar:checked ~ div.contenedor_btn,#menu-bar:checked ~ form.form-horizontal,#menu-bar:checked ~ #div1{
+  opacity: 0;
+}
+#menu-bar:checked ~ #menu{
+opacity: 1;
+margin-top: -150px;
+}
+
+#div1 {
+     overflow:scroll;
+     height:140px;
+     width: 1025px;
+     margin: auto;
+     margin-top: 10px;
+}

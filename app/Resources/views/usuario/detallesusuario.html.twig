@@ -1,0 +1,288 @@
+{% extends 'menu/menu.html.twig' %}
+
+
+{% block estilos %}
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <Link rel="stylesheet" href="{{ asset('css/usuario_sist.css')}}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script type="text/javascript">
+
+    function cerrar() {
+      $('#myModal_regusuario').modal('hide');
+    }
+
+    function modificar() {
+        
+        var statusConfirm =(confirm("Desea Enviar los Datos Modificados?"))
+      if (statusConfirm == true){ 
+        
+        var id = document.getElementById('inp1').value;
+        var usuario = document.getElementById('inp2').value;
+        var nombre = document.getElementById('inp3').value;
+        var apellido = document.getElementById('inp4').value;
+        var clave = document.getElementById('inp5').value;
+        var confirmar = document.getElementById('inp6').value;
+        var comentarios = document.getElementById('inp7').value;
+        var status = document.getElementById('sts').value;
+
+        if(clave == '' && confirmar ==''){
+          alert('Debe agregar la Contraseña');
+        }else{ 
+         var valor='';
+              if(status=='1'){
+                valor='Activo';
+              }if(status=='2'){
+                valor='Inactivo';
+              }if(status=='3'){
+                valor='Prohibido';
+              }
+
+            if (document.getElementById("inp12").checked==true){
+               var tp='Administrador';
+            }else{
+               var tp='Limitado';
+            }
+         if(clave==confirmar){
+         $.post("{{ path('modificar_usuario2') }}", {id:id,usuario:usuario,nombre:nombre,apellido:apellido,clave:clave,status:valor,comentarios:comentarios,tipo:tp}, function(mensaje) {
+              $("#inp4").html(mensaje);
+               });
+              alert('Registros Modificados');
+              location.reload();
+            }else{
+               alert('Las Contraseñas no coinciden');
+            }
+        }
+  }else{
+      alert('Procedimiento Cancelado');
+    }
+}
+
+    function eliminar() {
+
+      var idusuario = document.getElementById('inp1').value;
+
+       $.post("{{ path('eliminar_usuario') }}", {idusuario:idusuario}, function(mensaje) {
+              $("#inp4").html(mensaje);
+            });
+       alert('Usuario Eliminado');
+       location.reload();
+
+
+    }
+
+    function modalregistrousuario() {
+        var idref=0;
+        document.getElementById('inp2').value='';
+        document.getElementById('inp3').value='';
+        document.getElementById('inp4').value='';
+        document.getElementById('inp5').value='';
+        document.getElementById('inp6').value='';
+        document.getElementById('inp7').value='';
+        document.getElementById('btn2').disabled=true;
+        document.getElementById('btn3').disabled=true;
+        
+        $('#tabla tbody tr').each(function(){
+           idref = $(this).find("td").eq(2).html();
+        });
+        idref= parseInt(idref)+ parseInt(1);
+        document.getElementById('inp1').value=idref;
+      $('#myModal_regusuario').modal('show');
+    }
+
+    function registrarusuario() {
+      
+     var statusConfirm =(confirm("Desea Enviar los Datos?"))
+      if (statusConfirm == true){ 
+        var usuario = document.getElementById('inp2').value;
+        var nombre = document.getElementById('inp3').value;
+        var apellido = document.getElementById('inp4').value;
+        var clave = document.getElementById('inp5').value;
+        var confirmar = document.getElementById('inp6').value;
+        var comentarios = document.getElementById('inp7').value;
+        var status = document.getElementById('sts').value;
+        var valor='';
+              if(status=='1'){
+                valor='Activo';
+              }if(status=='2'){
+                valor='Inactivo';
+              }if(status=='3'){
+                valor='Prohibido';
+              }
+
+        if(usuario=='' && nombre=='' && apellido=='' && clave=='') {
+          alert('Debe llenar todos los campos');
+        }else{
+            if (document.getElementById("inp12").checked==true){
+               var tp='Administrador';
+            }else{
+               var tp='Limitado';
+            }
+            if(clave==confirmar){
+              $.post("{{ path('registro_usuario') }}", {usuario:usuario,nombre:nombre,apellido:apellido,contraseña:clave,status:valor,comentarios:comentarios,tipo:tp}, function(mensaje) {
+              $("#inp4").html(mensaje);
+              if(mensaje[0]["datosusuarios"] =='N'){
+                alert('Este Usuario ya esta Registrado');
+              }
+            });
+              alert('Usuario Registrado');
+              document.getElementById("inp1").value= parseInt(document.getElementById("inp1").value)+ parseInt(1);
+              $('#myModal_regusuario').modal('hide');
+              location.reload();
+
+            }else{
+              alert('Las contraseñas no son iguales');
+            }
+          }
+        }else{
+          alert('Procedimiento Cancelado');
+        }
+        }
+    </script>
+    {%endblock%}
+
+   {% block body %}
+
+
+{% set ultid  = '' %}
+{% set estado = '' %}
+{% for usuario in cadena %}
+  {% set ultid = usuario.id + 1 %}
+{% endfor %}
+
+{% set tipo = '' %}
+{% set estado = '' %}
+{% for usuario in dtsusuario %}
+  {% set tipo = usuario.tipo %}
+{% endfor %}
+{% if tipo == 'Limitado' %}    
+    {% set estado = 'disabled="true"' %}           
+{% else %}  
+    {% set estado = '' %}           
+{% endif %}
+
+	<form  id="frm" style="">
+    <h1 align="center"> USUARIOS </h1>
+		<div id="div1">
+            <table id="tabla" width="70%" align="center">
+              <thead>
+               <tr id="usuar">
+                  <th style="text-align: center;">Modificar</th>
+                   <th style="text-align: center;">Usuario</th>
+                   <th style="text-align: center;">ID</th>
+                   <th style="text-align: center;">Tipo</th>
+                   <th style="text-align: center;">Nombre</th>
+                   <th style="text-align: center;">Apellido</th>
+                   <th style="text-align: center;">Status</th>
+                   <th style="text-align: center;">Fecha Creación</th>
+                   <th style="text-align: center;">Fecha Ultimo Acceso</th>
+                   <th style="text-align: center;">Comentario</th>
+               </tr>
+             </thead>
+               <tbody>
+                     {% for usuario in cadena %}
+                    <tr align="center" >
+                       <td ><a href="#myModal_regusuario" data-toggle="modal" data-target="#myModal_regusuario">Editar</td>
+                        <td >{{ usuario.nombre_usuario }}</td>
+                        <td>{{ usuario.id }}</td>
+                        <td>{{ usuario.tipo }}</td>
+                        <td>{{ usuario.nombre }}</td>
+                        <td>{{ usuario.apellido }}</td>
+                        <td>{{ usuario.status }}</td>
+                        <td>{{ usuario.fecha_creacion }}</td>
+                        <td>{{ usuario.fecha_ultimo_ingreso }}</td>
+                        <td>{{ usuario.comentario }}</td>
+                    </tr>
+                  {% endfor %}
+        </tbody>
+          		</table>
+           <script>
+
+		        document.getElementById("tabla").onclick=function(e){ 
+              document.getElementById('btn5').disabled=true;
+              document.getElementById('btn2').disabled=false;
+              document.getElementById('btn3').disabled=false;
+		        if(!e)e=window.event; 
+		        if(!e.target) e.target=e.srcElement; 
+		        var TR=e.target;
+		        while( TR.nodeType==1 && TR.tagName.toUpperCase()!="TR" )
+		        TR=TR.parentNode;
+		        var celdas=TR.getElementsByTagName("TD");
+		        if( celdas.length!=0 )
+		          var usuario=( celdas[1].innerHTML );
+		           var id=( celdas[2].innerHTML );
+		           var tipo=( celdas[3].innerHTML );
+		           var nombre=( celdas[4].innerHTML );
+		           var apellido=( celdas[5].innerHTML );
+		           var status=( celdas[5].innerHTML );
+		           var fecha_creacion=( celdas[7].innerHTML );
+		           var fecha_ultimo_ingreso=( celdas[8].innerHTML );
+               var comentario=( celdas[9].innerHTML );
+              document.getElementById('inp2').value=usuario;
+              document.getElementById('inp3').value=nombre;
+              document.getElementById('inp4').value=apellido;
+              document.getElementById('inp1').value=id;
+              document.getElementById('inp7').value=comentario;
+              if (tipo=='Limitado'){
+                document.getElementById("inp12").checked=false;
+              }else{
+                document.getElementById("inp12").checked=true;
+              }
+              var status='';
+              if(status=='Activo'){
+                valor='1';
+              }if(status=='Inactivo'){
+                valor='2';
+              }if(status=='Prohibido'){
+                valor='3';
+              }
+              $("#sts option[value="+ valor +"]").attr("selected",true);
+		           }
+         
+		    </script> 
+
+      </div>
+          <label id="lblnota">De Clic en el Usuario si desea ver mas detalles</label>
+          <input style="display: block;margin: auto;" class="btn btn-info btn-lg" id="btncrear" type="button" name="crear_usuario" value="Crear Usuario" onclick="modalregistrousuario();">
+</form>
+                <!-- VENTANA MODAL REGISTRO USUARIO -->
+<div class="modal fade" id="myModal_regusuario" role="dialog" onchange="">
+    <div class="modal-dialog" style="  width: 100%;">
+      <div class="modal-content">
+        <div>
+         <h2 align="center" id="lblop">REGISTRAR USUARIO</h2>
+       </div>
+          <br>
+        <div id="divID" style="margin-left: 90px;">
+          <label id="lbl1">ID</label><input id="inp1" type="text" name="ID1" value="{{ultid}}" disabled="true">
+          <label id="lbl2">Usuario</label><input id="inp2" type="text" name="usuario">
+          <label id="lbl3">Nombre</label><input id="inp3" type="text" name="nombre">
+          <label id="lbl4">Apellido</label><input id="inp4" type="text" name="apellido">
+          <label id="lbl5">Contraseña</label><input id="inp5" type="password" name="clave">
+        </div>
+        <div id="div4" style="margin-left: 36px; margin-top: 5px;">
+          <label id="lbl6">Confirmar </label><input id="inp6" type="password" name="confirmar">
+          <label id="lbl7">Comentarios</label><input id="inp7" type="text" name="comentarios">
+          <label id="lbl8">Status</label><select id="sts" name="status">
+          <option value="1" >Activo</option>
+          <option value="2">Inactivo</option>
+          <option value="3">Prohibido</option>
+          </select> 
+          <label id="lbl9"> Administrador</label><input type="checkbox" name="adm" id="inp12">
+        </div>
+        <br/>
+        <div style="margin-left: 400px;">
+        <input  class="btn btn-info btn-lg" id="btn5" type="button" value="Registrar Usuario" onclick="registrarusuario();" >
+        <input  class="btn btn-info btn-lg" id="btn2" type="button" value="Modificar" onclick="modificar();" {{estado}}>
+        <input  class="btn btn-info btn-lg" id="btn3" type="button" value="Eliminar" onclick="eliminar();" {{estado}}>
+        <input style="color: red;"  class="btn btn-info btn-lg" id="btn4" type="button" value="Cerrar" onclick="cerrar();" >
+        
+        <br>
+        <br>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,52 @@
+detalles_pagos:
+    path:     /detalles
+    defaults: { _controller: "GestionBundle:Factura:pedidofact" }
+    methods:  [POST, GET]
+filtros_pagos:
+    path:     /flpagos
+    defaults: { _controller: "GestionBundle:Factura:filtropagos" }
+    methods:  [POST, GET]
+pedidos_pagos:
+    path:     /dtfacturas
+    defaults: { _controller: "GestionBundle:Factura:detallesfacturas" }
+    methods:  [POST, GET]
+registro_pagosfac:
+    path:     /rgfacturas
+    defaults: { _controller: "GestionBundle:Factura:registropagofac" }
+    methods:  [POST, GET]
+registro_pagosfac2:
+    path:     /rgfac
+    defaults: { _controller: "GestionBundle:Factura:registropago" }
+    methods:  [POST, GET]
+agregar_foliopago:
+    path:     /agrfolio
+    defaults: { _controller: "GestionBundle:Factura:agregarfl" }
+    methods:  [POST, GET]
+datalist2:
+    path:     /dt2
+    defaults: { _controller: "GestionBundle:Factura:llenardt" }
+    methods:  [POST, GET]
+llenarcuentas2:
+    path:     /cta2
+    defaults: { _controller: "GestionBundle:Factura:llenarcta2" }
+    methods:  [POST, GET]
+pagos_saldos:
+    path:     /saldos
+    defaults: { _controller: "GestionBundle:Factura:saldos" }
+    methods:  [POST, GET]
+filtros_saldos:
+    path:     /filtrossaldos
+    defaults: { _controller: "GestionBundle:Factura:filtrossaldos" }
+    methods:  [POST, GET]
+pagos:
+    path:     /pagos/{id}
+    defaults: { _controller: "GestionBundle:Factura:dtpagos" }
+    methods:  [POST, GET]
+comentarios:
+    path:     /cmt
+    defaults: { _controller: "GestionBundle:Factura:cnscomentario" }
+    methods:  [POST, GET]
+sql_pagos:
+    path:     /sqlpg
+    defaults: { _controller: "GestionBundle:Factura:sqlpags" }
+    methods:  [POST, GET]

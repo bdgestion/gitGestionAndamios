@@ -1,0 +1,61 @@
+<?php
+
+namespace GestionBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Impuestos
+ *
+ * @ORM\Table(name="impuestos", uniqueConstraints={@ORM\UniqueConstraint(name="id", columns={"id"})})
+ * @ORM\Entity
+ */
+class Impuestos
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="bigint", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcion", type="string", length=500, nullable=false)
+     */
+    private $descripcion;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="valor", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $valor;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipo", type="string", length=500, nullable=false)
+     */
+    private $tipo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="calculo", type="string", length=500, nullable=false)
+     */
+    private $calculo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=500, nullable=false)
+     */
+    private $status;
+
+
+}
+

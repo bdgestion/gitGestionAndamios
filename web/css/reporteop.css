@@ -1,0 +1,108 @@
+h2{
+	text-align: center;
+	margin-top: -35px;
+}
+
+.div1{
+	text-align: center;
+	margin-top: 40px;
+}
+
+
+.clientetxt{
+	margin-left: 15px;
+}
+
+.cuenta{
+	margin-left: 50px;
+}
+
+.cuentatxt{
+	margin-left: 15px;
+}
+
+.creados{
+	margin-left: 50px;
+}
+
+.creadostxt{
+	margin-left: 15px;
+}
+
+.hasta{
+	margin-left: 50px;
+}
+
+.hastatxt{
+	margin-left: 15px;
+}
+
+.grupo1{
+	margin-left: 300px;
+	margin-top: 20px;
+}
+
+.grupo3{
+	position: relative;
+	margin-left: 570px;
+	margin-top: -140px;
+}
+
+.grupo5{
+	position: relative;
+	margin-left: 850px;
+	margin-top: -140px;
+}
+
+#botones1{
+	margin-left:500px;
+	margin-top: 10px;
+}
+
+.btnlimpiar{
+	margin-left: 80px;
+}
+
+.limpiar{
+	margin-left: 10px;
+}
+
+.boton{
+	text-align: center;
+	margin-top: 15px;
+}
+
+.tabreporte{
+	margin-left: 3px;
+	margin-top: -28px;
+}
+
+
+.lbltabreporte{
+	position: absolute;
+	margin-left: 180px;
+	font-size: 20px;
+}
+
+table th {
+  background-color: #D3D3D3;
+  font-size: 12px;
+   }
+table tr:nth-child(odd) {background-color:   #F5F5F5;}
+table tr:nth-child(even) {background-color: #ADD8E6;}
+
+table{
+	margin-top:25px;
+  width: 1000px;
+
+}
+#div2 {
+	
+	overflow:scroll;
+     height:150px;
+     width: 1025px;
+     margin: auto;
+}
+#menu-bar:checked ~ div{
+ opacity: 0
+}

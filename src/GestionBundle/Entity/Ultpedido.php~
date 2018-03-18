@@ -1,0 +1,40 @@
+<?php
+
+namespace GestionBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Ultpedido
+ *
+ * @ORM\Table(name="ultpedido", uniqueConstraints={@ORM\UniqueConstraint(name="pedido", columns={"pedido"})})
+ * @ORM\Entity
+ */
+class Ultpedido
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pedido", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $pedido;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cliente", type="string", length=500, nullable=false)
+     */
+    private $cliente;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="obra", type="string", length=500, nullable=false)
+     */
+    private $obra;
+
+
+}
+

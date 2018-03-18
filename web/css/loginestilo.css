@@ -1,0 +1,36 @@
+
+div img{
+	display: block;
+    margin: auto;
+    width: 25%;
+}
+
+div {
+	 margin: .6em 0;
+	}
+
+div label {
+   display: block;
+   text-align: center;
+   font-size: 1.5em;
+
+	}
+form {
+ width: 200px;
+ margin:  auto;
+	}
+
+input[type="submit"] {
+    margin: 3em 0;
+ 	width:100px;
+ 	display: block;
+    text-align: center;
+    margin-left:auto;
+    margin-right:auto;
+}
+input[type="text"],input[type="password"] {
+	display: block;
+	 margin: .6em 0;
+	 width: 100%;
+    text-align: center;
+	}

@@ -1,0 +1,433 @@
+{% extends 'menu/menu.html.twig' %}
+{% block body %}
+
+
+{% set pd = '' %}
+{% set cuenta = '' %}        
+{% set folio = '' %}
+{% set cliente = '' %}
+{% set status = '' %}
+{% set montopedido = '' %}
+{% set saldo = '' %}
+{% set formas = '' %}
+
+
+{% for status_saldos in statu %}
+	{% set status = status_saldos.statussaldos%}
+{%endfor%}
+
+
+
+{% for pedido in pedido %}
+  {% set cuenta = pedido.cuenta %}
+  {% set cliente = pedido.cliente %}
+  {% set pd = pedido.pedido %}
+  {% set montopedido = pedido.total %}
+  
+{%endfor%}
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"></link>
+  <link rel="stylesheet" href="/resources/demos/style.css"></link>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ 	<style type="text/css">
+
+ 	@media (min-width: 768px) and (max-width: 1024px) {
+  		#dt2{
+			margin-left: -7%;
+		}
+		#div1{
+			position: absolute;
+			top: 60%;
+			left: -19%;
+		}
+		#field1{
+			position: absolute;
+			left: 20%;
+		}
+		#btn_rgfc{
+			position: absolute;
+			left: 25%;
+		}
+		#limpiardts{
+			position: absolute;
+			left: 90%;
+		}
+		#btn_fact{
+			position: absolute;
+			top: 150%;
+			left: 10%;
+		}
+		#regfolio{
+			position: absolute;
+			left: 35%;
+			top: 150%;
+		}
+	}
+
+ 	@media (min-width: 1025px) and (max-width: 1280px) {
+  
+  		
+ 	}
+  
+ 	@media (min-width: 481px) and (max-width: 767px) {
+		h1{
+			color: green;
+		}
+	}
+
+		
+	
+ 		#div1{
+	     height:200px;
+	     width: 59%;
+	     overflow:scroll;
+		}
+ 	</style>
+ 	<script type="text/javascript">
+
+
+
+ 		var cont=0;
+ 		var totalimp=0;
+ 		
+ 		$(document).ready(function() {
+
+
+
+ 			var montopedido = document.getElementById("inptmontopd").value;   //165.. 100-165= 65+5=70
+ 			document.getElementById("inptsaldo").value=montopedido;
+ 			$('#tblmov tbody tr').each(function(){
+ 			  cont=cont+1;
+ 				if (cont>1){
+		            var Referencia = $(this).find("td").eq(3).html();
+		            var tipo = $(this).find("td").eq(2).html();
+		            if (tipo=='pago'){
+			            totalimp= parseFloat(totalimp)+ parseFloat(Referencia);
+			            document.getElementById("inptsaldo").value=(parseFloat(document.getElementById("inptsaldo").value)-parseFloat(Referencia)).toFixed(2);
+		            }
+             if (tipo=='cargo'){
+               document.getElementById("inptsaldo").value=(parseFloat(document.getElementById("inptsaldo").value)+parseFloat(Referencia)).toFixed(2);  
+             }
+            }
+          });  
+ 			if(document.getElementById("inptsaldo").value==''){
+ 				document.getElementById("inptsaldo").value= montopedido;
+ 			}
+ 		});
+ 	$( function() {
+       $.datepicker.regional['es'] = {
+		        closeText: 'Cerrar',
+		        prevText: '< Ant',
+		        nextText: 'Sig >',
+		        currentText: 'Hoy',
+		        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+		        monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+		        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+		        dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+		        dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+		        weekHeader: 'Sm',
+		        dateFormat: 'dd/mm/yy',
+		        firstDay: 1,
+		        isRTL: false,
+		        showMonthAfterYear: false,
+		        yearSuffix: ''
+ 			};
+ 		$.datepicker.setDefaults($.datepicker.regional['es']);
+ 		$("#inptfechapg").datepicker();
+	});
+
+ 	function registrarpago() {
+ 		var statusConfirm =(confirm("Desea Registrar este Pago?"))
+      if (statusConfirm == true){ 
+ 		var pedido = document.getElementById('pedido').value;
+ 		var formapago = document.getElementById("combFP").value;
+ 		var fecha = document.getElementById("inptfechapg").value;
+ 		var operacion = document.getElementById("operacion").value;
+ 		var comentarios = document.getElementById("comentarios").value;
+ 		var monto_pagar = document.getElementById("inptmontofc").value;
+ 		var saldopedido = document.getElementById("inptsaldo").value;
+ 		var montopedido = document.getElementById("inptmontopd").value;
+ 		if(monto_pagar=='' || fecha==''){
+ 			alert('Debe Completar todos los Campos');
+ 		}else{
+ 			var total=0;
+ 			var statusfac='';
+ 			//alert(operacion);
+	 		if (operacion =='pago'){
+	 			total = (parseFloat(saldopedido) - parseFloat(monto_pagar));	
+	 			
+	 		}
+	 		if(operacion =='cargo'){
+	 			total = (parseFloat(saldopedido) + parseFloat(monto_pagar));
+	 		}
+	 		if (total<=0){
+	 			statusfac=2;
+	 		}else{
+	 			statusfac=1;
+	 		}
+
+	 		$.post("{{ path('registro_pagosfac2') }}", {pedido: pedido, formapago:formapago,fecha:fecha,operacion:operacion,comentarios:comentarios,monto_pagar:monto_pagar,statusfac:statusfac,montopedido:montopedido,saldo_restante:total},
+	      function(mensaje) {
+	              $("#txt3").html(mensaje);          
+	            });   
+	 		alert('El Procedimiento Se Ha realizado');
+	 	   location.reload();	
+
+ 		}
+ 	  }else{
+ 	  	alert('Procedimiento Cancelado');
+ 	  }
+ 	}
+ 	function foliofactura() {
+ 		$("#registrarfolio").css("display", "block");
+ 		$("#datospd").css("display", "none");
+ 		$("#registrarmov").css("display", "none");
+ 	}
+
+ 	function registrarfoliofac() {
+ 		var statusConfirm =(confirm("Desea Registrar el Folio de este Pago?"))
+      if (statusConfirm == true){ 
+
+ 		var pedidofac=document.getElementById('pd2').value;
+ 		var foliofac=document.getElementById('fcfolio').value;
+ 		var id=document.getElementById('id').value;
+      if (document.getElementById("checkbox").checked==true){
+         foliofac='No Requiere Factura';
+        }
+        if (foliofac ==''){
+        	alert('Debe Completar el Folio ó Marcar Casilla si no requiere Factura');
+        }else{
+        	$.post("{{ path('agregar_foliopago') }}", {id: id, folio:foliofac},
+	      	function(mensaje) {
+	              $("#txt3").html(mensaje);          
+	      	});   
+      		alert('Movimiento Facturado');	
+        }
+     }else{
+      alert('Procedimiento Cancelado');
+     }
+ 	}
+ 	function detallespedido(){
+    var pedid = document.getElementById("pedido").value;
+    var url=("{{ path('pedidos_detalles', { 'id':'xxx' }) }}");
+     url = url.replace("xxx", pedid);
+        $.ajax({
+            dataType: "html",
+            url: url,
+            type: "GET",
+            data: {id: pedid},
+            success: function(data)
+            {
+             location.href=url;   
+            }
+        });    
+  }
+  function activarcasilla(check,boton){
+	if(check.checked==true){
+		document.getElementById(boton).value='';
+		document.getElementById(boton).disabled=false;
+	}else{
+		document.getElementById(boton).value='';
+		document.getElementById(boton).disabled=true;
+	}
+ }
+  function activarcasilla2(check,boton){
+	if(check.checked==false){
+		document.getElementById(boton).value='';
+		document.getElementById(boton).disabled=false;
+	}else{
+		document.getElementById(boton).value='';
+		document.getElementById(boton).disabled=true;
+	}
+ }
+ function facturar() {
+ 	$('#myModal').modal('show');
+ }
+ function recorrercheck(){
+ 	var folio=document.getElementById('txt3').value;
+ 	if (document.getElementById("chek2").checked==true){
+         folio='No Requiere Factura';
+        }
+    var statusConfirm =(confirm("Desea Enviar el registro?"))
+	  if (statusConfirm == true){
+	    if (folio == ''){
+	          	alert('Debe Ingresar el Numero de Factura ó Seleccionar casilla que no requiere factura');
+	          }else{
+	          	$("input[name=chek3]").each(function () { 
+	         if($(this).is(':checked')){
+	          var id=($(this).val());
+
+	            $.post("{{ path('agregar_foliopago') }}", {id: id,folio:folio}, function(mensaje) {
+	              $("#txt3").html(mensaje);
+	              });
+	          }
+	      });
+	         alert('Proceso Realizado');
+	         location.reload();
+          } 
+	    }
+      }
+ 	</script>
+ 	
+  <form id="datospd">
+  		<fieldset id="container" style="display: block;margin: auto; width:100%; height:100%; text-align: center;">
+		<legend style="text-align: center;">Detalles Pedido</legend>
+		   <label id="lblpedido" class="label1" for="pedido">Pedido</label>&nbsp;<input id="pedido" type="text" name="pedido" value="{{pd}}" disabled="true" style="width: 10%;">
+		   <label id="lblmontopd" class="label1" for="pedido">Monto Pedido</label>&nbsp;<input id="inptmontopd" type="text" value="{{montopedido}}" disabled="true" style="width: 10%;">
+		   
+		   <label id="lblcliente" class="label6">Cliente</label>&nbsp;<input id="inptcliente" type="text" name="" value="{{cliente}}" disabled="true">
+			<label id="lblobras" class="label1" for="pedido">Obra</label>&nbsp;<input id="inptobras" type="text" name="pedido" value="{{cuenta}}" disabled="true" style="width: 25%;">
+			<br>
+			<br>
+			   <label id="lblstpd" class="label1" for="pedido">Status Pedido</label>&nbsp;<input id="inptstpd" type="text" value="{{status}}" disabled="true" style="width: 13%;">
+			   <label id="lblSaldo" class="label6">Saldo</label>&nbsp;<input id="inptsaldo" type="text" name="" value="" disabled="true" style="width: 10%;" >
+	</fieldset>
+  </form>
+  <form id="registrarmov">
+  	<fieldset id="field1" style="position: absolute;top: 54%; width: 40%;">
+  		<legend style="text-align: center;color: blue; font-size: 200%;">Registrar Movimiento</legend>
+  		<div id="dt3" style="margin-top: 2%;">
+			<label id="lblmontofc" class="label1" for="pedido">Monto $</label>&nbsp;<input id="inptmontofc" type="text" value="" size="4">
+		   <label id="lblformapg" class="label1" for="pedido">Forma de Pago</label>&nbsp;<select style="width: 39%;" id="combFP">
+		   	{% for formas_pagos in formaspg %}
+				{% set formas = formas_pagos.formas%}
+				<option value="{{formas}}">{{formas}}</option>	
+			{%endfor%}
+
+		   </select>
+		   
+		</div>
+		<div id="dt4" style="margin-top: 2%;">
+			<label id="lblfechapg" class="label6">Fecha</label>&nbsp;<input id="inptfechapg" type="text" value="">
+		   <label id="lbloperacion" style="">Operación</label>&nbsp;<select id="operacion" style="width: 20%;">
+				<option value="pago">Pago</option>
+				<option value="cargo">Cargo</option>
+			</select>
+		</div>
+		<div id="dt5">
+			<textarea placeholder="Comentarios" id="comentarios" style="margin-top: 2%; width: 450px; display: table-cell;"></textarea>
+		</div>
+		<div id="botones" style="">
+			<button type="button" class="" id="btn_rgfc" onclick="registrarpago();" style=" margin-left: 14%; width: 38%; color: blue;">Registrar </button> 
+			<button class="" id="limpiardts" onclick="" style="width: 30%; color: blue;">Limpiar</button> 
+		</div>
+  	</fieldset>
+  	<div id="tbldetallespg">
+  		<div id="div1" style="position: absolute;top:52%; left: 48%; width:50%;">
+            <table class="table table-striped" id="tblmov" width="100%" align="left" style="margin-left: 2%;table-layout: fixed;margin-top: -2%; ">
+            	<caption style="text-align: center; font-size: 30px;width: 100%; color: blue;"">Movimientos</caption>
+            	
+	              <tr id="colresumen" align="center" style="border-color: blue;">
+	                   <th style="text-align: center;">ID</th>
+	                   <th style="text-align: center;">Fecha</th>
+	                   <th style="text-align: center;">Operación</th>
+	                   <th style="text-align: center;">Monto</th>
+	                   <th style="text-align: center;">Forma de Pago</th>
+	                   <th style="text-align: center;">Factura</th>
+	                   <th style="text-align: center;"><input type="checkbox" name="" disabled="true"></th>
+	               </tr>
+               <tbody>
+         		{% for detallespago in dtpagos %}
+					<tr align="center" style="text-align: left;">
+		                <td style="text-align: center; color: blue; text-decoration: underline; cursor: pointer;" onclick="foliofactura(); ">{{ detallespago.id }}</td>
+		                <td style="text-align: center;">{{ detallespago.fechapago }}</td>
+		                <td style="text-align: center;">{{ detallespago.operacion }}</td>
+		                <td style="text-align: center;">{{ detallespago.montopago }}</td>
+		                <td style="text-align: center;">{{ detallespago.formas }}</td>
+		                <td style="text-align: center;">{{ detallespago.foliofactura }}</td>
+		                <td style="text-align: center;"><input onclick="activarcasilla(this,'btn_fact');" id="chek3" type="checkbox" name="chek3" value="{{ detallespago.id }}"></td>
+		            </tr>
+		        {% endfor %}
+         	    </tbody>
+         	    <script type="text/javascript">
+                  document.getElementById("tblmov").onclick=function(e){ 
+                      if(!e)e=window.event; 
+                      if(!e.target) e.target=e.srcElement; 
+                      var TR=e.target;
+                      while( TR.nodeType==1 && TR.tagName.toUpperCase()!="TR" )
+                      TR=TR.parentNode;
+                      var celdas=TR.getElementsByTagName("TD");
+                      if( celdas.length!=0 )
+					  var id=( celdas[0].innerHTML);
+                      var fecha=( celdas[1].innerHTML);
+                      var tipo=( celdas[2].innerHTML);
+                      var montotbl=( celdas[3].innerHTML);
+                      var forma=( celdas[4].innerHTML);
+                      document.getElementById('pd2').value=document.getElementById('pedido').value;
+			 		  document.getElementById('fechafolio').value=fecha;
+			 		  document.getElementById('id').value=id;
+			 		  document.getElementById('tipo').value=tipo;
+			 		  document.getElementById('monto').value=montotbl;
+			 		  document.getElementById('frmfolio').value=forma;
+
+			 		  $.post("{{ path('comentarios') }}", {id: id},
+				      	function(mensaje) {
+				              $("#txt3").html(mensaje);          
+				              document.getElementById('comentarios2').value=mensaje[0]['comentariopago'];
+
+				      	}); 
+			 		  
+                    }
+            </script>
+            </table>
+          </div>
+  	</div>
+  	<div id="botones2">
+  	<button type="button" class="btn btn-info btn-lg" id="btn_fact" onclick="facturar();" style="margin-left: 44%; margin-top: 2%;width: 10%;" disabled="true">Facturar</button> 
+  	<button class="btn btn-info btn-lg" type="button" id="regfolio" onclick="detallespedido();" style="margin-top: 2%;" >Detalles Pedido</button>
+  	</div>
+  </form>
+  <form id="registrarfolio" hidden="hidden">
+  	 	<fieldset style="display: block;margin: auto; width:80%; height:50%; text-align: center; margin-left: 4%;margin-top: 3%;">
+  		<legend style="text-align: center;color: blue;">Registrar Folio de Factura</legend>
+  		<div id="dt1folio" style="margin-top: 2%;">
+			<label>Pedido</label>&nbsp;<input id="pd2" type="text" name="" disabled="true">
+			<label>Operación ID</label>&nbsp;<input id="id" type="text" name="" disabled="true">
+			<label>Tipo</label>&nbsp;<input id="tipo" type="text" name="" disabled="true">
+			<label>Monto</label>&nbsp;<input id="monto" type="text" name="" disabled="true">
+		</div>
+		<div id="dtfolio2" style="margin-top: 2%;">
+			<label>Fecha</label>&nbsp;<input id="fechafolio" type="text" name="" disabled="true">
+			<label>Forma Pago</label>&nbsp;<input id="frmfolio" type="text" name="" disabled="true">
+			<label>Factura</label>&nbsp;<input id="fcfolio" type="text" name="">
+			<label>Marcar si no requiere Factura</label>&nbsp;&nbsp;<input id="checkbox" type="checkbox" name="" onclick="activarcasilla2(this,'fcfolio');">
+		</div>
+		<div id="dtfolio3" style="margin-top: 2%;">
+			<textarea placeholder="Comentarios" id="comentarios2" style="width: 50%;" style="text-align: center;" disabled="true"></textarea>
+		</div>
+  	</fieldset>
+   <div id="btnfolio" style="margin-left: 40%; margin-top: 5%;">
+      <button class="btn btn-info btn-lg" type="button" id="regfolio" onclick="registrarfoliofac();" >Registrar</button>
+	  <button class="btn btn-info btn-lg" id="cerrar">Cerrar</button>
+   </div>
+   
+  </form>
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <h2 id="lbl2" class="equipo" style="text-align: center" >Aplicar Cambios de Facturación a Múltiples Pagos?</h2>
+        <br>
+          <div id="dtsmultiplespagos">
+	        <label id="lbl2" class="equipo" style="margin-left: 35%;">Factura</label>&nbsp;<input id="txt3" class="equiptxt" type="text" name="textcl" size="10">
+	        </div>
+	        <br>
+	        <div>
+	        	<label id="lbl" class="clav" style="margin-left: 31%;" >Marcar si no requiere factura</label>&nbsp;<input id="chek2" class="clavtxt" type="checkbox" name="" onclick="activarcasilla2(this,'txt3');">
+	        </div>
+	        <br>
+      		<div>
+      			<button id="aceptarmult" type="button" class="btn btn-info btn-lg" style="display: block; margin: auto;" onclick="recorrercheck();" >Aceptar</button>
+      		</div>
+      		<br>
+      </div>
+    </div>
+  </div>
+
+ {% endblock %}

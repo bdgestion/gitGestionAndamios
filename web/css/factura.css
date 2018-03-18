@@ -1,0 +1,43 @@
+#pedidotxt,div .label1,div .label2, div .label3, div .label4, div .label5, div .label6,#contenedor2, div .label7{
+	padding: 10px;
+}
+div.contenedor_btn{
+	margin-left: 160px;
+	margin-top: 5px;
+}
+
+#pedidotxt{
+  margin-left: 140px;
+}
+#contenedor2{
+  margin-left: 140px;
+}
+div.botones{
+	margin-left: 725px;
+	margin-top: -32px;
+	}
+table th {
+  background-color: #D3D3D3;
+font-size: 16px;
+   }
+table tr:nth-child(odd) {background-color:   #F5F5F5;}
+table tr:nth-child(even) {background-color: #ADD8E6;}
+
+table{
+	margin-top: 10px;
+  width: 1000px;
+
+}
+#div1 {
+     overflow:scroll;
+     height:150px;
+     width: 1025px;
+     margin: auto;
+}
+form.form-horizontal{
+	margin-left: 980px;
+}
+form div.grupo1 #inpt1{
+	text-align: right;
+
+}

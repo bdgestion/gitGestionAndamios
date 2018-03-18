@@ -1,0 +1,55 @@
+.cantidad{
+	position: absolute;
+	margin-left: 5px;
+	margin-top: 40px;
+}
+
+
+.cantxt{
+    position: absolute;
+	margin-left: 70px;
+	margin-top: 40px;
+}
+
+.clav{
+	position: absolute;
+    margin-left: 150px;
+    margin-top: 40px;
+}
+.clavtxt{
+	position: absolute;
+    margin-left: 200px;
+    margin-top: 40px;
+
+}
+
+.equipo{
+	position: absolute;
+    margin-left: 280px;
+    margin-top: 40px;
+}
+
+.equiptxt{
+	position: absolute;
+    margin-left: 340px;
+    margin-top: 40px;
+}
+
+.pu{
+    position: absolute;
+    margin-left: 450px;
+    margin-top: 40px;
+
+}
+
+.putxt{
+	position: absolute;
+    margin-left: 480px;
+    margin-top: 40px;
+}
+
+.agregbtn{
+	position: absolute;
+	margin-left: 260px;
+	margin-top: 90px;
+}

@@ -1,0 +1,38 @@
+{% extends 'menu/menu.html.twig' %}
+
+
+ {% block estilos %}
+
+ 
+            <Link rel="stylesheet" href="{{ asset('css/encabezado.css')}}">
+            <Link rel="stylesheet" href="{{ asset('css/configuracion.css')}}">
+            <script type="text/javascript">
+                function miperfil() {
+                location.href=("{{ path('usuario_conf') }}");
+                }
+                function usuariosdelsistema() {
+                    location.href=("{{ path('detalles_usuarios') }}");
+                }
+            </script>
+            {%endblock%}
+
+          {% block body %}
+  <ul class="breadcrumb">
+        <li><a href="{{ path('inicio_detalles')}}">Home</a></li>
+        <li><a href="">Configuracion</a></li>
+  </ul>
+  <form   style="padding-bottom: 160px">
+
+<h1 align="center">Configuración</h1>
+<div id="contenedor">
+   
+<div id="boton1" align="center">
+ <input class="btn btn-info btn-lg" type="button" name="Submit" value="Mi Perfil" style="margin-top: 15px; color:black;height:60px; width:200px" onclick="miperfil();"  />
+</div>
+<br>
+<div id="boton2" align="center">
+  <button class="btn btn-info btn-lg" type="button" name="Submit2" style="color:black;height:60px; width:200px;" onclick="usuariosdelsistema();">Usuarios del Sistema </button>
+</div>
+</div>   
+</form> 
+{%endblock%}

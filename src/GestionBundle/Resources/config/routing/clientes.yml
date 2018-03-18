@@ -1,0 +1,40 @@
+detalles_clientes:
+    path:     /clientes
+    defaults: { _controller: "GestionBundle:Clientes:detalles" }
+    methods:  [POST, GET]
+filtros_clientes:
+    path:     /flt
+    defaults: { _controller: "GestionBundle:Clientes:filtrar" }
+    methods:  [POST, GET]
+registro_clientes:
+    path:     /reg
+    defaults: { _controller: "GestionBundle:Clientes:registrar" }
+    methods:  [POST, GET]
+registro_cuenta:
+    path:     /regcuenta
+    defaults: { _controller: "GestionBundle:Clientes:registrarcuenta" }
+    methods:  [POST, GET]
+consultar_cuenta:
+    path:     /consl
+    defaults: { _controller: "GestionBundle:Clientes:consultarcuenta" }
+    methods:  [POST, GET]
+detalles_cuenta:
+    path:     /detallescta
+    defaults: { _controller: "GestionBundle:Clientes:detallescuenta" }
+    methods:  [POST, GET]
+modificar_cuenta:
+    path:     /modificarcta
+    defaults: { _controller: "GestionBundle:Clientes:modificarcta" }
+    methods:  [POST, GET]
+modf_cliente:
+    path:     /restrcliente
+    defaults: { _controller: "GestionBundle:Clientes:modfcliente" }
+    methods:  [POST, GET]
+modificar_detalles:
+    path:     /dt
+    defaults: { _controller: "GestionBundle:Clientes:modificardetalles" }
+    methods:  [POST, GET]
+id_detalles:
+    path:     /idcl
+    defaults: { _controller: "GestionBundle:Clientes:id" }
+    methods:  [POST, GET]

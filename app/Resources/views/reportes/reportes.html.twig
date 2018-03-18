@@ -1,0 +1,45 @@
+{% extends 'menu/menu.html.twig' %}
+
+
+ {% block estilos %}
+            <Link rel="stylesheet" href="{{ asset('css/estilohome.css')}}">
+            <Link rel="stylesheet" href="{{ asset('css/Configuración.css')}}">
+            <Link rel="stylesheet" href="{{ asset('css/Reportes.css')}}">
+            <script>
+            function Pedidos() {
+                location.href=("{{ path('reportes_pedidos') }}");
+
+
+            }
+                function Operaciones() {
+
+                    location.href=("{{ path('reporte_operaciones') }}");
+                }
+                 function saldos() {
+                    location.href=("{{ path('reportes_saldos') }}");
+
+                }
+          
+</script>
+{%endblock%}
+
+{% block body %}
+    <ul style="margin-top: -20px;" class="breadcrumb">
+        <li><a href="{{ path('inicio_detalles')}}">Home</a></li>
+        <li><a href="">Reportes</a></li>
+    </ul>
+    <form   style="padding-bottom: 90px">
+    <h1 style="text-align: center;">Reportes</h1>
+    <div class="contenedor">
+<div class="pedidos">
+<button class="btn btn-info btn-lg" type="button"  name="Submit" onclick="Pedidos()" style="color:black;height:60px; width:200px">Pedidos</button>
+</div>
+<div class="operaciones">
+<button class="btn btn-info btn-lg" type="button" name="Submit"onclick="Operaciones()" style="color:black;height:60px; width:200px">Operaciones</button>
+</div>
+<div class="saldos">
+<button class="btn btn-info btn-lg" type="button" name="Submit" style="color:black;height:60px; width:200px" onclick="saldos();">Saldos </button>
+</div>
+</div>
+</form>
+{% endblock %}

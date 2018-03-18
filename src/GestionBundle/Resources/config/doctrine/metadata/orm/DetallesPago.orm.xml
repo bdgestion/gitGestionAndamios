@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="DetallesPago" table="detalles_pago">
+    <indexes>
+      <index name="statusfacturacion" columns="statusfacturacion"/>
+      <index name="formapago" columns="formapago"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="id" columns="id"/>
+    </unique-constraints>
+    <id name="id" type="bigint" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="pedido" type="integer" column="pedido" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="fechapago" type="string" column="fechapago" length="100" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="montopago" type="float" column="montopago" precision="10" scale="0" nullable="false"/>
+    <field name="comentariopago" type="string" column="comentariopago" length="500" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="foliofactura" type="string" column="foliofactura" length="100" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="operacion" type="string" column="operacion" length="100" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="saldoRestante" type="float" column="saldo_restante" precision="10" scale="0" nullable="false"/>
+    <many-to-one field="statusfacturacion" target-entity="StatusFacturacion" fetch="LAZY">
+      <join-columns>
+        <join-column name="statusfacturacion" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="formapago" target-entity="FormasPagos" fetch="LAZY">
+      <join-columns>
+        <join-column name="formapago" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

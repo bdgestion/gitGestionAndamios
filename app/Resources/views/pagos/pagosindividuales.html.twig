@@ -1,0 +1,489 @@
+{% extends 'menu/menu.html.twig' %}
+
+
+{% block estilos %}
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"></link>
+  <link rel="stylesheet" href="/resources/demos/style.css"></link>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <Link rel="stylesheet" href="{{ asset('css/encabezado.css')}}">
+        <Link rel="stylesheet" href="{{ asset('css/pagoindv.css')}}">
+             
+  <script type="text/javascript">
+    var op_id=0,fila,comentario,tipo,monto,fecha,formap;
+  
+              $( function() {
+                $( "#desde" ).datepicker();
+                $( "#hasta" ).datepicker();
+              } );
+
+              $(document).ready(function() {
+                $('#clt').on('input', function() {
+                  var userText = $(this).val();
+                  limpiar();
+                  $("#categoryname").find("option").each(function() {
+                    if ($(this).val() == userText) {
+                      validar();
+                    }
+                  })
+                })
+                 $("#tblpago").delegate("tr", "click", function(e) {
+                    fila=($(e.currentTarget).index() + 1);
+                 });
+              });
+              function limpiar() {
+              if (document.getElementById('clt').value=='') {
+                    clienterz='';
+                    var sel = document.getElementById("combocta");
+                    sel.remove(sel.selectedIndex);
+                   }
+              }
+             function llenardatalist(){
+                  $.post("{{ path('datalist') }}", function(mensaje) {
+                  $("#txt3").html(mensaje);
+                    for (var i=0, total = mensaje.length; i < total; i++) {
+                        $("#categoryname").append("<option>"+mensaje[i]['razonsocial']+"</option>");
+                    }
+                    });
+                  }
+        $( function() {
+          $.datepicker.regional['es'] = {
+          closeText: 'Cerrar',
+          prevText: '< Ant',
+          nextText: 'Sig >',
+          currentText: 'Hoy',
+          monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+          monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+          dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+          dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+          dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+          weekHeader: 'Sm',
+          dateFormat: 'dd/mm/yy',
+          firstDay: 1,
+          isRTL: false,
+          showMonthAfterYear: false,
+          yearSuffix: ''
+        };
+   $.datepicker.setDefaults($.datepicker.regional['es']);
+        $("#fechaemis" ).datepicker();
+    });
+    function agregarfolio(){
+      var folio_fct= (document.getElementById('foliofac').value);
+      var fecha_emision= (document.getElementById('fechaemis').value);
+
+      if (folio_fct=='' && fecha_emision==''){
+        alert('De llenar todos los campos');
+      }else{
+        if (document.getElementById("chk_factura").checked==true){
+        var cheked='activo';
+        folio_fct='No Requiere Factura';
+      }else{
+        var cheked='desactivado';
+      }
+      $.post("{{ path('agregar_folio') }}", {cheked:cheked,folio: folio_fct,fechaemision:fecha_emision,opid:op_id}, function(mensaje) {
+          $("#txt3").html(mensaje);
+   });
+      document.getElementById('tblpago').rows[fila].cells[6].innerHTML=folio_fct;
+      }
+      alert('Folio Registrado');
+      
+    }
+
+    function agregarfilapago(){
+      var monto=0;
+      var operacion = document.getElementById("combop").value ;
+       monto = document.getElementById("inpop1").value;
+        if (monto<0){
+        alert('El Número es incorrecto,Ingrese Números Positivos');
+         exit();
+       }
+       var pedidofac=document.getElementById("pd_pago").value;
+       var clientefac=document.getElementById("cltpago").value;
+       var cuentafac=document.getElementById("comb2pago").value;
+       var fechafacped=document.getElementById("fecha1_pago").value;
+       var statusped=document.getElementById("stpedpago").value;
+       var statusfin=document.getElementById("stfpago").value;
+       var cr_ped=document.getElementById("tcppago").value;
+       var fecha_dev=document.getElementById("fechainiciopago").value;
+       var formapago = document.getElementById("combFP").value;
+       var comentario = document.getElementById("idcom").value;
+       var saldo = document.getElementById("inpt1_saldo").value;
+      if(monto==''){
+        alert('Debe LLenar todos los campos');
+       }else{ 
+
+          var cargo_pedido=0;
+          cargo_pedido = document.getElementById("tcppago").value; 
+          var total=0;
+          var totalimp=0;
+          var f = new Date();
+          var month = f.getMonth()+1;
+          var day = f.getDate();
+          var year = f.getFullYear();
+          f=(day + '/' + month + '/' + year);
+       if(month <= 9){
+              month = '0'+month;
+            }
+            if(day <= 9){ 
+            day = '0'+day;
+          }
+          f=(day + '/' + month + '/' + year);
+          var faturacion='Pendiente';
+        if(Number(monto)>Number(saldo)){
+        alert('El Monto Excede al Cargo del Pedido');
+      }else{
+      $.post("{{ path('registro_pagosfac') }}", {saldo:saldo,operacion: operacion,monto:monto,formapago:formapago,comentario:comentario,fecha:f,cliente:clientefac,pedido:pedidofac,total:totalimp,fechafped:fechafacped,statusp:statusped,statusf:statusfin,cargpe:cr_ped,cuentafac:cuentafac,devolucion:fecha_dev,}, 
+        function(mensaje) {
+          $("#txtpu").html(mensaje); 
+          $('#tblpago').append("<tr><td style='text-align: center';><a href=#myModalpago_factura data-toggle=modal data-target=#myModalpago_factura>Facturar</td><td style='text-align: center';>"+mensaje[0]['idultimo']+"</td><td style='text-align: center';>"+operacion+"</td><td style='text-align: center';>"+f+"</td><td style='text-align: center';>"+formapago+"</td><td style='text-align: center';>"+comentario+"</td><td style='text-align: center';>"+faturacion+"</td><td style='text-align: center';>"+monto+"</td></tr>");
+          if (operacion=='Cargo'){
+              document.getElementById("tcppago").value= parseFloat(document.getElementById("tcppago").value)+ parseFloat(monto);
+            }
+          $('#tblpago tbody tr').each(function(){
+            var Referencia = $(this).find("td").eq(7).html();
+            var tipo = $(this).find("td").eq(2).html();
+            if (tipo=='Cargo'){
+            document.getElementById("inpt1_saldo").value=(parseFloat(saldo)+parseFloat(Referencia)).toFixed(2);  
+            }if (tipo=='Pago'){
+            totalimp= parseFloat(totalimp)+ parseFloat(Referencia);
+            document.getElementById("inpt1_saldo").value=(parseFloat(cargo_pedido)-parseFloat(totalimp)).toFixed(2);
+            }
+            
+          });  
+       var saldo2=0;
+       var statusf='';
+      saldo2=document.getElementById("inpt1_saldo").value;
+      if (document.getElementById("inpt1_saldo").value==0) {
+                  document.getElementById("stfpago").value ='Sin Adeudo';
+                  statusf=document.getElementById("stfpago").value;
+        } else{
+          document.getElementById("stfpago").value ='Adeudo';
+          statusf=document.getElementById("stfpago").value;
+        } 
+        cargo_pedido= document.getElementById("tcppago").value;
+          $.post("{{ path('act_pago') }}", {pedido:pedidofac,total:saldo2,statusf:statusf,cr_ped:cargo_pedido},
+          function(mensaje) {
+            $("#txtpu").html(mensaje); 
+            $('#myModal-agregarpg').modal('hide');
+         });   
+        });
+      alert('Pago Agregado');
+      $('#myModal-agregarpg').modal('hide');
+          }
+        }
+    }
+              function agregarpag() {
+                 $('#myModal-agregarpg').modal('show');
+              }
+              function filtrar() {
+                var pedido= document.getElementById('pedido').value;
+                var folio= document.getElementById('folio').value;
+                var cuenta= document.getElementById('combocta').value;
+                var cliente= document.getElementById('clt').value;
+                var hasta= document.getElementById('hasta').value;
+                var desde= document.getElementById('desde').value;
+                var tipo= document.getElementById('tipo').value;
+                var fact= document.getElementById('fact').value;
+                var formapago= document.getElementById('formapago').value;
+
+                $.post("{{ path('filtros_pagos') }}",{pedido:pedido,folio:folio,cuenta:cuenta,cliente:cliente,hasta:hasta,desde:desde,tipo:tipo,fact:fact,formapago:formapago},
+                    function(mensaje) {
+                       $("#tbla_cons_pagos").find("tr:gt(0)").remove();
+                       $("#pedido").html(mensaje);
+                       $("#tbla_cons_pagos").find("tr:gt(0)").remove();
+                        for (var i=0, total = mensaje.length; i < total; i++) {
+                         $("#tbla_cons_pagos").append("<tr class='dev'><td style='text-align: center';><a href=#myModal_1 data-toggle=modal data-target=#myModal_1>Detalles</td><td style='text-align: center'>"+mensaje[i]["pedido"]+"<td style='text-align: center'>"+mensaje[i]["folio"]+"<td style='text-align: center'>"+mensaje[i]["fecha"]+"<td style='text-align: center'>"+mensaje[i]["tipo"]+"<td style='text-align: center'>"+mensaje[i]["fecha"]+"<td style='text-align: center'>"+mensaje[i]["forma_pago"]+"<td style='text-align: center'>"+mensaje[i]["comentario"]+"<td style='text-align: center'>"+mensaje[i]["facturacion"]+"<td style='text-align: center'>"+mensaje[i]["monto"]+"</td></tr>");
+                        }
+                     });
+              }
+      function validar(e) {        
+        $("#restriccion").css("display", "none");
+        var clienterz= document.getElementById("clt").value;
+            if (clienterz != ''){
+              $.post("{{ path('llenarcuentas2') }}", {clienterz:clienterz}, function(mensaje) {
+            $("#txt3").html(mensaje);
+              if(mensaje[0]['restringir'] =='Restringido'){
+                  $("#restriccion").show();
+              }else{
+                $("#restriccion").css("display", "none");
+              for (var i=0, total = mensaje.length; i < total; i++) {
+                $("#combocta").append("<option value="+mensaje[i]['cuenta_Id']+">"+mensaje[i]['cuenta_Id']+"</option>");
+              }
+            }
+          });
+        }
+      }
+
+       document.getElementById("tbla_cons_pagos").onclick=function(e){ 
+
+            $("#tblpago").find("tr:gt(0)").remove();
+              if(!e)e=window.event; 
+              if(!e.target) e.target=e.srcElement; 
+              var TR=e.target;
+              while( TR.nodeType==1 && TR.tagName.toUpperCase()!="TR" )
+              TR=TR.parentNode;
+              var celdas=TR.getElementsByTagName("TD");
+              if( celdas.length!=0 )
+                var pedidofac=( celdas[1].innerHTML);
+                $.post("{{ path('pedidos_pagos') }}", {pedidofac: pedidofac}, function(mensaje) {
+                $("#txt3").html(mensaje);
+
+                  for (var i=0, total = mensaje.length; i < total; i++) {
+
+                    document.getElementById("pd_pago").value=pedidofac;
+                    document.getElementById("cltpago").value=mensaje[i]["cliente"];  
+                    document.getElementById("comb2pago").value=mensaje[i]["cuenta"];
+                    document.getElementById("fecha1_pago").value=mensaje[i]["fecha"]; 
+                    document.getElementById("fechainiciopago").value=mensaje[i]["devolucion"]; 
+                    document.getElementById("stpedpago").value=mensaje[i]["status"]; 
+                    document.getElementById("stfpago").value=mensaje[i]["statusf"]; 
+                    document.getElementById("tcppago").value=mensaje[i]["cargo"]; 
+                    $("#tblpago").append("<tr id=tr2 class=tr5><td style='text-align: center';><a href=#myModalpago_factura data-toggle=modal data-target=#myModalpago_factura>Facturar</td><td style='text-align: center';>"+mensaje[i]["opid"]+"</td><td style='text-align: center'>"+mensaje[i]["tipo"]+"</td><td style='text-align: center'>"+mensaje[i]["fecha"]+"</td><td style='text-align: center'>"+mensaje[i]["formapago"]+"</td><td style='text-align: center'>"+mensaje[i]["comentario"]+"</td><td style='text-align: center'>"+mensaje[i]["facturacion"]+"</td><td style='text-align: center'>"+mensaje[i]["monto"]+"</td></tr>");
+                    }
+                    var totalimp2=0;
+                    var cargo_pedido = document.getElementById("tcppago").value;
+                 $('#tblpago tbody tr').each(function(){
+                    var Referencia = $(this).find("td").eq(7).html();
+                    var tipo = $(this).find("td").eq(2).html();
+                    if (tipo=='Cargo'){
+                    document.getElementById("inpt1_saldo").value=parseFloat(document.getElementById('inpt1_saldo').value)+parseFloat(Referencia);  
+                    }if (tipo=='Pago'){
+                      totalimp2= parseFloat(totalimp2)+ parseFloat(Referencia);
+                      document.getElementById("inpt1_saldo").value=parseFloat(cargo_pedido)-parseFloat(totalimp2);
+                    }
+                    });   
+                  });
+              }
+             document.getElementById("tblpago").onclick=function(e){ 
+                   if(!e)e=window.event; 
+                    if(!e.target) e.target=e.srcElement; 
+                    var TR=e.target;
+                    while( TR.nodeType==1 && TR.tagName.toUpperCase()!="TR" )
+                    TR=TR.parentNode;
+                    var celdas=TR.getElementsByTagName("TD");
+                    if( celdas.length!=0 )
+                     op_id=( celdas[1].innerHTML);
+                   tipo=( celdas[2].innerHTML);
+                   fecha=( celdas[3].innerHTML);
+                   formap=( celdas[4].innerHTML);
+                   comentario=( celdas[5].innerHTML);
+                   fac=( celdas[6].innerHTML);
+                   monto=( celdas[7].innerHTML);
+               $.post("{{ path('consulta_foliopago') }}", {op_id:op_id}, function(mensaje) {
+               $("#txt3").html(mensaje);
+               if(mensaje=='[object Object]'){
+                mensaje='';
+               }
+               document.getElementById("fechaemis").value=mensaje;
+               if(fac=='No Requiere Factura'){
+               document.getElementById("foliofac").value=''; 
+               document.getElementById("chk_factura").checked=true;
+               }else{
+                document.getElementById("foliofac").value=fac; 
+                document.getElementById("chk_factura").checked=false;
+               }
+             });
+          }
+
+  
+  </script>
+
+    {%endblock%}
+
+{% block body %}
+{% set rol = '' %}
+   {% set rol=app.session.get('myrol') %}
+   {% set estado = '' %}
+   {% if rol == 'Limitado' %}    
+    {% set estado = 'disabled="true"' %}           
+   {% else %}  
+    {% set estado = '' %}           
+   {% endif %}
+    <ul class="breadcrumb">
+        <li><a href="{{ path('inicio_detalles')}}">Home</a></li>
+        <li><a href="{{ path('gestion_pagos')}}">Gestión de Pagos</a></li>
+        <li><a href="">Pagos Individuales</a></li>
+    </ul>
+
+
+<form style="padding-bottom: 70px">
+<h2 style="">Pagos Individuales</h2> 
+  <div id="cta_comb" class="cmb-cta">
+     <label class="lblpedido" style="margin-left: 350px;">Pedido:</label><input id="pedido" class="pedtxt" type="text" name="pedido" size="8">
+     <label class="lblfolio">Folio:</label><input id="folio" class="foltxt" type="text" name="folio" size="8">
+     
+     <span  id="restriccion" style="background-color:red; display: none">RESTRINGIDO</span>
+
+     
+     <label class="label3" for="cliente">Cliente</label>
+      <input name="clt" type="text" id="clt" autocomplete="off" list="categoryname"></input>
+        <datalist id="categoryname">
+     <script type="text/javascript">
+            llenardatalist();
+          </script>
+</datalist>
+<label class="cuenta">Cuenta:</label><select id="combocta"></select>
+
+
+     <input style="margin-left: 25px;" id="btnbuscar" class="btn btn-info btn-lg" type="button" value="Buscar" name="buscar" onclick="filtrar();">
+      </script>
+    
+  </div> 
+  <div id="contenedor">
+     <label class="lblhasta" style="margin-left: 200px;">Hasta:</label><input id="hasta" class="hastatxt" type="text" name="hasta" size="8">
+     <label class="lblregist">Registrados de:</label><input id="desde" class="regtxt"  type="text" name="desde" size="8">
+      <label>Tipo</label>
+      <SELECT NAME="tipo" SIZE=1 id="tipo">
+        <OPTION></OPTION>
+        <OPTION>Cargo</OPTION>
+        <OPTION>Pago</OPTION>
+      </SELECT> 
+       <label>Facturación</label>
+      <SELECT NAME="facturacion" SIZE=1 style="width: 100px" id="fact">
+        <OPTION></OPTION>
+        <OPTION>Facturado</OPTION>
+        <OPTION>No Requiere Factura</OPTION>
+      </SELECT> 
+      <label>Forma de Pago</label>
+      <SELECT NAME="forma_pago" SIZE=1 style="width: 100px" id="formapago">
+        <OPTION></OPTION>
+        <OPTION>Efectivo</OPTION>
+        <OPTION>Cheque</OPTION>
+        <OPTION>Transferencia</OPTION> 
+        <OPTION>Tarjeta</OPTION> 
+      </SELECT>
+      
+  </div>
+<div id="div1" style="height: 200px;">
+      <table id="tbla_cons_pagos" width="100%" align="center" >
+        <thead>
+         <tr id="columnas_pedidos" align="center">
+             <th style="text-align: center;">Detalles</th>
+             <th style="text-align: center;">Pedido</th>
+             <th style="text-align: center;">Folio</th>
+             <th style="text-align: center;">Op ID</th>
+             <th style="text-align: center;">Tipo</th>
+             <th style="text-align: center;">Fecha</th>
+             <th style="text-align: center;">Forma de Pago</th>
+             <th style="text-align: center;">Comentario</th>
+             <th style="text-align: center;">Facturacion</th>
+             <th style="text-align: center;">Monto</th>
+         </tr>
+         </thead>
+         
+       </table>
+    </div>
+  </form>
+
+    <!-- VENTANA MODAL DETALLES PAGO -->
+
+
+    <div class="modal fade" id="myModal_1" role="dialog" onchange="">
+    <div class="modal-dialog" style="  width: 100%;">
+      <!-- Modal content-->
+      <div class="modal-content">
+          <h1 style="text-align: center;">PAGOS</h1>  
+          <div id="pedidotxt" style="margin-left: 150px;">
+            <label class="label1" for="pedido">Pedido</label><input id="pd_pago" type="text" name="pedido" value="" disabled="true">
+            <label class="label3" for="cliente">Cliente</label>
+            <input type="text" id="cltpago" disabled="true"></input>
+            <label class="label4" for="cuenta">Cuenta</label><input id="comb2pago" type="text" class="cta_comb" name="cuenta" disabled="true">
+            <label class="label5" for="fecha">Fecha</label><input id="fecha1_pago" type="text" name="fecha" disabled="true" >
+            <label class="label6" for="devolucion">Devolución</label><input id="fechainiciopago" class="dev" size="16" type="text" name="devolucion">
+          </div>
+        <div id="contenedor2" style="margin-left: 150px;">
+          <label class="label7" for="status">Status</label><input id="stpedpago" class="status" size="19 type="text" name="status" disabled="true">
+          <label class="label7" for="status">Status Financiero</label><input id="stfpago" class="status" size="19 type="text" name="status" value="" disabled>
+          <label class="label7" for="status">Cargo Pedido</label><input id="tcppago" class="status" size="19 type="text" name="status" disabled="true" >
+        </div>
+    <div id="div1">
+      <table id="tblpago" width="100%" align="center" >
+        <thead>
+         <tr id="columnas_pedidos" align="center" class="ejemplo1">
+          <th>Facturar</th>
+             <th>Op ID</th>
+             <th>Tipo</th>
+             <th>Fecha</th>
+             <th>Forma de Pago</th>
+             <th>Comentario</th>
+             <th>Facturación</th>
+             <th class="mnt">Monto</th>
+         </tr>
+       </thead>
+       <script type="text/javascript">
+     
+  </script>
+     </table>
+      </div>
+
+       <div class="grupo1" style="margin-left: 850px;">    
+
+          <label id="lbl1">Saldo $</label> <input id="inpt1_saldo" type="text" name="sld"  disabled="true">
+        </div>
+        <input class="btn btn-info btn-lg" style="display: block;margin: auto;" id="btnel" type="button" value="+ Agregar" onclick="agregarpag();"  {{estado}}></input>
+
+        </div>
+      </div>
+    </div>
+        <!-- MODAL AGREGAR PAGO -->
+    <div class="modal fade" id="myModal-agregarpg" role="dialog" onchange="">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div>
+         <h2 align="center" id="lblop">Agregar Pago/Cargo</h2>
+       </div>
+          <br>
+         <label id="lblop">Operación</label><SELECT id="combop" NAME="selCombo" SIZE=1>
+            <OPTION>Pago</OPTION>
+            <OPTION>Cargo</OPTION>
+         </SELECT> 
+          <label class="monto">Monto</label><input id="inpop1" class="montotxt" type="text" name="" size="10"><label class="monto">Forma de Pago</label><SELECT id="combFP" NAME="selCombo" SIZE=1>
+            <OPTION>Efectivo</OPTION>
+            <OPTION>Transferencia</OPTION>
+            <OPTION>Cheque</OPTION>
+            <OPTION>Tarjeta</OPTION>
+         </SELECT> 
+         <div>
+            <br>
+        <label id="lblcom" class="clav" >Comentarios</label><input id="idcom" class="clavtxt" type="text" name="" size="53" placeholder="Escriba La observacion del Pago">
+          </div>
+          <br>
+
+      <div class="btagregar" align="center">
+        <input id="btn1op" class="agregbtnop2" type="button" value="Aceptar" onclick="agregarfilapago();">
+      </div>
+          <br>
+          <br>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModalpago_factura" role="dialog" onchange="">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div>
+         <h2 align="center" id="lblop">Facturar Pago</h2>
+       </div>
+          <br>
+         &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  <label id="lblop" >Fecha Emision a Facturar</label>&nbsp; &nbsp; &nbsp; &nbsp; <input id="fechaemis" type="text" name="fechaemis">
+         <br>
+         &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<label id="lblfoliofac">Folio de Factura</label>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;<input id="foliofac" type="text" name="" size="18">
+            <br>
+            &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<label id="lblfacchk" >Este Pago no se Factura</label>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;<input type="checkbox" name="chk" id="chk_factura" value="">
+            <br>
+      <div class="btagregar" align="center">
+        <input id="btn1op" class="agregbtnop2" type="button" value="Aplicar" onclick="agregarfolio();" {{estado}}>
+      </div>
+          <br>
+          <br>
+      </div>
+    </div>
+  </div>
+{% endblock %}

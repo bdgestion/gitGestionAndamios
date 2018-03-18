@@ -1,0 +1,300 @@
+{% extends 'menu/menu.html.twig' %}
+{% block estilos %}
+{% set cont2='-1' %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"></link>
+  <link rel="stylesheet" href="/resources/demos/style.css"></link>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="mdtimepicker.js"></script>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet"/>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.css" rel="stylesheet"/>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+
+
+	<title>Detalles de Pedidos</title>
+  <Link rel="stylesheet" href="{{ asset('css/ped_estilo.css')}}">
+		 {%endblock%}
+
+         {% block body %}
+         <style type="text/css">
+         	#div1{
+     			overflow: scroll;
+     			width: 65%;
+     			height: 250px;
+			}
+         </style>
+	<script type="text/javascript">
+		var fila=0;
+		function activar(cheked) {
+			if(cheked.checked==true){
+					document.getElementById('btn_Eliminar').disabled=false;	
+				}else{
+					document.getElementById('btn_Eliminar').disabled=true;	
+				}
+		}
+		 function recorrercheck(){
+			  var statusConfirm =(confirm("Desea borrar el registro?"))
+			  if (statusConfirm == true){ 
+			   	var i = 0;
+			   	 $("input[name=chek1]").each(function () { 
+
+			         if($(this).is(':checked')){
+			          var recoleccion=($(this).val());
+			         	// document.getElementById("tbla").deleteRow(fila);
+			            $.post("{{ path('eliminar_recolecciones') }}", {recoleccion: recoleccion}, function(mensaje) {
+			              $("#txt3").html(mensaje);
+			              
+			            });
+			         }
+			      });
+			   	 alert('Registro Eliminado');
+			              location.reload();
+			         
+			    }
+
+		 	
+		 }
+		$(document).ready(function() {
+
+			var recoleccion='';
+			$("#tbla").delegate("tr", "click", function(e) {         
+	 			fila=($(e.currentTarget).index() + 1 );      
+	     		});
+			$('#inptcliente').on('input', function() {
+    		var userText = $(this).val();
+    		$("#categoryname").find("option").each(function() {
+      		if ($(this).val() == userText) {
+        		validar();
+      		}
+
+
+		    })
+		     $.post("{{ path('pedidos') }}", {clienterz:userText}, function(mensaje) {
+                  $("#txt3").html(mensaje);
+                    for (var i=0, total = mensaje.length; i < total; i++) {
+                       $("#category1").append("<option>"+mensaje[i]['pedido']+"</option>");	
+                   }
+                }); 
+		    $.post("{{ path('domicilio') }}", {clienterz:userText}, function(mensaje) {
+                 $("#txt3").html(mensaje);
+                  for (var i=0, total = mensaje.length; i < total; i++) {
+                  	$("#category4").append("<option>"+mensaje[i]['domicilio']+"</option>");		
+                  	
+	              }
+	            });
+		  })
+			$("#datetimepicker1").datetimepicker({
+          	 format: 'HH:mm a'
+        	 });
+		 });
+		 function llenardatalist(){
+		     $.post("{{ path('datalist') }}", function(mensaje) {
+		      $("#txt3").html(mensaje);
+		      for (var i=0, total = mensaje.length; i < total; i++) {
+		          $("#categoryname").append("<option>"+mensaje[i]['razonsocial']+"</option>");
+		      }
+		     });
+		  }
+    
+		   
+		   function validar(e) { 
+		   		var rz='';
+	             var clienterz= document.getElementById("inptcliente").value;
+                  if (clienterz != ''){
+                  $.post("{{ path('llenarcuentas') }}", {clienterz:clienterz}, function(mensaje) {
+                  $("#txt3").html(mensaje);
+                    for (var i=0, total = mensaje.length; i < total; i++) {
+                       $("#category2").append("<option>"+mensaje[i]['cuenta_Id']+"</option>");
+                   }
+                  });
+              }
+             
+           
+            }
+
+          function crear() {
+
+          	var clienterz= document.getElementById("inptcliente").value;
+          	var obra= document.getElementById("obra").value;
+          	var pedido= document.getElementById("pedido").value;
+          	var domicilio= document.getElementById("domicilio").value;
+          	var fecha= document.getElementById("fecha1").value;
+          	var hora= document.getElementById("hora").value;
+          	if(obra==''){
+          		obra='No Posee ';
+          	}
+
+			if(clienterz!= '' || domicilio !='' || fecha !='' || hora !=''){
+  			  $.post("{{ path('registro_recolecciones') }}", {clienterz:clienterz,obra:obra,pedido:pedido,domicilio:domicilio,fecha:fecha,hora:hora}, function(mensaje) {
+              $("#txt3").html(mensaje);
+	        });
+			alert('Recoleccion Realizada');
+			location.reload();
+			}else{
+				alert('Complete todos los Campos');
+			}
+          }
+	   $( function() {
+	       $.datepicker.regional['es'] = {
+		        closeText: 'Cerrar',
+		        prevText: '< Ant',
+		        nextText: 'Sig >',
+		        currentText: 'Hoy',
+		        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+		        monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+		        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+		        dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+		        dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+		        weekHeader: 'Sm',
+		        dateFormat: 'dd/mm/yy',
+		        firstDay: 1,
+		        isRTL: false,
+		        showMonthAfterYear: false,
+		        yearSuffix: ''
+	 		};
+		 $.datepicker.setDefaults($.datepicker.regional['es']);
+		 $("#fecha1" ).datepicker();
+		 $("#fecha1").datepicker('option', { dateFormat: "dd/mm/yy" });
+	 });
+
+	   	function clickfilas() {
+	   		document.getElementById('btn_crear').disabled=true;
+	   		document.getElementById('btn_modificar').disabled=false;
+	   		document.getElementById('btn_print').disabled=false;
+	   		//document.getElementById('btn_Eliminar').disabled=false;
+ 		    document.getElementById('btn_regresar').disabled=false;
+ 	}
+ 	function modfirecoleccion() {
+ 		 var statusConfirm =(confirm("Esta Seguro de Enviar éstas Modificaciones?"))
+      if (statusConfirm == true){ 
+ 		 $.post("{{ path('modificar_recolecciones') }}", { recoleccion:recoleccion,cliente:document.getElementById('inptcliente').value,obra:document.getElementById('obra').value,pedido:document.getElementById('pedido').value,domicilio:document.getElementById('domicilio').value,fecha:document.getElementById('fecha1').value,hora:document.getElementById('hora').value}, function(mensaje) {
+              $("#txt3").html(mensaje);
+	        });
+ 		 alert('Recoleccion Modificada');
+		}else{
+			alert('Procedimiento Cancelado');
+		}
+ 	}
+ 	function imprimir(){
+           var fecha= $("input#fecha1").val();
+           //25/02/2018
+           var dia = fecha.substring(0, 2);
+           var mes = fecha.substring(3, 5);
+           var año = fecha.substring(6, 10);
+                var hoy = new Date();
+			var dd = hoy.getDate();
+			var mm = hoy.getMonth()+1; //hoy es 0!
+			var yyyy = hoy.getFullYear();
+
+			if(dd<10) {
+			    dd='0'+dd
+			} 
+
+			if(mm<10) {
+			    mm='0'+mm
+			} 
+
+			hoy = yyyy+'-'+mm+'-'+dd;
+           window.open("imprimirrec/"+hoy);
+        }
+	</script>
+
+ <form id="form1">
+     	<fieldset style="display: block;margin: auto; text-align: center; margin-top: 1%;">
+	    	<legend style="text-align: center;"> DATOS DE RECOLECCIONES <span class="glyphicon glyphicon-pencil"></span></legend>
+	    		 <label class="label3">Cliente</label>
+                <input type="text" id="inptcliente" autocomplete="off" list="categoryname"></input>
+                <script type="text/javascript">
+                  llenardatalist();
+                </script>
+                <datalist id="categoryname">
+                </datalist>
+			<label id="lblobra">Obra</label>
+			<input type="text" id="obra" autocomplete="off" list="category2" value=""> </input>
+		          <datalist id="category2">
+		          </datalist>
+			<label id="lblcliente">Pedido</label>
+			<input type="text" id="pedido" autocomplete="off" list="category1" value=""></input>
+		        <datalist id="category1">
+		        </datalist>
+		          <br>
+		       <br>
+		      <label id="lblcliente">Domicilio</label>
+			<input type="text" id="domicilio" autocomplete="off" list="category4" value="" size="80" > </input>
+		          <datalist id="category4" >
+		          </datalist>
+
+		       <label class="label5" for="fecha">Fecha <span class="glyphicon glyphicon-calendar"></span></label><input id="fecha1" type="text" name="fecha" value="" >
+		       <br>
+		       <br>
+		          <div style="width: 15%; display: block;margin: auto;" class="input-group date" id="datetimepicker1">
+				    <input id="hora" type="text" class="form-control" placeholder="Hora" />
+					  <span class="input-group-addon">
+					    <span class="glyphicon glyphicon-dashboard"></span>
+					  </span>
+				  </div>
+       </fieldset>
+      	<div id="botones" style="text-align: center; margin-top: 2%; height: 15px;">
+      		<button class="btn btn-primary" id="btn_crear" type="button" value="Crear" onclick="crear();"> Programar Recoleccion <span class="glyphicon glyphicon-floppy-open"></span></button>
+      		
+       		<button class="btn btn-warning" id="btn_modificar" type="button" value="Modificar Pedido" onclick="modfirecoleccion();" style="margin-top: -1px; " disabled="true"> Modificar Recoleccion  <span class="glyphicon glyphicon-wrench"></span></button></button>
+       		<button class="btn btn-info" id="btn_print" type="button"  onclick="imprimir();" style="margin-top: -1px" >Imprimir  <span class="glyphicon glyphicon-print"></span></button>
+       		<button class="btn btn-danger" id="btn_Eliminar" type="button" value="Eliminar" onclick="recorrercheck();" style="margin-top: -1px" disabled="true" > Eliminar  <span class="glyphicon glyphicon-trash"></span></button>
+       	</div>
+			<br>
+	<div id="div1" class="table table-striped" style="width: 80%;">
+			<table id="tbla" class="table" width="100%" align="center">
+				<thead>
+					<tr id="columnas_pedidos" style="text-align: center;">
+						<th style="text-align: center;"><input type="checkbox" name="" disabled="true"></th>
+						<th style="text-align: center;">Recolecciones</th>
+						<th style="text-align: center;">Clientes</th>
+						<th style="text-align: center;">Obra</th>
+						<th style="text-align: center;">Fecha</th>
+						<th style="text-align: center;">Hora</th>
+						<th style="text-align: center;">Pedidos</th>
+						<th style="text-align: center;">Domicilio</th>
+					</tr>
+				</thead>
+			<tbody>
+			        {% for recolecciones in datosrecolecciones %}
+			            <tr>
+			            	<td style="text-align: center;"><input id="chek2" type="checkbox" name="chek1" value="{{ recolecciones.id }}" onclick="activar(this);"></td>
+			                <td style='text-align: center; color:blue; text-decoration: underline; cursor:pointer;'>{{ recolecciones.id }}</td>
+			                <td style="text-align: center;">{{ recolecciones.clientes }}</td>
+			                <td style="text-align: center;">{{ recolecciones.obra }}</td>
+			                <td style="text-align: center;">{{ recolecciones.fecha|date("d/m/Y") }}</td>
+			                <td style="text-align: center;">{{ recolecciones.hora }}</td>
+			                <td style="text-align: center;">{{ recolecciones.pedidos }}</td>
+			                <td style="text-align: center;">{{ recolecciones.domicilio }}</td>
+			            </tr>
+			        {% endfor %}
+       			</tbody>
+				<script type="text/javascript">
+					document.getElementById("tbla").onclick=function(e){ 
+					if(!e)e=window.event; 
+					if(!e.target) e.target=e.srcElement; 
+					var TR=e.target;
+					while( TR.nodeType==1 && TR.tagName.toUpperCase()!="TR" )
+					TR=TR.parentNode;
+					var celdas=TR.getElementsByTagName("TD");
+					if( celdas.length!=0 )
+						recoleccion= celdas[1].innerHTML;
+					document.getElementById('inptcliente').value=celdas[2].innerHTML;
+					document.getElementById('obra').value=celdas[3].innerHTML;
+					document.getElementById('hora').value=celdas[5].innerHTML;
+					document.getElementById('domicilio').value=celdas[7].innerHTML;
+					document.getElementById('fecha1').value=celdas[4].innerHTML;
+					document.getElementById('pedido').value=celdas[6].innerHTML;
+					clickfilas();
+					}
+					</script>
+				<input style="visibility:hidden;" name="txtTabla" type="text" id="txtTabla" value=""  >
+		</table>
+	</div>
+ </form>
+ {% endblock %}

@@ -1,0 +1,159 @@
+<?php
+
+namespace GestionBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Factura
+ *
+ * @ORM\Table(name="factura", uniqueConstraints={@ORM\UniqueConstraint(name="Op_ID", columns={"Op_ID"})})
+ * @ORM\Entity
+ */
+class Factura
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pedido", type="integer", nullable=false)
+     */
+    private $pedido;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="folio", type="string", length=50, nullable=false)
+     */
+    private $folio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cliente", type="string", length=100, nullable=false)
+     */
+    private $cliente;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cuenta", type="string", length=200, nullable=false)
+     */
+    private $cuenta;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fecha_pago", type="string", length=100, nullable=false)
+     */
+    private $fechaPago;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="monto", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $monto;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="forma_pago", type="string", length=100, nullable=false)
+     */
+    private $formaPago;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="facturacion", type="string", length=100, nullable=true)
+     */
+    private $facturacion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=100, nullable=false)
+     */
+    private $status;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status_financiero", type="string", length=100, nullable=false)
+     */
+    private $statusFinanciero;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="cargo_pedido", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $cargoPedido;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="devolucion", type="string", length=400, nullable=false)
+     */
+    private $devolucion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comentario", type="string", length=500, nullable=false)
+     */
+    private $comentario;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipo", type="string", length=100, nullable=false)
+     */
+    private $tipo;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="saldo", type="float", precision=10, scale=0, nullable=true)
+     */
+    private $saldo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fecha", type="string", length=100, nullable=false)
+     */
+    private $fecha;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="Op_ID", type="bigint", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $opId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fecha_emision", type="string", length=100, nullable=true)
+     */
+    private $fechaEmision;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="total", type="float", precision=10, scale=0, nullable=false)
+     */
+    private $total;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="folio_pedido", type="string", length=100, nullable=false)
+     */
+    private $folioPedido;
+
+
+}
+

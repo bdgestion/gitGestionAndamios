@@ -1,0 +1,120 @@
+pedidos_index:
+    path:     /
+    defaults: { _controller: "GestionBundle:Pedidos:index" }
+    methods:  GET
+pedidos_show:
+    path:     /{id}/show
+    defaults: { _controller: "GestionBundle:Pedidos:show" }
+    methods:  GET
+inicio_detalles:
+    path:     /home
+    defaults: { _controller: "GestionBundle:Pedidos:home" }
+    methods:  GET
+pedidos_detalles:
+    path:     /detallespedido/{id}
+    defaults: { _controller: "GestionBundle:Pedidos:detallespedido" }
+    methods:  GET
+pedidos_factura:
+    path:     /pedidosfact/{p}/{id}
+    defaults: { _controller: "GestionBundle:Pedidos:pedidofact" }
+    methods:  GET
+modificar_pedido:
+    path:     /modificar
+    defaults: { _controller: "GestionBundle:Pedidos:modificarpedido" }
+    methods:  [POST, DELETE,GET]
+eliminar_pedido:
+    path:     /eliminar
+    defaults: { _controller: "GestionBundle:Pedidos:eliminarpedido" }
+    methods:  [POST, GET]
+buscar_datos:
+    path:     /buscar
+    defaults: { _controller: "GestionBundle:Pedidos:buscarclave" }
+    methods:  [POST, GET]
+registro_folio:
+    path:     /folio/
+    defaults: { _controller: "GestionBundle:Pedidos:registrofolio" }
+    methods:  [POST, GET,UPDATE]
+registro_pago:
+    path:     /pago
+    defaults: { _controller: "GestionBundle:Pedidos:registropago" }
+    methods:  [POST, GET,UPDATE]
+agregar_folio:
+    path:     /agregarfolio
+    defaults: { _controller: "GestionBundle:Pedidos:agregarfolio" }
+    methods:  [POST, GET,UPDATE]
+buscar_eq:
+    path:     /buscareq
+    defaults: { _controller: "GestionBundle:Pedidos:buscarequipos" }
+    methods:  [POST, GET]
+gestion_rentas:
+    path:     /rentas
+    defaults: { _controller: "GestionBundle:Pedidos:gestionrentas" }
+    methods:  [POST, GET]
+datalist:
+    path:     /dt
+    defaults: { _controller: "GestionBundle:Pedidos:llenardt" }
+    methods:  [POST, GET]
+llenarcuentas:
+    path:     /cta
+    defaults: { _controller: "GestionBundle:Pedidos:llenarcta" }
+    methods:  [POST, GET]
+registrar_pedidos:
+    path:     /rgs
+    defaults: { _controller: "GestionBundle:Pedidos:registrarpedido" }
+    methods:  [POST, GET]
+act_pago:
+    path:     /act
+    defaults: { _controller: "GestionBundle:Pedidos:actpago" }
+    methods:  [POST, GET]
+configuracion:
+    path:     /conf
+    defaults: { _controller: "GestionBundle:Pedidos:configuracion" }
+    methods:  [POST, GET]
+gestion_pagos:
+    path:     /pagos
+    defaults: { _controller: "GestionBundle:Pedidos:gestionpagos" }
+    methods:  [POST, GET]
+consultas_pedidos:
+    path:     /cltpeds
+    defaults: { _controller: "GestionBundle:Pedidos:consultaspds" }
+    methods:  [POST, GET]
+clt_pedidos:
+    path:     /flped
+    defaults: { _controller: "GestionBundle:Pedidos:consultaspdstabla" }
+    methods:  [POST, GET]
+consultas_dev2:
+    path:     /clstdev
+    defaults: { _controller: "GestionBundle:Pedidos:consultdevdetalles" }
+    methods:  [POST, GET]
+dev_detallestabla:
+    path:     /fldevtbl
+    defaults: { _controller: "GestionBundle:Pedidos:detallesdv" }
+    methods:  [POST, GET]
+dev_detallestabla2:
+    path:     /fldevtbl2
+    defaults: { _controller: "GestionBundle:Pedidos:detallesdv2" }
+    methods:  [POST, GET]
+dev_detallestabla3:
+    path:     /fldevtbl3
+    defaults: { _controller: "GestionBundle:Pedidos:detallesdv3" }
+    methods:  [POST, GET]
+obtener_pedido2:
+    path:     /obtpd2
+    defaults: { _controller: "GestionBundle:Pedidos:obtpd2" }
+    methods:  [POST, GET]
+imprimir_dev:
+    path:     /detallespedido/imprdev/{pedido}
+    defaults: { _controller: "GestionBundle:Pedidos:imprdev" }
+    methods:  [POST, GET]
+consulta_foliopago:
+    path:     /cnlfolio
+    defaults: { _controller: "GestionBundle:Pedidos:conslfoliopago" }
+    methods:  [POST, GET]
+cancelar_pedido:
+    path:     /cancped
+    defaults: { _controller: "GestionBundle:Pedidos:modifpedcancelado" }
+    methods:  [POST, GET]
+ultpedido:
+    path:     /ult
+    defaults: { _controller: "GestionBundle:Pedidos:ultipedido" }
+    methods:  [POST, GET]

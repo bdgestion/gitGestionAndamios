@@ -1,0 +1,131 @@
+<?php
+
+namespace GestionBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Devoluciones
+ *
+ * @ORM\Table(name="devoluciones", uniqueConstraints={@ORM\UniqueConstraint(name="id_dev", columns={"id_dev"})}, indexes={@ORM\Index(name="IDX_DA538C63C4EC16CE", columns={"pedido"})})
+ * @ORM\Entity
+ */
+class Devoluciones
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_dev", type="bigint", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idDev;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pedido", type="integer", nullable=true)
+     */
+    private $pedido;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cuenta", type="string", length=200, nullable=false)
+     */
+    private $cuenta;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cliente", type="string", length=100, nullable=false)
+     */
+    private $cliente;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="folio", type="string", length=100, nullable=false)
+     */
+    private $folio;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fecha_devolucion", type="string", length=100, nullable=false)
+     */
+    private $fechaDevolucion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fecha_actual", type="string", length=100, nullable=false)
+     */
+    private $fechaActual;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status_pedido", type="string", length=200, nullable=false)
+     */
+    private $statusPedido;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cantidad_entregados", type="integer", nullable=false)
+     */
+    private $cantidadEntregados;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="clave_equipo", type="string", length=200, nullable=false)
+     */
+    private $claveEquipo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nomb_equipo", type="string", length=200, nullable=false)
+     */
+    private $nombEquipo;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cant_devueltos", type="integer", nullable=false)
+     */
+    private $cantDevueltos;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pendiente_dev", type="integer", nullable=false)
+     */
+    private $pendienteDev;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="detalles", type="string", length=500, nullable=false)
+     */
+    private $detalles;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="cant_dina", type="integer", nullable=false)
+     */
+    private $cantDina;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="folio_pedido", type="string", length=100, nullable=false)
+     */
+    private $folioPedido;
+
+
+}
+

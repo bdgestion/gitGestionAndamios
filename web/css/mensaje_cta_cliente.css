@@ -1,0 +1,18 @@
+div{
+	text-align: center;
+}
+.bnt1{
+	margin-top: 50px;
+    margin-left: 20px;
+    width: 40%;
+    padding: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #1883ba;
+    border-radius: 6px;
+    border: 2px solid #0016b0;
+    cursor: pointer;
+    font-size: 16px;
+
+}
