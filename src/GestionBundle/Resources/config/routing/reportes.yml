@@ -11,20 +11,8 @@ filtros_rptped:
     defaults: { _controller: "GestionBundle:Pedidos:filtroped" }
     methods:  [GET, POST]
 sql_ped:
-    path:     /sqlpd/{cliente2}/{cuenta2}/{hasta2}/{desde2}/{cliente}/{cuenta}/{hasta}/{desde}/{filtro1}/{filtro2}/{filtro3}/{filtro4}/{filtro5}/{filtro6}
+    path:     /sqlpd/{cliente}/{cuenta}/{hasta}/{desde}/{folio}/{pedido}
     defaults: { _controller: "GestionBundle:Pedidos:sqlped" }
-    methods:  [GET, POST]
-reporte_operaciones:
-    path:     /rptoperaciones
-    defaults: { _controller: "GestionBundle:Factura:reporteoperaciones" }
-    methods:  [GET, POST]
-filtros_rptoper:
-    path:     /rptopefiltros
-    defaults: { _controller: "GestionBundle:Factura:rptopiltro" }
-    methods:  [GET, POST]
-sql_rptoper:
-    path:     /sqlop/{cliente2}/{cuenta2}/{hasta2}/{desde2}/{cliente}/{cuenta}/{hasta}/{desde}/{filtro1}/{filtro2}/{filtro3}/{filtro4}/{filtro5}/{filtro6}/{filtro7}/{filtro8}/{filtro9}
-    defaults: { _controller: "GestionBundle:Factura:sqloper" }
     methods:  [GET, POST]
 reportes_saldos:
     path:     /rptsaldos
@@ -35,10 +23,18 @@ filtros_rptsaldo:
     defaults: { _controller: "GestionBundle:Factura:filtrosaldo" }
     methods:  [GET, POST]
 sql_rptsaldo:
-    path:     /sqlsaldo/{cliente}/{cuenta}/{fechahasta}/{fechadesde}/{tipofecha}
+    path:     /sqlsaldo/{cliente}/{cuenta}/{fechadesde}/{fechahasta}/{tipofecha}
     defaults: { _controller: "GestionBundle:Factura:sqlsaldo" }
     methods:  [GET, POST]
 imprimir_general:
     path:     /impr/{desde}/{hasta}/{cliente}/{cuenta}
     defaults: { _controller: "GestionBundle:Recolecciones:filtrogeneral" }
+    methods:  [POST, GET]
+imprimirdevolucion:
+    path:     /rptdev/{pedido}/{folio}/{desde}/{hasta}
+    defaults: { _controller: "GestionBundle:DetallesDevoluciones:imprimirdevolucion" }
+    methods:  [POST, GET]
+imprimirpagos:
+    path:     /rptpago/{pedido}/{folio}/{fechadesde}/{fechahasta}/{cliente}/{obra}
+    defaults: { _controller: "GestionBundle:Factura:imprimirpago" }
     methods:  [POST, GET]

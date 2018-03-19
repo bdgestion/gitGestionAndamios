@@ -311,16 +311,14 @@ class RecoleccionesController extends Controller
                 $this->get('session')->getFlashBag()->add('fall','ES NECESARIO INICIAR SESSION');
                 return $this->redirect($this->generateUrl('usuario_login'));
             }
-
-
         $sql="SELECT * FROM recolecciones";
         $con=0;
-         if ($cliente<>'')
+         if ($cliente<>'0')
         {
           $sql= $sql." WHERE clientes like '".$cliente."%'";
           $con=1;
         }
-        if ($cuenta<>'')
+        if ($cuenta<>'0')
         {
             if($con==1){
               $sql= $sql." and obra like '".$cuenta."%'";  
@@ -329,7 +327,7 @@ class RecoleccionesController extends Controller
             }
             $con=2;
         }
-        if ($desde <> '' and $hasta <> ''){
+        if ($desde <> '0' and $hasta <> '0'){
           if($con==1 or $con==2){
             $sql= $sql." and fecha >= '".$desde."' and fecha <= '".$hasta."'";
           }else{
@@ -337,21 +335,19 @@ class RecoleccionesController extends Controller
           }
           $con=3;
         }
-         if ($desde <> '' and $hasta == '') {
+         if ($desde <> '0' and $hasta == '0') {
           if($con==1 or $con==2 or $con==3){
             $sql= $sql." and fecha = '".$desde."'";
           }else{
             $sql= $sql." where fecha = '".$desde."'";
           }
         }
-
-
         $manager = $this->getDoctrine()->getManager();
         $conn = $manager->getConnection();
         $rec= $conn->query($sql);
 
         $pdf = $this->get("white_october.tcpdf")->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-
+        
           $añod = substr($desde,0,4);
           $diad = substr($desde,8,9);
           $mesd = substr($desde,5,2);

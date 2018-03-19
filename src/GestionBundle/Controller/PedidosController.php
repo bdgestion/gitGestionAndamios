@@ -548,34 +548,6 @@ public function llenardtAction(Request $request)
          }
          return new JsonResponse($ultpds);
   }
-
-  
-  // public function obtpd2Action(Request $request)
-  // {
-  //   $session = $request->getSession(); 
-  //       if(!$session->get("usuarionombre")){
-  //           $this->get('session')->getFlashBag()->add('fall','ES NECESARIO INICIAR SESSION');
-  //           return $this->redirect($this->generateUrl('usuario_login'));
-  //       }
-  //     $pedido = $_POST['pedido'];  
-  //     $manager = $this->getDoctrine()->getManager();
-  //     $conn = $manager->getConnection();
-  //     $em = $this->getDoctrine()->getManager();
-  //                   $generardatos = array();
-  //                   $queryc = $em->createQuery(
-  //                   'SELECT p
-  //                   FROM  GestionBundle:Pedidos p
-  //                   WHERE p.pedido = :price ' 
-  //                   )->setParameter('price', $pedido);
-  //                   $row = $queryc->getResult();
-  //                    foreach ($row as $entidad){
-  //                     $pd = $entidad->getPedido();
-  //                     $localidad['pedido'] =$pd; 
-  //                     $generardatos[]=$localidad;
-  //                   }
-  //                   return new JsonResponse($generardatos);
-  // }
-
   public function consultaspdstablaAction(Request $request)
       {
         $session = $request->getSession(); 
@@ -626,129 +598,123 @@ public function llenardtAction(Request $request)
       }
 
         
-     public function filtropedAction(Request $request)
-     {
-        $session = $request->getSession(); 
-        if(!$session->get("usuarionombre")){
-            $this->get('session')->getFlashBag()->add('fall','ES NECESARIO INICIAR SESSION');
-            return $this->redirect($this->generateUrl('usuario_login'));
+  //    public function filtropedAction(Request $request)
+  //    {
+  //       $session = $request->getSession(); 
+  //       if(!$session->get("usuarionombre")){
+  //           $this->get('session')->getFlashBag()->add('fall','ES NECESARIO INICIAR SESSION');
+  //           return $this->redirect($this->generateUrl('usuario_login'));
 
-        }
-        $con=0;
-        $sql="SELECT * FROM pedidos";
-        $cliente=$_POST['cliente'];
-        $cuenta=$_POST['cuenta'];
-        $desde=$_POST['desde'];
-        $hasta=$_POST['hasta'];
-        $filtro1=$_POST['filtro1'];
-        $filtro2=$_POST['filtro2'];
-        $filtro3=$_POST['filtro3'];
-        $filtro4=$_POST['filtro4'];
-        $filtro5=$_POST['filtro5'];
-        $filtro6=$_POST['filtro6'];
+  //       }
+  //       $con=0;
+  //       $sql="SELECT * FROM pedidos";
+  //       $cliente=$_POST['cliente'];
+  //       $cuenta=$_POST['cuenta'];
+  //       $desde=$_POST['desde'];
+  //       $hasta=$_POST['hasta'];
 
-         if ($cuenta<>'')
-        {
-          $sql= $sql." where cuenta like '".$cuenta."%'";
-          $con=1;
-        }
-        if ($cliente<>'')
-        {
-          if ($con==1){
-            $sql= $sql." and cliente like '".$cliente."%'";
-            $con=2;
-          }else {
-            $sql=$sql. " where cliente like '".$cliente."%'"; 
-            $con=3;
-         }
-        }
-  if ($desde <>'' and $hasta <>''){
-          if ($con==1 OR $con==2 OR $con==3 ){
-            $sql= $sql." and fecha >= '".$desde."' and fecha <= '".$hasta."'";
-            $con=4;
-          }else{
-            $sql=$sql. " where fecha >= '".$desde."' and fecha <= '".$hasta."'"; 
-            $con=5;
-          }
-        }
-         if ($desde <>'' and $hasta ==''){ 
-          if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5){
-            $sql= $sql." and fecha = '".$desde."'";
-            $con=6;
-          }else{
-            $sql=$sql. " where fecha = '".$desde."'"; 
-            $con=7;
-          }
-        }
-    if($filtro1=='Activo'){
-      if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7){
-            $sql= $sql." or status_pedido='Pedido'";
-            $con=8;
-          }else{
-            $sql=$sql. " where status_pedido='Pedido'";
-            $con=9;
-          }
-        }
-         if($filtro2=='Activo'){
-      if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7 OR $con==8 OR $con==9){
-            $sql= $sql." or status_pedido='En Renta'";
-            $con=10;
-          }else{
-            $sql=$sql. " where status_pedido='En Renta'";
-            $con=11;
-          }
-        }
-        if($filtro3=='Activo'){
-        if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7 OR $con==8 OR $con==9 OR $con==10 OR $con==11){
-            $sql= $sql." or status_pedido='Pendiente de Devolucion'";
-            $con=12;
-          }else{
-            $sql=$sql. " where status_pedido='Pendiente de Devolucion'";
-            $con=13;
-          }
-        }
-        if($filtro4=='Activo'){
-        if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7 OR $con==8 OR $con==9 OR $con==10 OR $con==11 OR $con==12 OR $con==13){
-            $sql= $sql." or status_pedido='Devuelto'";
-            $con=14;
-          }else{
-            $sql=$sql. " where status_pedido='Devuelto'";
-            $con=15;
-          }
-        }
-        if($filtro5=='Activo'){
-        if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7 OR $con==8 OR $con==9 OR $con==10 OR $con==11 OR $con==12 OR $con==13 OR $con==14 OR $con==15){
-            $sql= $sql." or status_pago='Adeudo'";
-            $con=16;
-          }else{
-            $sql=$sql. " where status_pago='Adeudo'";
-            $con=17;
-          }
-        }
-      if($filtro6=='Activo'){
-        if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7 OR $con==8 OR $con==9 OR $con==10 OR $con==11 OR $con==12 OR $con==13 OR $con==14 OR $con==15 OR $con==16 OR $con==17){
-            $sql= $sql." or status_pago='Sin Adeudo'";
-            $con=18;
-          }else{
-            $sql=$sql. " where status_pago='Sin Adeudo'";
-            $con=19;
-          }
-        }
+  //        if ($cuenta<>'')
+  //       {
+  //         $sql= $sql." where cuenta like '".$cuenta."%'";
+  //         $con=1;
+  //       }
+  //       if ($cliente<>'')
+  //       {
+  //         if ($con==1){
+  //           $sql= $sql." and cliente like '".$cliente."%'";
+  //           $con=2;
+  //         }else {
+  //           $sql=$sql. " where cliente like '".$cliente."%'"; 
+  //           $con=3;
+  //        }
+  //       }
+  // if ($desde <>'' and $hasta <>''){
+  //         if ($con==1 OR $con==2 OR $con==3 ){
+  //           $sql= $sql." and fecha >= '".$desde."' and fecha <= '".$hasta."'";
+  //           $con=4;
+  //         }else{
+  //           $sql=$sql. " where fecha >= '".$desde."' and fecha <= '".$hasta."'"; 
+  //           $con=5;
+  //         }
+  //       }
+  //        if ($desde <>'' and $hasta ==''){ 
+  //         if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5){
+  //           $sql= $sql." and fecha = '".$desde."'";
+  //           $con=6;
+  //         }else{
+  //           $sql=$sql. " where fecha = '".$desde."'"; 
+  //           $con=7;
+  //         }
+  //       }
+  //   if($filtro1=='Activo'){
+  //     if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7){
+  //           $sql= $sql." or status_pedido='Pedido'";
+  //           $con=8;
+  //         }else{
+  //           $sql=$sql. " where status_pedido='Pedido'";
+  //           $con=9;
+  //         }
+  //       }
+  //        if($filtro2=='Activo'){
+  //     if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7 OR $con==8 OR $con==9){
+  //           $sql= $sql." or status_pedido='En Renta'";
+  //           $con=10;
+  //         }else{
+  //           $sql=$sql. " where status_pedido='En Renta'";
+  //           $con=11;
+  //         }
+  //       }
+  //       if($filtro3=='Activo'){
+  //       if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7 OR $con==8 OR $con==9 OR $con==10 OR $con==11){
+  //           $sql= $sql." or status_pedido='Pendiente de Devolucion'";
+  //           $con=12;
+  //         }else{
+  //           $sql=$sql. " where status_pedido='Pendiente de Devolucion'";
+  //           $con=13;
+  //         }
+  //       }
+  //       if($filtro4=='Activo'){
+  //       if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7 OR $con==8 OR $con==9 OR $con==10 OR $con==11 OR $con==12 OR $con==13){
+  //           $sql= $sql." or status_pedido='Devuelto'";
+  //           $con=14;
+  //         }else{
+  //           $sql=$sql. " where status_pedido='Devuelto'";
+  //           $con=15;
+  //         }
+  //       }
+  //       if($filtro5=='Activo'){
+  //       if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7 OR $con==8 OR $con==9 OR $con==10 OR $con==11 OR $con==12 OR $con==13 OR $con==14 OR $con==15){
+  //           $sql= $sql." or status_pago='Adeudo'";
+  //           $con=16;
+  //         }else{
+  //           $sql=$sql. " where status_pago='Adeudo'";
+  //           $con=17;
+  //         }
+  //       }
+  //     if($filtro6=='Activo'){
+  //       if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7 OR $con==8 OR $con==9 OR $con==10 OR $con==11 OR $con==12 OR $con==13 OR $con==14 OR $con==15 OR $con==16 OR $con==17){
+  //           $sql= $sql." or status_pago='Sin Adeudo'";
+  //           $con=18;
+  //         }else{
+  //           $sql=$sql. " where status_pago='Sin Adeudo'";
+  //           $con=19;
+  //         }
+  //       }
 
        
-        $manager = $this->getDoctrine()->getManager();
-        $conn = $manager->getConnection();
+  //       $manager = $this->getDoctrine()->getManager();
+  //       $conn = $manager->getConnection();
           
-        $peds= $conn->query($sql)->fetchAll();
-    //    var_dump($peds);
-     //   exit();
-        return new JsonResponse($peds);
+  //       $peds= $conn->query($sql)->fetchAll();
+  //   //    var_dump($peds);
+  //    //   exit();
+  //       return new JsonResponse($peds);
 
-     }
+  //    }
 
      
 
-     public function sqlpedAction($cliente2,$cuenta2,$desde2,$hasta2,$cuenta,$cliente,$desde,$hasta,$filtro1,$filtro2,$filtro3,$filtro4,$filtro5,$filtro6,Request $request)
+     public function sqlpedAction($cuenta,$cliente,$desde,$hasta,$folio,$pedido,Request $request)
      { 
         $session = $request->getSession(); 
         if(!$session->get("usuarionombre")){
@@ -756,177 +722,65 @@ public function llenardtAction(Request $request)
             return $this->redirect($this->generateUrl('usuario_login'));
 
         }
-        $desde= str_replace(",", "/", $desde);
-        $hasta= str_replace(",", "/", $hasta);
+        $desde= str_replace("-", "/", $desde);
+        $hasta= str_replace("-", "/", $hasta);
         $con=0;
-        $sql="SELECT * FROM pedidos";
+        $sql="SELECT p.pedido,p.cliente,p.cuenta,p.fecha,s.status,p.folio,p.devolucion FROM pedidos p,status_entrega s where p.status_pedido=s.id";
 
          if ($cuenta<>'0')
         {
-          $sql= $sql." where cuenta like '".$cuenta."%'";
-          $con=1;
+          $sql= $sql." and cuenta like '".$cuenta."%'";
         }
         if ($cliente<>'0')
         {
-          if ($con==1){
             $sql= $sql." and cliente like '".$cliente."%'";
-            $con=2;
-          }else {
-            $sql=$sql. " where cliente like '".$cliente."%'"; 
-            $con=3;
-         }
         }
-  if ($desde <>'0' and $hasta <>'0'){
-          if ($con==1 OR $con==2 OR $con==3 ){
+        if ($desde <>'0' and $hasta <>'0'){
             $sql= $sql." and fecha >= '".$desde."' and fecha <= '".$hasta."'";
-            $con=4;
-          }else{
-            $sql=$sql. " where fecha >= '".$desde."' and fecha <= '".$hasta."'"; 
-            $con=5;
-          }
         }
          if ($desde <>'0' and $hasta =='0'){ 
-          if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5){
             $sql= $sql." and fecha = '".$desde."'";
-            $con=6;
-          }else{
-            $sql=$sql. " where fecha = '".$desde."'"; 
-            $con=7;
-          }
         }
-    if($filtro1=='Activo'){
-      if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7){
-            $sql= $sql." or status_pedido='Pedido'";
-            $con=8;
-          }else{
-            $sql=$sql. " where status_pedido='Pedido'";
-            $con=9;
-          }
-        }
-         if($filtro2=='Activo'){
-      if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7 OR $con==8 OR $con==9){
-            $sql= $sql." or status_pedido='En Renta'";
-            $con=10;
-          }else{
-            $sql=$sql. " where status_pedido='En Renta'";
-            $con=11;
-          }
-        }
-        if($filtro3=='Activo'){
-        if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7 OR $con==8 OR $con==9 OR $con==10 OR $con==11){
-            $sql= $sql." or status_pedido='Pendiente de Devolucion'";
-            $con=12;
-          }else{
-            $sql=$sql. " where status_pedido='Pendiente de Devolucion'";
-            $con=13;
-          }
-        }
-        if($filtro4=='Activo'){
-        if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7 OR $con==8 OR $con==9 OR $con==10 OR $con==11 OR $con==12 OR $con==13){
-            $sql= $sql." or status_pedido='Devuelto'";
-            $con=14;
-          }else{
-            $sql=$sql. " where status_pedido='Devuelto'";
-            $con=15;
-          }
-        }
-        if($filtro5=='Activo'){
-        if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7 OR $con==8 OR $con==9 OR $con==10 OR $con==11 OR $con==12 OR $con==13 OR $con==14 OR $con==15){
-            $sql= $sql." or status_pago='Adeudo'";
-            $con=16;
-          }else{
-            $sql=$sql. " where status_pago='Adeudo'";
-            $con=17;
-          }
-        }
-      if(isset($_POST["chk6"])){
-        if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7 OR $con==8 OR $con==9 OR $con==10 OR $con==11 OR $con==12 OR $con==13 OR $con==14 OR $con==15 OR $con==16 OR $con==17){
-            $sql= $sql." or status_pago='Sin Adeudo'";
-            $con=17;
-          }else{
-            $sql=$sql. " where status_pago='Sin Adeudo'";
-            $con=18;
-          }
-        }
+       if ($folio <>'0'){
+            $sql= $sql." and folio = '".$folio."'";
+       }
+       if ($pedido <>'xxx'){
+            $sql= $sql." and pedido = '".$pedido."'";
+       }
+
         $manager = $this->getDoctrine()->getManager();
         $conn = $manager->getConnection();
           
         $peds= $conn->query($sql);
        
-       
-       if ($filtro1=='Desactivado'){
-        $chekeado='';
-    }else{
-        $chekeado='checked="checked"';
-    }
-    if ($filtro2=='Desactivado'){
-        $chekeado='';
-    }else{
-        $chekeado='checked="checked"';
-    }
-    if ($filtro3=='Desactivado'){
-        $chekeado='';
-    }else{
-        $chekeado='checked="checked"';
-    }
-    if ($filtro4=='Desactivado'){
-        $chekeado='';
-    }else{
-        $chekeado='checked="checked"';
-    }
-    if ($filtro5=='Desactivado'){
-        $chekeado='';
-    }else{
-        $chekeado='checked="checked"';
-    }
-    if ($filtro6=='Desactivado'){
-        $chekeado='';
-    }else{
-        $chekeado='checked="checked"';
-    }
-
-    $pdf = $this->get("white_october.tcpdf")->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-    $pdf->SetAuthor('JJC');
+        $pdf = $this->get("white_october.tcpdf")->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $pdf->SetAuthor('JJC');
         $pdf->SetTitle(('Reporte_Pedidos'));
         $pdf->SetSubject('Our Code World Subject');
         $pdf->setFontSubsetting(true);
         $pdf->SetFont('Helvetica', '', 10); 
         $pdf->AddPage();
-
+        
     $content = ''; 
      
     $content .= ' 
 
-        
-        <div class="row"> 
-        <label class="label6" for="" bgcolor="#E4DBDA" style="text-align:right;">Cliente: '.$cliente.'</label><br/>
-        <br/>
-        <label class="label7" for="" bgcolor="#E4DBDA">Cuenta:       '.$cuenta.'</label><br/>
-        <br/>
-        <label class="label8" for="" bgcolor="#E4DBDA">Desde:     '.$desde.'</label><br/>
-          <br/>
-        <label class="label9" for="" bgcolor="#E4DBDA">Hasta:     '.$hasta.'</label><br/>
-           <br/>
-        <label class="label9" for="" bgcolor="#E4DBDA">FILTROS:</label><br/>
-           <br/>
-           Pendiente<input type="checkbox" id="chk1" name="chk1" value="Emitida"'.$chekeado.'>
-           Devuelto<input type="checkbox" id="chk2" name="chk2" value="Emitida"'.$chekeado.'>
-           Adeudo<input type="checkbox" id="chk3" name="chk3" value="Emitida"'.$chekeado.'>
-           Sin Adeudo<input type="checkbox" id="chk2" name="chk2" value="Emitida"'.$chekeado.'>
-
+         <div class=""> 
+          <h3 style="color:#00BFFF">Fecha de Impresión:'.date("d-m-Y").' </h3>
+         </div>
             <div class="col-md-12"> 
                 <h1 style="text-align:center;">REPORTE DE PEDIDOS</h1> 
             
                     <table border="1" cellpadding="5"> 
                       <thead> 
                         <tr align="center"> 
-                          <th bgcolor="#E4DBDA">Pedido</th>
-                         <th bgcolor="#E4DBDA">Cliente</th>
-                         <th bgcolor="#E4DBDA">Cuenta</th>
-                         <th bgcolor="#E4DBDA">Status</th>
-                         <th bgcolor="#E4DBDA">Status Financiero</th>
-                         <th bgcolor="#E4DBDA">Fecha Creación</th>
-                    <th bgcolor="#E4DBDA">Fecha Pactada Devolución</th>
+                         <th bgcolor="#00BFFF" style="font-size:100%;">Pedido</th>
+                         <th bgcolor="#00BFFF" style="font-size:100%;">Cliente</th>
+                         <th bgcolor="#00BFFF" style="font-size:100%;">Obra</th>
+                         <th bgcolor="#00BFFF" style="font-size:100%;">Fecha</th>
+                         <th bgcolor="#00BFFF" style="font-size:100%;">Status</th>
+                         <th bgcolor="#00BFFF" style="font-size:100%;">Folio</th>
+                         <th bgcolor="#00BFFF" style="font-size:100%;">Devolución</th>
                         </tr> 
                       </thead> 
                       '; 
@@ -935,13 +789,13 @@ public function llenardtAction(Request $request)
 
                       $content .= ' 
                               <tr> 
-                          <td>'.$row['pedido'].'</td> 
-                          <td>'.$row['cliente'].'</td> 
-                          <td>'.$row['cuenta'].'</td> 
-                          <td>'.$row['status_pedido'].'</td> 
-                          <td>'.$row['status_pago'].'</td> 
-                          <td>'.$row['fecha'].'</td> 
-                          <td>'.$row['devolucion'].'</td> 
+                          <td style= "text-align:center;">'.$row['pedido'].'</td> 
+                          <td style= "text-align:center;">'.$row['cliente'].'</td> 
+                          <td style= "text-align:center;">'.$row['cuenta'].'</td> 
+                          <td style= "text-align:center;">'.$row['fecha'].'</td>
+                          <td style= "text-align:center;">'.$row['status'].'</td> 
+                          <td style= "text-align:center;">'.$row['folio'].'</td> 
+                          <td style= "text-align:center;">'.$row['devolucion'].'</td> 
                       </tr> 
                       '; 
                       } 
