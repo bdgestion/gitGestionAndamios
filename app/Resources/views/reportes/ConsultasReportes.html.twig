@@ -9,19 +9,35 @@
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"></link>
   <link rel="stylesheet" href="/resources/demos/style.css"></link>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
     <Link rel="stylesheet" href="{{ asset('css/reportesaldo.css')}}">
+    <style type="text/css">
+    #myProgress {
+      width: 50%;
+      background-color: #ddd;
+      display: block;
+      margin: auto;
+
+    }
+    #myBar {
+    width: 10%;
+    height: 30px;
+    background-color: #4CAF50;
+    text-align: center; /* To center it horizontally (if you want) */
+    line-height: 30px; /* To center it vertically */
+    color: white; 
+    }
+</style>
     <script >
         var cliente2;
         var cuenta2;
         var hasta2;
         var desde2;
   $(document).ready(function() {
-     $("#btnbuscar").click(function () {         
+     $("#btnbuscar").click(function () {    
      $("#tbla").empty(); 
      var radios= $('input:radio[name=rap]:checked').val();
   if (radios=='1'){
-    
+    if(document.getElementById("clt").value!='' && document.getElementById("combocta").value!='' && document.getElementById("desde").value!='' && document.getElementById("hasta").value!='' || document.getElementById("pedido").value!=''){
         var pedido= document.getElementById('pedido').value;
         var folio= document.getElementById('folio').value;
         var cuenta= document.getElementById('combocta').value;
@@ -30,15 +46,47 @@
         var desde= document.getElementById('desde').value;
         var hastadev='';
         var desdedev='';          
+        var cont=0;
+        var upd=0;
         $("#tbla").append("<tr class='dev'><td style='text-align: center' color:'blue';>PEDIDO</td><td style='text-align: center' color:'blue';>FOLIO</td><td style='text-align: center' color:'blue';>CLIENTE</td><td style='text-align: center' color:'blue';>OBRA</td><td style='text-align: center' color:'blue';>EMISION</td><td style='text-align: center' color:'blue';>DEVOLUCION</td><td style='text-align: center' color:'blue';>STATUS</td></tr>");
         $.post("{{ path('clt_pedidos') }}",{pedido:pedido,folio:folio,cuenta:cuenta,cliente:cliente,hasta:hasta,desde:desde,hastadev:hastadev,desdedev:desdedev},
         function(mensaje) {
+          var pass='';
            $("#pedido").html(mensaje);
-           for (var i=0, total = mensaje.length; i < total; i++) {
-           $("#tbla").append("<tr class='dev'><td style='text-align: center;'>"+mensaje[i]["pedido"]+"</td><td style='text-align: center'>"+mensaje[i]["folio"]+"</td><td style='text-align: center'>"+mensaje[i]["cliente"]+"</td><td style='text-align: center'>"+mensaje[i]["cuenta"]+"</td><td style='text-align: center'>"+mensaje[i]["fecha"]+"</td><td style='text-align: center'>"+mensaje[i]["devolucion"]+"</td><td style='text-align: center'>"+mensaje[i]["status"]+"</td></tr>");
-            }
-        });
+            var elem = document.getElementById("myBar");   
+            var width = 15;
+            var id = setInterval(frame, mensaje.length);
+
+            $("#cargando").show();
+            $("#myBar").show();
+            var upd=0;
+            function frame() {
+
+              if (width >= 100) {
+                clearInterval(id);
+                $("#cargando").hide();
+                $("#myBar").hide();
+                $("#cargando").append("<span>"+mensaje.length+'Registros</span>');
+              } else {
+                if(pass!='activo'){
+                  for (var i=0, total = mensaje.length; i < total; i++) { 
+                    pass='activo';
+                    width++;
+                    elem.innerHTML = width *1 + 'Registros'; 
+                $("#tbla").append("<tr class='dev'><td style='text-align: center;'>"+mensaje[i]["pedido"]+"</td><td style='text-align: center'>"+mensaje[i]["folio"]+"</td><td style='text-align: center'>"+mensaje[i]["cliente"]+"</td><td style='text-align: center'>"+mensaje[i]["cuenta"]+"</td><td style='text-align: center'>"+mensaje[i]["fecha"]+"</td><td style='text-align: center'>"+mensaje[i]["devolucion"]+"</td><td style='text-align: center'>"+mensaje[i]["status"]+"</td></tr>");  
+                }
+               
+              }else{
+                  width=100;
+                }
+           }
+         }
+      });
+
+     }else{
+      alert('Debe Completar Algunos Campos');
      }
+   }
   
        if (radios=='2') {
 
@@ -123,40 +171,118 @@
      } 
     }
      if (radios=='3') {
-        $.post("{{ path('clt_devoluciones') }}",{pedido:document.getElementById('pedido').value,cuenta:document.getElementById('combocta').value,cliente:document.getElementById('clt').value,hasta:document.getElementById('hasta').value,desde:document.getElementById('desde').value,foliodev:document.getElementById('folio_dev').value},
+      
+      if(document.getElementById("clt").value!='' && document.getElementById("combocta").value!='' && document.getElementById("desde").value!='' && document.getElementById("hasta").value!=''){
+        var cliente=document.getElementById('clt').value;
+
+        $.post("{{ path('clt_devoluciones') }}",{cuenta:document.getElementById('combocta').value,cliente:cliente,hasta:document.getElementById('hasta').value,desde:document.getElementById('desde').value,foliodev:document.getElementById('folio_dev').value},
+
         function(mensaje) {
           $("#tbla").find("tr:gt(0)").remove();
           $("#pedido").html(mensaje);
-          $("#tbla").append("<tr class='dev'><td style='text-align: center' color:'blue';>PEDIDO</td><td style='text-align: center' color:'blue';>FOLIO DEVOLUCION</td><td style='text-align: center' color:'blue';>CLIENTE</td><td style='text-align: center' color:'blue';>OBRA</td><td style='text-align: center' color:'blue';>FECHA DEVOLUCION</td><td style='text-align: center' color:'blue';>EQUIPO</td><td style='text-align: center' color:'blue';>CANTIDAD DEVUELTO</td></tr>");
-          for (var i=0, total = mensaje.length; i < total; i++) {
-              $("#tbla").append("<tr class='dev'><td style='text-align: center';>"+mensaje[i]["pedido"]+"</td><td style='text-align: center'>"+mensaje[i]["foliodevolucion"]+"</td><td style='text-align: center'>"+mensaje[i]["cliente"]+"</td><td style='text-align: center'>"+mensaje[i]["cuenta"]+"</td><td style='text-align: center'>"+mensaje[i]["fechamovimiento"]+"</td><td style='text-align: center'>"+mensaje[i]["equipo"]+"</td><td style='text-align: center'>"+mensaje[i]["cantidad"]+"</td></tr>");
-                      }
-                });
-     }
+          $("#tbla").append("<tr class='dev'><td style='text-align: center' color:'blue';>REFERENCIA</td><td style='text-align: center' color:'blue';>PEDIDO</td><td style='text-align: center' color:'blue';>FOLIO DEVOLUCION</td><td style='text-align: center' color:'blue';>CLIENTE</td><td style='text-align: center' color:'blue';>OBRA</td><td style='text-align: center' color:'blue';>FECHA DEVOLUCION</td><td style='text-align: center' color:'blue';>EQUIPO</td><td style='text-align: center' color:'blue';>CANTIDAD DEVUELTO</td></tr>");
+          $("#pedido").html(mensaje);
+          var pass='';
+            var elem = document.getElementById("myBar");   
+            var width = 0;
+            var id = setInterval(frame, 10);
+            $("#cargando").show();
+            $("#myBar").show();
+            function frame() {
+              if (width >= 100) {
+                 clearInterval(id);
+                $("#cargando").hide();
+                $("#myBar").hide();
+              } else {
+               
+                if(pass!='activo'){
+                  for (var i=0, total = mensaje.length; i < total; i++) { 
+                    pass='activo';
+                width++;
+                    elem.innerHTML = width *1 + 'Registros';     
+                    $("#tbla").append("<tr class='dev'><td style='text-align: center';>"+mensaje[i]["id"]+"<td style='text-align: center';>"+mensaje[i]["pedidosistema"]+"</td><td style='text-align: center'>"+mensaje[i]["foliodevolucion"]+"</td><td style='text-align: center'>"+mensaje[i]["cliente"]+"</td><td style='text-align: center'>"+mensaje[i]["obra"]+"</td><td style='text-align: center'>"+mensaje[i]["fechamovimiento"]+"</td><td style='text-align: center'>"+mensaje[i]["equipo"]+"</td><td style='text-align: center'>"+mensaje[i]["cantidad"]+"</td></tr>");
+                  }
+                }else{
+                  width=100;
+                }
+              }
+            }
+      });
+      }else{
+        alert("Debe Completar Los Cuatro Primeros Campos");
+      }
+  }
+     
      if (radios=='4') {
+         if(document.getElementById("clt").value!='' && document.getElementById("combocta").value!='' && document.getElementById("desde").value!='' && document.getElementById("hasta").value!=''){
       $("#tbla").append("<tr class='dev'><td style='text-align: center' color:'blue';>PEDIDO</td><td style='text-align: center' color:'blue';>CLIENTE</td><td style='text-align: center' color:'blue';>OBRA</td><td style='text-align: center' color:'blue';>OPERACION</td><td style='text-align: center' color:'blue';>FORMA PAGO</td><td style='text-align: center' color:'blue';>FECHA DE PAGO</td><td style='text-align: center' color:'blue';>MONTO</td></tr>");
 
        $.post("{{ path('filtros_pagos') }}",{pedido:document.getElementById('pedido').value,cuenta:document.getElementById('combocta').value,cliente:document.getElementById('clt').value,hasta:document.getElementById('hasta').value,desde:document.getElementById('desde').value,operacion:document.getElementById('oper').value,forma:document.getElementById('combFP').value},
         function(mensaje) {
           $("#pedido").html(mensaje);
-          for (var i=0, total = mensaje.length; i < total; i++) {
+           var pass='';
+            var elem = document.getElementById("myBar");   
+            var width = 0;
+            var id = setInterval(frame, 10);
+            $("#cargando").show();
+            $("#myBar").show();
+            function frame() {
+              if (width >= 100) {
+                 clearInterval(id);
+                $("#cargando").hide();
+                $("#myBar").hide();
+              } else {
+                if(pass!='activo'){
+                  for (var i=0, total = mensaje.length; i < total; i++) { 
+                    pass='activo';
+                width++;
+                    elem.innerHTML = width *1 + 'Registros';     
               $("#tbla").append("<tr class='dev'><td style='text-align: center';>"+mensaje[i]["pedido"]+"</td><td style='text-align: center'>"+mensaje[i]["cliente"]+"</td><td style='text-align: center'>"+mensaje[i]["obra"]+"</td><td style='text-align: center'>"+mensaje[i]["operacion"]+"</td><td style='text-align: center'>"+mensaje[i]["formas"]+"</td><td style='text-align: center'>"+mensaje[i]["fechapago"]+"</td><td style='text-align: center'>"+mensaje[i]["montopago"]+"</td></tr>");
-                      }
-                });
+                       }
+                }else{
+                  width=100;
+                }
+              }
+            }
+      });
+      }else{
+        alert("Debe Completar Los Cuatro Primeros Campos");
+      }
      }
          if (radios=='5') {
           if(document.getElementById("clt").value!='' && document.getElementById("combocta").value!='' && document.getElementById("desde").value!='' && document.getElementById("hasta").value!=''){
+            $("#tbla").append("<tr class='dev'><td style='text-align: center';>PEDIDOS</td><td style='text-align: center'>CLIENTES</td><td style='text-align: center'>OBRA</td><td style='text-align: center'>FECHA</td><td style='text-align: center'>DOMICILIO</td><td style='text-align: center'>HORA</td></tr>");
             $.post("{{ path('filtrar_recolecciones') }}",{cliente:document.getElementById("clt").value,cuenta:document.getElementById("combocta").value,hasta:document.getElementById("hasta").value,desde:document.getElementById("desde").value},
               function(mensaje) {
-                $("#tbla").append("<tr class='dev'><td style='text-align: center';>PEDIDOS</td><td style='text-align: center'>CLIENTES</td><td style='text-align: center'>OBRA</td><td style='text-align: center'>FECHA</td><td style='text-align: center'>DOMICILIO</td><td style='text-align: center'>HORA</td></tr>");
-                for (var i=0, total = mensaje.length; i < total; i++) {
+                var pass='';
+            var elem = document.getElementById("myBar");   
+            var width = 0;
+            var id = setInterval(frame, 10);
+            $("#cargando").show();
+            $("#myBar").show();
+            function frame() {
+              if (width >= 100) {
+                 clearInterval(id);
+                $("#cargando").hide();
+                $("#myBar").hide();
+              } else {
+                if(pass!='activo'){
+                  for (var i=0, total = mensaje.length; i < total; i++) { 
+                    pass='activo';
+                     width++;
+                    elem.innerHTML = width *1 + 'Registros';     
                   var ano2 = mensaje[i]["fecha"].substring(0, 4);
                   var dia2 = mensaje[i]["fecha"].substring(8, 10);
                   var mes2 = mensaje[i]["fecha"].substring(5, 7);
                   var fecha= dia2+"/"+mes2+"/"+ano2;
                 $("#tbla").append("<tr class='dev'><td style='text-align: center';>"+mensaje[i]["pedidos"]+"</td><td style='text-align: center'>"+mensaje[i]["clientes"]+"</td><td style='text-align: center'>"+mensaje[i]["obra"]+"</td><td style='text-align: center'>"+fecha+"</td><td style='text-align: center'>"+mensaje[i]["domicilio"]+"</td><td style='text-align: center'>"+mensaje[i]["hora"]+"</td></tr>");
                 }
-              });
+                }else{
+                  width=100;
+                }
+              }
+            }
+          });
           }else{
             alert('Debe Completar todos los Campos');
           }
@@ -327,7 +453,14 @@
 {
  $("#rec").change(function(){
   $("#tbla").find("tr:gt(0)").remove();
-           $("#cta_comb").show();
+    $("#cta_comb").show();
+    document.getElementById('combocta').value='';
+    document.getElementById('clt').value='';
+    document.getElementById('desde').value='';
+    document.getElementById('hasta').value='';
+    document.getElementById('folio').value='';
+    document.getElementById('folio_dev').value='';
+    document.getElementById('pedido').value='';
            $("#contenedor3").hide();
            $("#fdv").hide();
            $("#folio_dev").hide();
@@ -346,11 +479,15 @@
            $("#sl").hide();
            $("#totalsuma").hide();
            $("#imprimir").prop("disabled",true);
-
-
-
   });
    $("#sal").change(function(){
+    document.getElementById('combocta').value='';
+    document.getElementById('clt').value='';
+    document.getElementById('desde').value='';
+    document.getElementById('hasta').value='';
+    document.getElementById('folio').value='';
+    document.getElementById('folio_dev').value='';
+    document.getElementById('pedido').value='';
     $("#imprimir").prop("disabled",true);
     $("#tbla").find("tr:gt(0)").remove();
            $("#contenedor3").show();
@@ -374,6 +511,13 @@
 
             }); 
   $("#devl").change(function(){
+    document.getElementById('combocta').value='';
+    document.getElementById('clt').value='';
+    document.getElementById('desde').value='';
+    document.getElementById('hasta').value='';
+    document.getElementById('folio').value='';
+    document.getElementById('folio_dev').value='';
+    document.getElementById('pedido').value='';
     $("#imprimir").prop("disabled",true);
     $("#tbla").find("tr:gt(0)").remove();
            $("#cta_comb").show();
@@ -392,6 +536,13 @@
            $("#totalsuma").hide();
             });  
   $("#ped").change(function(){
+    document.getElementById('combocta').value='';
+    document.getElementById('clt').value='';
+    document.getElementById('desde').value='';
+    document.getElementById('hasta').value='';
+    document.getElementById('folio').value='';
+    document.getElementById('folio_dev').value='';
+    document.getElementById('pedido').value='';
     $("#imprimir").prop("disabled",true);
     $("#tbla").find("tr:gt(0)").remove();
            $("#cta_comb").show();
@@ -414,6 +565,13 @@
            $("#totalsuma").hide();
             }); 
    $("#pag").change(function(){
+    document.getElementById('combocta').value='';
+    document.getElementById('clt').value='';
+    document.getElementById('desde').value='';
+    document.getElementById('hasta').value='';
+    document.getElementById('folio').value='';
+    document.getElementById('folio_dev').value='';
+    document.getElementById('pedido').value='';
     $("#imprimir").prop("disabled",true);
     $("#tbla").find("tr:gt(0)").remove();
            $("#cta_comb").show();
@@ -436,29 +594,38 @@
            $("#totalsuma").hide();
             });
 });
-  
+
+ 
 </script>
  {%endblock%}
 
 {% block body %}
 
 <form method="post">
+  <div id="myProgress" hidden="hidden" >
+     <div id="myBar" hidden="hidden" >Registros</div>
+   </div>
     <div id="contenedor" style="display: block;margin:auto;">
       <div id="contenedor2">
         <fieldset style="width: 30%; display: block;margin: auto;">
           <img style="width: 30%; display: block;margin: auto;" class="logo" src="{{ asset('img/reporte.jpg')}}">   
           <legend style="text-align: center;">Buscar Por:</legend>
-          Pedidos<input type="radio" name="rap" id="ped" value="1">
-          Saldos<input type="radio" name="rap" id="sal" value="2">
-          Devoluciones<input type="radio" name="rap" id="devl" value="3">
-          Pagos<input type="radio" name="rap" id="pag" value="4">
-          Recolecciones<input type="radio" name="rap" id="rec" value="5">
+          <div class="radio" style="text-align: center;">
+          <label><input type="radio" name="rap" id="ped" value="1">Pedidos</label>
+          <label><input type="radio" name="rap" id="sal" value="2">Saldos</label>
+          <label><input type="radio" name="rap" id="devl" value="3">Devoluciones</label>
+          <label><input type="radio" name="rap" id="pag" value="4">Pagos</label>
+          <label><input type="radio" name="rap" id="rec" value="5">Recolecciones</label>
+          </div>
         </fieldset>
     </div>
-    <div id="contenedor3" hidden="hidden">
+   
+   <div id="contenedor3" hidden="hidden">
        <fieldset style="width: 25%; display: block;margin: auto;">
-        Fecha de Entrega<input type="radio" name="edad" id="edad" value="1">
-        Fecha de Devolución<input type="radio" name="edad" id="edad2" value="2">
+        <div class="radio" style="text-align: center;">
+          <label><input type="radio" name="edad" id="edad" value="1">Fecha de Entrega</label>
+          <label><input type="radio" name="edad" id="edad2" value="2">Fecha de Devolución</label>
+        </div>
       </fieldset>
     </div>
    <div id="cta_comb" class="form-group" hidden="hidden" style="text-align: center; margin-top: 1%;">

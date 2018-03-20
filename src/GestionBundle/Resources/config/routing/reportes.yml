@@ -2,10 +2,6 @@ reportes_inicio:
     path:     /rpt
     defaults: { _controller: "GestionBundle:Pedidos:rptinicio" }
     methods:  [GET, POST]
-reportes_pedidos:
-    path:     /rptpedido
-    defaults: { _controller: "GestionBundle:Pedidos:rptpedido" }
-    methods:  [GET, POST]
 filtros_rptped:
     path:     /fltrptped
     defaults: { _controller: "GestionBundle:Pedidos:filtroped" }

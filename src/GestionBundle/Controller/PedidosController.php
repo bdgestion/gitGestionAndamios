@@ -394,16 +394,16 @@ class PedidosController extends Controller
       }
       
 
-      public function rptpedidoAction(Request $request)
-      {
-        $session = $request->getSession(); 
-        if(!$session->get("usuarionombre")){
-            $this->get('session')->getFlashBag()->add('fall','ES NECESARIO INICIAR SESSION');
-            return $this->redirect($this->generateUrl('usuario_login'));
+      // public function rptpedidoAction(Request $request)
+      // {
+      //   $session = $request->getSession(); 
+      //   if(!$session->get("usuarionombre")){
+      //       $this->get('session')->getFlashBag()->add('fall','ES NECESARIO INICIAR SESSION');
+      //       return $this->redirect($this->generateUrl('usuario_login'));
 
-        }
-        return $this->render('reportes/reportespedidos.html.twig');
-      }
+      //   }
+      //   return $this->render('reportes/reportespedidos.html.twig');
+      // }
 
 public function llenardtAction(Request $request)
   {

@@ -7,6 +7,8 @@ use Doctrine\ORM\Query\ResultSetMapping;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Console\Helper\ProgressBar;
+
 
 class DetallesDevolucionesController extends Controller
 {
@@ -248,67 +250,39 @@ class DetallesDevolucionesController extends Controller
             $this->get('session')->getFlashBag()->add('fall','ES NECESARIO INICIAR SESSION');
             return $this->redirect($this->generateUrl('usuario_login'));
 
-        }  
-           $sql="SELECT p.pedido,p.cliente,p.cuenta,p.fecha,p.devolucion,a.foliopadre,a.foliodevolucion,a.fechamovimiento,a.equipo,a.cantidad FROM pedidos p,detalles_devoluciones a";
-           $con=0;
-           $pedido=$_POST['pedido'];
-           $cliente=$_POST['cliente'];
+        } 
+          $cliente=$_POST['cliente'];
            $cuenta=$_POST['cuenta'];
            $foliodev=$_POST['foliodev'];
            $desde=$_POST['desde'];
            $hasta=$_POST['hasta'];
+         $sql="SELECT a.id,a.pedidosistema,p.cliente,p.obra,a.foliodevolucion,a.fechamovimiento,a.equipo,a.cantidad FROM ultpedido p, detalles_devoluciones a WHERE p.pedido=a.pedidosistema";
+           $con=0;
+          
 
-           if ($pedido<>'')
-        {
-          $sql= $sql." where p.pedido like '".$pedido."%' and a.pedidosistema like '".$pedido."%'";
-          $con=1;
-        }
+        //    if ($pedido<>'')
+        // {
+        //   $sql= $sql." where a.pedidosistema like '".$pedido."%' and a.pedidosistema like '".$pedido."%'";
+        //   $con=1;
+        // }
         if ($cliente<>''){
-  
-          if ($con==1 OR $con==2 OR $con==3 ){
-            $sql= $sql." and p.cliente like '".$cliente."%'";
-            $con=4;
-          }else{
-          $sql=$sql. " where p.cliente like '".$cliente."%'"; 
-          $con=5;
+          $sql=$sql. " and p.cliente like '".$cliente."%'"; 
+          $con=1;
           }
-        }
+        
         if ($cuenta<>''){
-          if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 ){
-            $sql= $sql." and p.cuenta like '".$cuenta."%'";
-            $con=6;
-          }else{
-            $sql=$sql. " where p.cuenta like '".$cuenta."%'"; 
-            $con=7;
-          }
+            $sql= $sql." and p.obra like '".$cuenta."%'";
         }
         if ($foliodev<>''){
-          if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7 ){
             $sql= $sql." and a.foliodevolucion like '".$foliodev."%'";
-            $con=8;
-          }else{
-            $sql=$sql. " where a.foliodevolucion like '".$foliodev."%'"; 
-            $con=9;
-          }
         }
          if ($desde<>'' and $hasta<>''){
-          if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7 OR $con==8 OR $con==9 ){
             $sql= $sql." and a.fechamovimiento >= '".$desde."' and a.fechamovimiento <= '".$hasta."'";
-            $con=10;
-          }else{
-            $sql=$sql. " where a.fechamovimiento >= '".$desde."' and a.fechamovimiento <= '".$hasta."'"; 
-            $con=11;
-          }
         }
         if ($desde <> '' and $hasta ==''){ 
-          if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7 OR $con==8 OR $con==9 OR $con==11 OR $con==12 ){
             $sql= $sql." and a.fechamovimiento = '".$desde."'";
-            $con=12;
-          }else{
-            $sql=$sql. " where a.fechamovimiento = '".$desde."'"; 
-            $con=13;
-          }
         }
+        
          $manager = $this->getDoctrine()->getManager();
          $conn = $manager->getConnection();
          $dts= $conn->query($sql)->fetchAll();
@@ -330,16 +304,33 @@ class DetallesDevolucionesController extends Controller
         $sql="SELECT d.pedidosistema,d.foliodevolucion,d.fechamovimiento,d.cantidad,d.equipo FROM detalles_devoluciones d";
 
         if ($desde <>'0' and $hasta <>'0'){
-            $sql= $sql." and fecha >= '".$desde."' and fecha <= '".$hasta."'";
+            $sql= $sql." where fechamovimiento >= '".$desde."' and fechamovimiento <= '".$hasta."'";
+            $con=1;
         }
+
          if ($desde <>'0' and $hasta =='0'){ 
-            $sql= $sql." and fecha = '".$desde."'";
+          if($con==1){
+            $sql= $sql." and fechamovimiento = '".$desde."'";
+          }else{
+            $sql= $sql." where fechamovimiento = '".$desde."'";
+          }
+          $con=2;
         }
+
         if ($folio <>'0'){
-            $sql= $sql." and folio = '".$folio."'";
+          if($con==1 or $con==2){
+            $sql= $sql." and foliodevolucion = '".$folio."'";
+          }else{
+            $sql= $sql." where foliodevolucion = '".$folio."'";
+          }
+          $con=3;
         }
         if ($pedido <>'xxx'){
-            $sql= $sql." and pedido = '".$pedido."'";
+          if($con==1 or $con==2 or $con==3){
+            $sql= $sql." and pedidosistema = '".$pedido."'";
+          }else{
+            $sql= $sql." where pedidosistema = '".$pedido."'";
+          }
         }
 
         $manager = $this->getDoctrine()->getManager();

@@ -71,7 +71,7 @@ class FacturaController extends Controller
           $manager = $this->getDoctrine()->getManager();
           $conn = $manager->getConnection();
           $datosformas= $conn->query("SELECT DISTINCT formas FROM formas_pagos")->fetchAll();
-          return $this->render('reportes/reportesaldos.html.twig',array('formaspg' => $datosformas));
+          return $this->render('reportes/ConsultasReportes.html.twig',array('formaspg' => $datosformas));
         }
          
         public function rptsaldoAction(Request $request)
@@ -85,7 +85,7 @@ class FacturaController extends Controller
           $manager = $this->getDoctrine()->getManager();
           $conn = $manager->getConnection();
           $datosformas= $conn->query("SELECT DISTINCT formas FROM formas_pagos")->fetchAll();
-          return $this->render('reportes/reportesaldos.html.twig',array('formaspg' => $datosformas));
+          return $this->render('reportes/ConsultasReportes.html.twig',array('formaspg' => $datosformas));
         } 
         public function registropagoAction(Request $request)
         {

@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, user- scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
    <Link rel="stylesheet" href="{{ asset('css/fontello.css')}}">
-   <Link rel="stylesheet" href="{{ asset('css/estilonuevohome.css')}}">
+   
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
      
@@ -74,17 +74,8 @@
         <li class="submenu"><a href="#">Gestion de Rentas <span class="glyphicon glyphicon-chevron-down"></span></a>
           <ul>
             <li><a href="{{ path('pedidos_detalles', { 'id': 0 }) }}">Crear Pedido</a></li>
-            <li><a href="{{ path('consultas_pedidos') }}">Buscar Pedidos</a></li>
-            <li><a href="{{ path('consultas_dev2') }}">Buscar Devoluciones</a></li>
           </ul>
         </li>
-
-         <li><a href="#">Gestión de Pagos <span class="glyphicon glyphicon-chevron-down"></span></a>
-           <ul>
-            <li><a href="#">Saldos</a></li>
-            <li><a href="#">Pagos Individuales</a></li>
-          </ul>
-         </li>
         <li><a href="#">Consultas <span class="glyphicon glyphicon-chevron-down"></span></a>
            <ul>
             <li><a href="{{ path('reportes_saldos') }}">Consultas Generales</a></li>
