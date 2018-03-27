@@ -141,13 +141,6 @@ class Pedidos
     private $total;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="status_pago", type="string", length=100, nullable=false)
-     */
-    private $statusPago;
-
-    /**
      * @var float
      *
      * @ORM\Column(name="subtotal", type="float", precision=10, scale=0, nullable=false)
@@ -161,19 +154,6 @@ class Pedidos
      */
     private $subtotal2;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="cliente2", type="string", length=100, nullable=false)
-     */
-    private $cliente2;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="montoact", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $montoact;
 
     /**
      * @var float

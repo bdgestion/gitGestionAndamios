@@ -14,6 +14,10 @@ pedidos_detalles:
     path:     /detallespedido/{id}
     defaults: { _controller: "GestionBundle:Pedidos:detallespedido" }
     methods:  GET
+cotizaciones_detalles:
+    path:     /detallescot/{cot}
+    defaults: { _controller: "GestionBundle:Pedidos:detallescotizaciones" }
+    methods:  [POST, GET]
 pedidos_factura:
     path:     /pedidosfact/{p}/{id}
     defaults: { _controller: "GestionBundle:Pedidos:pedidofact" }
@@ -22,6 +26,10 @@ modificar_pedido:
     path:     /modificar
     defaults: { _controller: "GestionBundle:Pedidos:modificarpedido" }
     methods:  [POST, DELETE,GET]
+eliminar_cotizacion:
+    path:     /eliminarcot
+    defaults: { _controller: "GestionBundle:Pedidos:eliminarcot" }
+    methods:  [POST, GET]
 eliminar_pedido:
     path:     /eliminar
     defaults: { _controller: "GestionBundle:Pedidos:eliminarpedido" }
@@ -117,4 +125,8 @@ cancelar_pedido:
 ultpedido:
     path:     /ult
     defaults: { _controller: "GestionBundle:Pedidos:ultipedido" }
+    methods:  [POST, GET]
+consultar_cot:
+    path:     /cltcot
+    defaults: { _controller: "GestionBundle:Pedidos:consultarcot" }
     methods:  [POST, GET]

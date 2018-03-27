@@ -358,7 +358,7 @@ class RecoleccionesController extends Controller
           $mesd2 = substr($hasta,5,2);
           $fechafiltrohasta=$diad2."/".$mesd2."/".$añod2;
 
-        $pdf->SetAuthor('JJC');
+            $pdf->SetAuthor('JJC');
             $pdf->SetTitle(('Reporte_Recolecciones'));
             $pdf->SetSubject('Our Code World Subject');
             $pdf->setFontSubsetting(true);

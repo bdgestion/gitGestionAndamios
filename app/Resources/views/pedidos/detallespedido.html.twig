@@ -16,20 +16,26 @@
 
 {% set botones = '' %}
   {% set estado = '' %}
-
   {% set rol = '' %}
   {% set rol=app.session.get('myrol') %}
-   {% if rol == 'Limitado' %}    
+  {% if rol == 'Limitado' %}    
     {% set botones = 'disabled="true"' %}           
-   {% else %}  
+  {% else %}  
     {% set botones = '' %}           
    {% endif %}
 
+{% if cot != '00' %}
+  {% for comment in cot %}
+      {{comment.cot}} 
+  {% endfor %}
+    {% set estadoobra ='disabled="true"' %}
+    {% set id=0 %}
+{% endif %}
+
+{% if cot == '00' %}  
   {% for comment in id %}
     {{comment.id}} 
-  {% endfor %}
-
-  
+{% endfor %}
 
   {% if id == 0 %}
     {% set estado = ''  %}
@@ -39,6 +45,7 @@
     {% set estado ='disabled="true"' %}
     {% set estadoobra ='disabled="true"' %}
   {% endif %}
+{% endif %}
 
     <script type="text/javascript">
     var totaldifferencia='';
@@ -53,17 +60,14 @@
     var year1='';
     var totaldiff=0;
     var fecha11='';
+    var dato=0;
     function calcular2() {
       var totaldesc=0;
       if(document.getElementById("inpt2").value!=0){
-       
        totaldesc= (parseFloat(document.getElementById("inpt1").value) * parseFloat(document.getElementById("inpt2").value) / 100); 
       }
-      
        document.getElementById("inpt3").value= (parseFloat(document.getElementById("inpt1").value) - parseFloat(totaldesc)).toFixed(2);  
-
        document.getElementById("inpt5").value= (parseFloat(document.getElementById("inpt3").value) + parseFloat(document.getElementById("sventrega").value)).toFixed(2);  
-
        if (document.getElementById("check").checked){
                     totalimpuesto= parseFloat(document.getElementById('inpt3').value) * parseFloat(0.16);
                     document.getElementById('inpt4').value= Math.round(totalimpuesto);
@@ -74,43 +78,104 @@
                       document.getElementById('inpt4').disabled=true;
                       document.getElementById('inpt5').value=document.getElementById('inpt3').value;
                       document.getElementById('inpt4').value=0;
-
-                       document.getElementById('inpt5').value= (parseFloat(document.getElementById('inpt3').value) + parseFloat(document.getElementById('sventrega').value)).toFixed(2);
-
+                      document.getElementById('inpt5').value= (parseFloat(document.getElementById('inpt3').value) + parseFloat(document.getElementById('sventrega').value)).toFixed(2);
         }
-
       if(document.getElementById("inpst").value==''){
         document.getElementById("btn").disabled=false;
       }
-
-                    
     }
-       $(document).ready(function() {
-         if(document.getElementById('inpt1').value!=0){
+    var radiocotpd='';
+$(document).ready(function() {
+
+  if(document.getElementById('inptcot').value !=''){
+   // $("#btn_detalles").show();
+    $("#btn_modificar").hide();
+    $("#btn2_entregar").hide();
+    $("#btn3_pagos").hide();
+    $("#btn2_entregar").hide();
+    $("#btn").hide();
+    $("#btn4").hide();
+    $("#btn_modificar").show();
+    $("#btneliminarcotizacion").prop("disabled",false);
+    if(document.getElementById('inpst').value=='En Renta'){
+      $("#btn_orden").hide();
+    }else{
+      $("#btn_orden").show();
+      $("#btn_orden").prop("disabled",false);
+
+    }
+
+
+  }
+  function limpiar() {
+   document.getElementById('ped').value='';
+   document.getElementById('inptcot').value='';
+   document.getElementById('inptcliente').value='';
+   document.getElementById('combocta').value='';
+   document.getElementById('inpst').value='';
+   document.getElementById('fecha1').value='';
+   document.getElementById('fecha2').value='';
+   document.getElementById('inpt1').value='';
+   document.getElementById('inpt2').value='';
+   document.getElementById('inpt3').value='';
+   document.getElementById('inpt4').value='';
+   document.getElementById('inpt5').value='';
+   document.getElementById('sventrega').value='';
+   document.getElementById('inpcom').value='';
+   document.getElementById('inpdir').value='';
+   $("#tbla").find("tr:gt(0)").remove();
+  }
+
+  $("#cot").change(function(){
+        radiocotpd='Cotizacion';
+        limpiar();       
+        $("#botones_func").show();
+        $("#datos").show();
+        $("#btn_modificar").hide();
+        $("#btn2_entregar").hide();
+        $("#btn3_pagos").hide();
+        $("#btn4").hide();
+        $("#btn_orden").show();
+        $("#inptcot").show();
+        $("#lblcot").show();
+        $("#btn6cancelar").hide();
+        $("#btneliminarcotizacion").show();
+        
+  });
+
+
+  $("#radioped").change(function(){
+    limpiar();
+      radiocotpd='Pedido';
+      $("#btneliminarcotizacion").hide();
+      $("#botones_func").show();
+      $("#datos").show();
+      $("#inptcot").hide();
+      $("#lblcot").hide();
+      $("#btn_orden").hide();
+      $("#btn_modificar").show();
+      $("#btn2_entregar").show();
+      $("#btn3_pagos").show();
+      $("#btn2_entregar").show();
+      $("#btn6cancelar").show();
+      $("#btn4").show();
+    });
+    if(document.getElementById('inpt1').value!=0){
       document.getElementById('calcular').disabled=false;
     }
-   $("#fecha1").change(function () {
-   
-          if(document.getElementById('fecha2').value !='' && document.getElementById('inpst').value=='' ){
-            document.getElementById('btn2').disabled=false;
-          }
-        });
-   
-        $("#fecha2").change(function () {
-          if(document.getElementById('fecha1').value !='' && document.getElementById('inpst').value==''){
-            document.getElementById('btn2').disabled=false;
-            
-          }
-          if(document.getElementById('fecha1').value !='' && document.getElementById('inpst').value!=''){
-          document.getElementById('calcular').disabled=false;
-          fecha11 = document.getElementById('fecha1').value;
-          fecha22 = document.getElementById('fecha2').value;
-          fecha1hoy = (fecha11.substring(6,10)+ '/' + fecha11.substring(3,6) +  fecha11.substring(0,2));
-          fecha2dev = (fecha22.substring(6,10)+ '/' + fecha22.substring(3,6) +  fecha22.substring(0,2));
-
-      mydate1 = new Date(fecha1hoy);
-      day1 = mydate1.getDate();
-      month1 = mydate1.getMonth()+1;
+   $("#fecha2").change(function () {
+      // if(document.getElementById('fecha1').value !='' && document.getElementById('inpst').value==''){
+      //  document.getElementById('btn2').disabled=false;
+      // }
+    if(document.getElementById('fecha1').value !='' && document.getElementById('inpst').value!=''){
+    document.getElementById('calcular').disabled=false;
+    fecha11 = document.getElementById('fecha1').value;
+    fecha22 = document.getElementById('fecha2').value;
+    fecha1hoy = (fecha11.substring(6,10)+ '/' + fecha11.substring(3,6) +  fecha11.substring(0,2));
+    fecha2dev = (fecha22.substring(6,10)+ '/' + fecha22.substring(3,6) +  fecha22.substring(0,2));
+     mydate1 = new Date(fecha1hoy);
+     day1 = mydate1.getDate();
+     month1 = mydate1.getMonth()+1;
      year1 = mydate1.getFullYear();
       
           if(month1 <= 9){
@@ -149,17 +214,14 @@
           document.getElementById('inpst').value='En Renta';
         }
         if(document.getElementById('flio').value !='' && totaldiff == 0 ){
-          //document.getElementById('inpst').value='Pendiente de Devolucion';
         }
         
 
-var dto=0;
-var totalimp=0;
-var totalimp5=0;
-var totalimp4=0;
+      var dto=0;
+      var totalimp=0;
+      var totalimp5=0;
+      var totalimp4=0;
      
-      //exit();
-
         for (var i=1;i<document.getElementById('tbla').rows.length;i++) { 
         var Referencia = document.getElementById('tbla').rows[i].cells[6].innerHTML;
         cantidad = document.getElementById('tbla').rows[i].cells[1].innerHTML;
@@ -175,34 +237,26 @@ var totalimp4=0;
          }
           document.getElementById("inpt1").value= totalimp5;
          document.getElementById("inpt3").value=0;// (parseFloat(totalimp5) + parseFloat(dto)).toFixed(2);
-         //document.getElementById('inpt3').value=0;
-
          document.getElementById('inpt2').value=0;
          document.getElementById('inpt4').value=0;
          document.getElementById('sventrega').value=0;
          document.getElementById('inpt5').value=0;
-         //sv=document.getElementById('sventrega').value;
-          }
-
-
-
-
-
-
-
-
-
-        });
-        if(document.getElementById('btn_modificar').disabled==false){
-          document.getElementById('btneliminarfila').disabled=true;
-          document.getElementById('btn3').disabled=true;
-          document.getElementById('btn2').disabled=true;
-        }
-        if(document.getElementById('flio').value !=''){
-          document.getElementById('btn4').disabled=false;
-          
-          document.getElementById('btn3_pagos').disabled=false;
-        }
+      }
+   });
+    if(document.getElementById('btn_modificar').disabled==false){
+      $("#datos").show();
+      $("#radios").hide();
+      $("#botones_func").show();
+     // $("#btn_orden").hide();
+      //$("#btn_detalles").hide();
+      document.getElementById('btneliminarfila').disabled=true;
+      document.getElementById('btn3').disabled=true;
+      document.getElementById('btn2').disabled=true;
+    }
+    if(document.getElementById('flio').value !=''){
+      document.getElementById('btn4').disabled=false;
+      document.getElementById('btn3_pagos').disabled=false;
+    }
 
     if (document.getElementById('inpt4').value=='' || document.getElementById('inpt4').value==0 ){
               document.getElementById("check").checked=false;
@@ -210,15 +264,14 @@ var totalimp4=0;
               document.getElementById("check").checked=true;
             }
 
-  $('#inptcliente').on('input', function() {
-    var userText = $(this).val();
-    
+    $('#inptcliente').on('input', function() {
+      var userText = $(this).val();
     $("#categoryname").find("option").each(function() {
-      if ($(this).val() == userText) {
-        validar();
-      }
+        if ($(this).val() == userText) {
+          validar();
+        }
+      })
     })
-  })
  
   $("#bt").click(function(){
     if(document.getElementById("txtpu").value==''){
@@ -317,15 +370,6 @@ var totalimp4=0;
     alert('El Pedido no Ha Sido Cancelado');
   }
 }  
-
-// function limpiar() {
-//   if (document.getElementById('inptcliente').value=='') {
-//         clienterz='';
-//         var sel = document.getElementById("combocta");
-//         sel.remove(sel.selectedIndex);
-//        }
-// }
-
      $( function() {
        $.datepicker.regional['es'] = {
         closeText: 'Cerrar',
@@ -356,16 +400,12 @@ var totalimp4=0;
           document.getElementById('btn2_entregar').disabled=true;
          }     
 
-     // if(document.getElementById('ped').value==''){
-     //     document.getElementById('ped').value='1';
-     // }
       $("#fecha2" ).datepicker();
       $("#fechaemis" ).datepicker();
       $("#inpfecdevol" ).datepicker();
       $("#fechadev" ).datepicker();
       $("#fechainicio" ).datepicker();
       $("#fecha1" ).datepicker();
-
       $("#fecha1").datepicker('option', { dateFormat: "dd/mm/yy" });
       $("#fecha2").datepicker('option', { dateFormat: "dd/mm/yy" });
     } );
@@ -386,12 +426,8 @@ function abrirmodalfac(){
             }
         });    
 }
+
   function modificar_pedido(){
-            // if (document.getElementById('inpt4').value==''){
-            //   document.getElementById("check").checked=false;
-            // }else{
-            //   document.getElementById("check").checked=true;
-            // }
       var statusConfirm =(confirm("Desea Enviar las Modificaciones?"))
       if (statusConfirm == true){ 
         var pedido_id = $("input#ped").val();
@@ -406,13 +442,11 @@ function abrirmodalfac(){
              PU_1=document.getElementById('tbla').rows[i].cells[5].innerHTML;
              cliente=document.getElementById('inptcliente').value;
              cuenta=document.getElementById('combocta').value;
-              
              status=document.getElementById('inpst').value;
              pedido_1=document.getElementById('ped').value;
              folio_1=document.getElementById('flio').value;
              subtotal_1=document.getElementById('inpt1').value;
              subtotal_2=document.getElementById('inpt3').value;
-
              descuento_1=document.getElementById('inpt2').value;
              impuesto=document.getElementById('inpt4').value;
              sv=document.getElementById('sventrega').value;
@@ -421,7 +455,7 @@ function abrirmodalfac(){
              direccion_entrega=document.getElementById('inpdir').value;
              comentario_1=document.getElementById('inpcom').value;
              
-         $.post("{{ path('modificar_pedido') }}", {cantidad: cantidad, equipo_2:equipo_2, clv:clv, dias_1:totaldiff,PU_1:PU_1, importe:importe, cliente:cliente, cuenta:cuenta, fecha_1:fecha11,fecha_2:fecha22,status:status, pedido_1:pedido_1,folio_1:folio_1,subtotal_1:subtotal_1, subtotal_2:subtotal_2,descuento_1:descuento_1,impuesto:impuesto,total:total,direccion_entrega:direccion_entrega,comentario_1:comentario_1,sv:sv },
+         $.post("{{ path('modificar_pedido') }}", {cot:document.getElementById('inptcot').value,cantidad: cantidad, equipo_2:equipo_2, clv:clv, dias_1:totaldiff,PU_1:PU_1, importe:importe, cliente:cliente, cuenta:cuenta, fecha_1:fecha11,fecha_2:fecha22,status:status, pedido_1:pedido_1,folio_1:folio_1,subtotal_1:subtotal_1, subtotal_2:subtotal_2,descuento_1:descuento_1,impuesto:impuesto,total:total,direccion_entrega:direccion_entrega,comentario_1:comentario_1,sv:sv },
           function(mensaje) {
                   $("#txt3").html(mensaje);          
                 });
@@ -453,9 +487,17 @@ var pedid = document.getElementById("ped").value;
            window.open("imprdev/"+pedido_id);
         }
         function ultpedido() {
-           $.post("{{ path('ultpedido') }}", {}, function(mensaje) {
+           $.post("{{ path('ultpedido') }}", {radio:radiocotpd}, function(mensaje) {
               $("#txtpu").html(mensaje);
-              document.getElementById('ped').value=(parseInt(mensaje[0]['pedido']) + parseInt(1));
+              if(radiocotpd=='Pedido'){
+                document.getElementById('ped').value=(parseInt(mensaje[0]['pedido']) + parseInt(1));            
+                dato=document.getElementById('ped').value;
+              }else{
+              document.getElementById('inptcot').value=(parseInt(mensaje[0]['cotizacion']) + parseInt(1));            
+              dato=document.getElementById('inptcot').value;
+              $("#btn_modificar").show();
+              $("#btneliminarcotizacion").prop("disabled",false);
+              }
               xd();
            });
         }
@@ -513,109 +555,76 @@ var pedid = document.getElementById("ped").value;
   document.getElementById('btn_modificar').disabled=true;
 
    if (statusConfirm == true){ 
-  document.getElementById('inpst').value='Pedido';
-  document.getElementById('btn_modificar').disabled=false;
-  document.getElementById('btn2_entregar').disabled=false;
-  document.getElementById('btn5').disabled=false;
-  document.getElementById('btn6cancelar').disabled=false;
-  document.getElementById('btneliminarfila').disabled=true;
-  document.getElementById('btn3').disabled=true;
-  document.getElementById('btn2').disabled=true;
-  
-     
-       // if(document.getElementById('ped').value==''){
-       //      document.getElementById('ped').value=1;
-       //    }
-
+      document.getElementById('inpst').value='Pedido';
+      document.getElementById('btn_modificar').disabled=false;
+      document.getElementById('btn2_entregar').disabled=false;
+      document.getElementById('btn5').disabled=false;
+      document.getElementById('btn6cancelar').disabled=false;
+      document.getElementById('btneliminarfila').disabled=true;
+      document.getElementById('btn3').disabled=true;
+      document.getElementById('btn2').disabled=true;
+      
     for (var i=1;i<document.getElementById('tbla').rows.length;i++) { 
-         cantidad=document.getElementById('tbla').rows[i].cells[1].innerHTML;
-         equipo_2=document.getElementById('tbla').rows[i].cells[2].innerHTML;
-         clv=document.getElementById('tbla').rows[i].cells[3].innerHTML;
-         dias_1=document.getElementById('tbla').rows[i].cells[4].innerHTML;
-         PU_1=document.getElementById('tbla').rows[i].cells[5].innerHTML;
-         importe=document.getElementById('tbla').rows[i].cells[6].innerHTML;
-         cliente=document.getElementById('inptcliente').value;
-         cuenta=document.getElementById('combocta').value;
-         fecha_1=document.getElementById('fecha1').value;
-         fecha_2=document.getElementById('fecha2').value;
-         status='En Renta';
-         document.getElementById('inpst').value=status;
-         pedido_1=document.getElementById('ped').value;
-         folio_1=document.getElementById('flio').value.trim();
-         subtotal_1=document.getElementById('inpt1').value;
-         subtotal_2=document.getElementById('inpt3').value;
-         descuento_1=document.getElementById('inpt2').value;
-         impuesto=document.getElementById('inpt4').value;
-         total=document.getElementById('inpt5').value;
-         direccion_entrega=document.getElementById('inpdir').value;
-         comentario_1=document.getElementById('inpcom').value;
-         var sventr=document.getElementById('sventrega').value;
-         var f = new Date();
-         
-         
-
-         $.post("{{ path('registrar_pedidos') }}", {cantidad: cantidad, equipo_2:equipo_2, clv:clv, dias_1:dias_1,PU_1:PU_1, importe:importe, cliente:cliente, cuenta:cuenta, fecha_1:fecha_1,fecha_2:fecha_2,status:status, pedido_1:pedido_1,folio_1:folio_1,subtotal_1:subtotal_1, subtotal_2:subtotal_2,descuento_1:descuento_1,impuesto:impuesto,total:total,direccion_entrega:direccion_entrega,comentario_1:comentario_1, sventr:sventr,f:f }, function(mensaje) {
+         document.getElementById('inpst').value='En Renta';
+      $.post("{{ path('registrar_pedidos') }}", {cot:document.getElementById('inptcot').value,radio:radiocotpd, cantidad: document.getElementById('tbla').rows[i].cells[1].innerHTML, equipo_2:document.getElementById('tbla').rows[i].cells[2].innerHTML, clv:document.getElementById('tbla').rows[i].cells[3].innerHTML, dias_1:document.getElementById('tbla').rows[i].cells[4].innerHTML,PU_1:document.getElementById('tbla').rows[i].cells[5].innerHTML, importe:document.getElementById('tbla').rows[i].cells[6].innerHTML, cliente:document.getElementById('inptcliente').value, cuenta:document.getElementById('combocta').value, fecha_1:document.getElementById('fecha1').value,fecha_2:document.getElementById('fecha2').value,status:document.getElementById('inpst').value, pedido_1:dato,folio_1:document.getElementById('flio').value.trim(),subtotal_1:document.getElementById('inpt1').value, subtotal_2:document.getElementById('inpt3').value,descuento_1:document.getElementById('inpt2').value,impuesto:document.getElementById('inpt4').value,total:document.getElementById('inpt5').value,direccion_entrega:document.getElementById('inpdir').value,comentario_1:document.getElementById('inpcom').value, sventr:document.getElementById('sventrega').value,f:new Date() }, function(mensaje) {
           $("#txtpu").html(mensaje);
             });
-          }
+      }
+      if (radiocotpd=='Cotizacion'){
+            document.getElementById('btn_orden').disabled=false;  
+            document.getElementById('inpst').value='Cotización';
+            }
       alert("Datos Registrados");
       document.getElementById('btn').disabled=true;
-
         }
       }
-   
     }
 function eliminarfila(){
-  if (fila==''){
-    alert('Debe Seleccionar Una Fila')
-  }else{
-  var statusConfirm =(confirm("Desea borrar el registro?"))
-   if (statusConfirm == true){ 
-      document.getElementById("tbla").deleteRow(fila);
-      if (document.getElementById("inpt1").value==0){
-       var dto=0;
-      }else{
-        var dto=document.getElementById("inpt2").value;
-      }
-
-       var totalimp=0;
-       $('#tbla tbody tr').each(function(){
-        var Referencia = $(this).find("td").eq(6).html();
-        totalimp= parseFloat(totalimp)+ parseFloat(Referencia);
-});
-       
-       if (totalimp==0){
-        document.getElementById("sventrega").value=0;
-        document.getElementById("inpt2").value=0;
-        document.getElementById("inpt3").value=0;
-        document.getElementById("inpt5").value=0;
-        subtotal2_total=0;
-        totaldesc=0;
-        dto=0;
-         }else{
-          totaldesc= (parseFloat(document.getElementById("inpt1").value) * parseFloat(dto) / 100);
-         }
-       document.getElementById("inpt1").value= totalimp;
-        subtotal2_total= (parseFloat(totalimp) - parseFloat(totaldesc));
-        
-        document.getElementById("inpt3").value=subtotal2_total;
-        total_pedido= (parseFloat(subtotal2_total) + parseFloat(document.getElementById("inpt4").value)+ parseFloat(document.getElementById("sventrega").value));
-        document.getElementById("inpt5").value= total_pedido;
-      alert('Registro Eliminado');
-      if(document.getElementById("inpt1").value==0){
-        document.getElementById('btn').disabled=true;
-        document.getElementById('btneliminarfila').disabled=true;
-        document.getElementById('btn3').disabled=true;
-
-        
-      }
-
-      fila='';
-  }else {
-    alert('Transaccion Cancelada');
+        if (fila==''){
+          alert('Debe Seleccionar Una Fila')
+        }else{
+        var statusConfirm =(confirm("Desea borrar el registro?"))
+         if (statusConfirm == true){ 
+            document.getElementById("tbla").deleteRow(fila);
+            if (document.getElementById("inpt1").value==0){
+             var dto=0;
+            }else{
+              var dto=document.getElementById("inpt2").value;
+            }
+             var totalimp=0;
+             $('#tbla tbody tr').each(function(){
+              var Referencia = $(this).find("td").eq(6).html();
+              totalimp= parseFloat(totalimp)+ parseFloat(Referencia);
+             });
+             if (totalimp==0){
+              document.getElementById("sventrega").value=0;
+              document.getElementById("inpt2").value=0;
+              document.getElementById("inpt3").value=0;
+              document.getElementById("inpt5").value=0;
+              subtotal2_total=0;
+              totaldesc=0;
+              dto=0;
+               }else{
+                totaldesc= (parseFloat(document.getElementById("inpt1").value) * parseFloat(dto) / 100);
+               }
+             document.getElementById("inpt1").value= totalimp;
+              subtotal2_total= (parseFloat(totalimp) - parseFloat(totaldesc));
+              
+              document.getElementById("inpt3").value=subtotal2_total;
+              total_pedido= (parseFloat(subtotal2_total) + parseFloat(document.getElementById("inpt4").value)+ parseFloat(document.getElementById("sventrega").value));
+              document.getElementById("inpt5").value= total_pedido;
+            alert('Registro Eliminado');
+            if(document.getElementById("inpt1").value==0){
+              document.getElementById('btn').disabled=true;
+              document.getElementById('btneliminarfila').disabled=true;
+              document.getElementById('btn3').disabled=true;
+            }
+            fila='';
+        }else {
+          alert('Transaccion Cancelada');
+          }
+        }
     }
-  }
-}
  function abrirmodal_folio(){
 
     document.getElementById('btn').disabled=true;
@@ -626,13 +635,9 @@ function eliminarfila(){
 function abrirmodal(){
    var fecha11 = document.getElementById('fecha1').value;
    var fecha22 = document.getElementById('fecha2').value;
-   if (fecha11=='' && fecha22==''){
+   if (fecha11=='' && fecha22=='' || document.getElementById('inptcliente').value=='' || document.getElementById('combocta').value=='' ){
     alert('Debe rellenar todos los campos');
    }else{
-   //document.getElementById('btnel').disabled =false;
-   
-   //document.getElementById('btn').disabled=false;
-      
       var fecha1hoy = (fecha11.substring(6,10)+ '/' + fecha11.substring(3,6) +  fecha11.substring(0,2));
       var fecha2dev = (fecha22.substring(6,10)+ '/' + fecha22.substring(3,6) +  fecha22.substring(0,2));
       var mydate1 = new Date(fecha1hoy);
@@ -670,9 +675,7 @@ function abrirmodal(){
         }
         totaldiff= Math.round(diferencia/(1000*60*60*24));
         $('#myModal').modal('show');
-
    }
-   
 }
 function agregarfilamodf(){
       document.getElementById("tbla").deleteRow(fila);
@@ -880,14 +883,13 @@ function agregarfilamodf(){
         
         $.post("{{ path('registro_folio') }}", {folio: folio_rg,pedido:pedido_6,fechaactfl:fechaactfl,status_entrega:status_entrega,clave:clave,equipo:equipo,cantidad:cantidad,total:totalsaldo}, function(mensaje) {
                   $("#txt3").html(mensaje);
-            });
+        });
        });
            alert('Pedido Entregado');
            document.getElementById('btn3_pagos').disabled=false;
            document.getElementById('btn6cancelar').disabled=true;
            document.getElementById('btn2_entregar').disabled=true;
            document.getElementById('btn4').disabled=false;
-
            $('#myModal-folio').modal('hide');}
       }
   function llenardatalist(){
@@ -915,26 +917,38 @@ function agregarfilamodf(){
                       document.getElementById('inpt4').value=0;
                       document.getElementById('inpt4').disabled=true;
                       document.getElementById('inpt5').value=0;
-                      
                     }
+          }
+          function generarorden() {
+            radiocotpd='Pedido';
+            ultpedido();
+            $("#btn_orden").hide();
+            $("#botones_func").show();
+            $("#btn2_entregar").show();
+            $("#btn3_pagos").show();
+            $("#btn4").show();
+          }
+          function eliminarcot() {
+            $.post("{{ path('eliminar_cotizacion') }}", {cotizaciones:document.getElementById('inptcot').value}, function(mensaje)  {
+                $("#txt3").html(mensaje);
+                alert(mensaje);
+                location.href="{{ path('pedidos_detalles', { 'id': 0 }) }}";
+             });
+
+
           }
     </script>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <div class="modal fade" id="myModal" role="dialog">
-
     <div class="modal-dialog">
-      <!-- Modal content-->
-
       <div class="modal-content">
-       
         <h2 id="lbl2" class="equipo" style="text-align: center" >Agregar Equipo</h2>
           <div>
             <span  id="equiponor" style="background-color:red; display: none; font-size: 150%; margin-left: 33%;">Equipo No Registrado</span>
             <br>
             <br>
             <br>
-
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label class="cantidad">Cantidad</label>&nbsp;<input id="cnt" class="cantxt" type="text" name="" size="5">
         <label id="lbl" class="clav" >Clave</label>&nbsp;<input id="clave" class="clavtxt" type="text" name="" size="5" onkeyup="buscar1();">
         <label id="lbl2" class="equipo">Equipo</label>&nbsp;<input id="txt3" class="equiptxt" type="text" name="textcl" size="10" onkeyup="buscar2();">
@@ -966,8 +980,7 @@ function agregarfilamodf(){
       </div>
     </div>
   </div>
-{% if id != 0 %}
- {% set pedidoinput = 0 %}
+  {% set pedidoinput = 0 %}
         {% set folioinpt = 0 %}
         {% set clienteinpt = 0 %}
         {% set cuentainpt = 0 %}
@@ -982,25 +995,49 @@ function agregarfilamodf(){
         {% set id_pd = 0 %}        
         {% set svent = 0 %}
         {% set comentarios = '' %}        
-        {% set direccion = '' %}        
-           {% for pedidos in datosequipos %}
-              {% set pedidoinput = pedidos.pedido %}
-              {% set folioinpt = pedidos.folio %}
-              {% set svent = pedidos.servicioentrega %}
-              {% set clienteinpt = pedidos.cliente %}
-              {% set comentarios = pedidos.comentarios %}
-              {% set direccion = pedidos.direccion_entrega %}
-              {% set cuentainpt = pedidos.cuenta %}
-              {% set fechainpt = pedidos.fecha %}
-              {% set devolucioninpt = pedidos.devolucion %}
-              {% set statusinpt = pedidos.status %}
-              {% set sub1 = pedidos.subtotal %}
-              {% set descuento = pedidos.descuento %}
-              {% set sub2 = pedidos.subtotal2 %}
-              {% set impuesto = pedidos.impuesto %}
-              {% set total = pedidos.total %}
-              {% set id_pd = pedidos.id %}
-              {% endfor %}
+        {% set direccion = '' %}     
+        {% set cotizacion = 0 %}
+   {% if cot != 0 %}
+      {% for cotizaciones in cotizaciones %}
+        {% set cotizacion = cotizaciones.cotizacion %}
+          {% set svent = cotizaciones.servicioentrega %}
+          {% set clienteinpt = cotizaciones.cliente %}
+          {% set comentarios = cotizaciones.comentarios %}
+          {% set direccion = cotizaciones.direccion_entrega %}
+          {% set cuentainpt = cotizaciones.obra %}
+          {% set fechainpt = cotizaciones.fecha %}
+          {% set devolucioninpt = cotizaciones.devolucion %}
+          {% set statusinpt = cotizaciones.status %}
+          {% set sub1 = cotizaciones.subtotal %}
+          {% set descuento = cotizaciones.descuento %}
+          {% set sub2 = cotizaciones.subtotal2 %}
+          {% set impuesto = cotizaciones.impuesto %}
+          {% set total = cotizaciones.total %}
+          {% set id_pd = cotizaciones.id %}
+      {% endfor %}
+      {% else %}
+        {% set cotizacion = '' %}
+    {% if id != 0 %}
+      {% for pedidos in datosequipos %}
+          {% set pedidoinput = pedidos.pedido %}
+          {% set folioinpt = pedidos.folio %}
+          {% set svent = pedidos.servicioentrega %}
+          {% set clienteinpt = pedidos.cliente %}
+          {% set comentarios = pedidos.comentarios %}
+          {% set direccion = pedidos.direccion_entrega %}
+          {% set cuentainpt = pedidos.cuenta %}
+          {% set fechainpt = pedidos.fecha %}
+
+          {% set devolucioninpt = pedidos.devolucion %}
+          {% set statusinpt = pedidos.status %}
+          {% set sub1 = pedidos.subtotal %}
+          {% set descuento = pedidos.descuento %}
+          {% set sub2 = pedidos.subtotal2 %}
+          {% set impuesto = pedidos.impuesto %}
+          {% set total = pedidos.total %}
+          {% set id_pd = pedidos.id %}
+     {% endfor %}
+
     {% else %}
               {% set pedidoinput = '' %}
               {% set id_pd = '' %}
@@ -1022,6 +1059,7 @@ function agregarfilamodf(){
               {% set impuesto = '' %}
               {% set total = '' %}
   {% endif %}
+ {% endif %}
 
  <input id="id_pedido" type="" name="" value="" style="visibility: hidden;" >
  <input id="id_dev" type="" name="" value=""  style="visibility: hidden;">
@@ -1051,41 +1089,46 @@ function agregarfilamodf(){
     </div>
   </div>
   <fieldset style="display: block;margin: auto; text-align: center; margin-top: -2%;" >
-          <legend style="text-align: center;"> DATOS DEl PEDIDO <span class="glyphicon glyphicon-pencil"></span></legend> 
-                <label class="label1" for="pedido">Pedido</label><input id="ped" type="text" name="pedido" disabled="true" value="{{pedidoinput}}">
-                <label class="label2" for="folio">Folio</label><input id="flio" type="text" name="folio" value="{{ folioinpt }}" disabled></input>
-                <label class="label3">Cliente</label>
-                <span  id="restriccion" style="background-color:red; display: none">RESTRINGIDO</span>
-                <input type="text" id="inptcliente" autocomplete="off" list="categoryname"  value="{{ clienteinpt }}" {{estado}}></input>
-                <script type="text/javascript">
-                  llenardatalist();
-                </script>
-                <datalist id="categoryname">
-                </datalist>
-          <label id="lblcta" class="label4" for="cuenta">Obra</label>
-          <input type="text" id="combocta" autocomplete="off" list="categoryname2" value="{{ cuentainpt }}" {{estadoobra}}> </input>
-          <br>
-          <br>
-          <datalist id="categoryname2">
-          </datalist>
+    <legend style="text-align: center;"> DATOS DEL PEDIDO/COTIZACION <span class="glyphicon glyphicon-pencil"></span></legend> <div id="radios">
+        <label><input type="radio" name="rad" id="radioped" value="1">Pedidos</label>
+        <label><input type="radio" name="rad" id="cot" value="2">Cotización</label>
+    </div>
+    <div id="datos" hidden="hidden">
+      <label class="label1" for="pedido" id="lblpedido">Pedido</label><input id="ped" type="text" name="pedido" disabled="true" value="{{pedidoinput}}">
+      <label class="label2" for="folio">Folio</label><input id="flio" type="text" name="folio" value="{{ folioinpt }}" disabled></input>
+      <label class="label3">Cliente</label>
+      <span  id="restriccion" style="background-color:red; display: none">RESTRINGIDO</span>
+      <input type="text" id="inptcliente" autocomplete="off" list="categoryname"  value="{{ clienteinpt }}" {{estado}}></input>
 
+      <script type="text/javascript">
+        llenardatalist();
+      </script>
+
+      <datalist id="categoryname">
+      </datalist>
+      <label id="lblcta" class="label4" for="cuenta">Obra</label>
+      <input type="text" id="combocta" autocomplete="off" list="categoryname2" value="{{ cuentainpt }}" {{estadoobra}}> 
+      <br>
+      <br>
+      <datalist id="categoryname2">
+      </datalist>
       <label class="label5" for="fecha">Fecha </label><input id="fecha1" type="text" name="fecha" value="{{ fechainpt }}" {{estado}}>
-
-        <label class="label6" for="devolucion">Devolución </label><input id="fecha2" class="dev" size="16" type="text" name="devolucion" value="{{ devolucioninpt }}">
-        <label class="label7" for="status">Status </label><input id="inpst" class="status" size="19" type="text" name="status" value="{{ statusinpt }}" disabled="true"> 
-        </fieldset>
-    <div id="botones_func" style="text-align: center; margin-top: 2%; height: 15px;">
-         <button class="btn btn-warning" id="btn_modificar" type="submit" value="Modificar Pedido" onclick="modificar_pedido();" style="margin-top: -1px" {{botones}} style=""> Modificar Pedido  <span class="glyphicon glyphicon-wrench"></span></button></button>
-          <button class="btn btn-primary" id="btn" type="submit" value="Crear" onclick="ultpedido();" disabled="true" {{botones}}> Crear <span class="glyphicon glyphicon-floppy-open"></span></button>
-          <button class="btn btn-primary" id="btn2_entregar" type="submit" value="Entregar" onclick="abrirmodal_folio()" {{botones}} >Entregar <span class="glyphicon glyphicon-send"></span></button>
-          <button class="btn btn-info" id="btn3_pagos" type="submit" value="$" onclick="abrirmodalfac();" {{botones}} disabled="true" > Pagos/Cargos  <span class=" glyphicon glyphicon-usd"></span></button>
-          <button class="btn btn-info" id="btn4" type="submit" value="Devoluciones" onclick="devoluciones();" {{botones}} disabled="true" >Devoluciones  <span class="glyphicon glyphicon-retweet"></span></button>
+      <label class="label6" for="devolucion">Devolución </label><input id="fecha2" class="dev" size="16" type="text" name="devolucion" value="{{ devolucioninpt }}">
+      <label class="label7" for="status">Status </label><input id="inpst" class="status" size="19" type="text" name="status" value="{{ statusinpt }}" disabled="true"> 
+      <label id="lblcot">Cotización</label><input type="text" id="inptcot" disabled="true" value="{{cotizacion}}">
+      </div>
+    </fieldset>
+    <div id="botones_func" style="text-align: center; margin-top: 2%; height: 15px;" hidden="hidden">
+        <button class="btn btn-warning" id="btn_modificar" type="submit" value="Modificar Pedido" onclick="modificar_pedido();" style="margin-top: -1px" {{botones}} style=""> Modificar Pedido/Cotización  <span class="glyphicon glyphicon-wrench"></span></button></button>
+        <button class="btn btn-primary" id="btn" type="submit" value="Crear" onclick="ultpedido();" disabled="true" {{botones}}> Crear <span class="glyphicon glyphicon-floppy-open"></span></button>
+        <button class="btn btn-primary" id="btn2_entregar" type="submit" value="Entregar" onclick="abrirmodal_folio()" {{botones}} >Entregar <span class="glyphicon glyphicon-send"></span></button>
+        <button class="btn btn-info" id="btn3_pagos" type="submit" value="$" onclick="abrirmodalfac();" {{botones}} disabled="true" > Pagos/Cargos  <span class=" glyphicon glyphicon-usd"></span></button>
+        <button class="btn btn-info" id="btn4" type="submit" value="Devoluciones" onclick="devoluciones();" {{botones}} disabled="true" >Devoluciones  <span class="glyphicon glyphicon-retweet"></span></button>
         <button class="btn btn-info" id="btn5" type="submit"  onclick="imprimir()" style="margin-top: -1px" {{botones}}>Imprimir  <span class="glyphicon glyphicon-print"></span></button>
-
-
-<!-- <a onclick="imprimir();" class="btn btn-info" {{botones}}><span class="glyphicon glyphicon-print"></span> Imprimir</a> -->
-
-           <button class="btn btn-danger" id="btn6cancelar" type="submit" onclick="cancelarped();" style="margin-top: -1px" disabled="true">Cancelar <span class="glyphicon glyphicon-trash"></span></button>
+        <button class="btn btn-danger" id="btn6cancelar" type="submit" onclick="cancelarped();" style="margin-top: -1px"
+         disabled="true">Cancelar <span class="glyphicon glyphicon-trash"></span></button>
+        <button class="btn btn-info" id="btn_orden" type="submit" onclick="generarorden();" {{botones}} disabled="true" >Convertir en Pedido <span class="glyphicon glyphicon-retweet"></span></button>
+        <button class="btn btn-danger" id="btneliminarcotizacion" type="button" value="Eliminar Fila" onclick="eliminarcot();" disabled="true">Eliminar Cotizacion <span class="glyphicon glyphicon-trash"></span></button></button>
     </div> 
       <div id="div1" class="table table-striped" style="width: 80%;">
         <table id="tbla" class="table" width="100%" align="center">
@@ -1115,6 +1158,20 @@ function agregarfilamodf(){
                   </tr>
               {% endfor %}
           {% endif %}
+           {% if cot != 0 %}
+              {% for cotizaciones in cotizaciones %}
+              {# {% set pedidoinput = cotizaciones.cantidad %} #}
+                  <tr align="center" style="text-align: left;">
+                    <td style="text-align: center;"><input type="radio" name="rd1"></td>
+                      <td style="text-align: center;">{{ cotizaciones.cantidad }}</td>
+                      <td style="text-align: center;">{{ cotizaciones.equipo }}</td>
+                      <td style="text-align: center;">{{ cotizaciones.clave }}</td>
+                      <td style="text-align: center;">{{ cotizaciones.dias }}</td>
+                      <td style="text-align: center;">{{ cotizaciones.PU }}</td>
+                      <td id="impr" style="text-align: center;">{{ cotizaciones.importe }}</td>
+                  </tr>
+              {% endfor %}
+          {% endif %}
             </tbody>
            <script type="text/javascript">
                   document.getElementById("tbla").onclick=function(e){ 
@@ -1139,7 +1196,7 @@ function agregarfilamodf(){
       </div>
  <div class="contenedor_btn" style="text-align: left;">
         <button class="btn btn-danger" id="btneliminarfila" type="button" value="Eliminar Fila" onclick="eliminarfila();" disabled="true">Eliminar Fila <span class="glyphicon glyphicon-trash"></span></button></button>
-        <button id="btn2" type="button" class="btn btn-primary" onclick="abrirmodal();"  disabled="true">Agregar  <span class="glyphicon glyphicon-plus"></span></button>
+        <button id="btn2" type="button" class="btn btn-primary" onclick="abrirmodal();">Agregar  <span class="glyphicon glyphicon-plus"></span></button>
 
         <button id="btn3" class="btn btn-warning" type="button" onclick="modificar();"  disabled="true">Editar Registros  <span class="glyphicon glyphicon-wrench"></span></button>
         <br>

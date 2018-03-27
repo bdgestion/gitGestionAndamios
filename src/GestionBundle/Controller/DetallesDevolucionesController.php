@@ -59,7 +59,6 @@ class DetallesDevolucionesController extends Controller
         FROM  GestionBundle:Pedidos p
         WHERE p.pedido = :price ' 
         )->setParameter('price', $pedid);
-        //$cnt = $queryc->getResult();
         $row = $queryc->getResult();
 
          foreach ($row as $entidad){

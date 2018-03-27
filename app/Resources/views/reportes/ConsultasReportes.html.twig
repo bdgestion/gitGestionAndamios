@@ -32,10 +32,45 @@
         var cuenta2;
         var hasta2;
         var desde2;
+        var pd;
   $(document).ready(function() {
+
      $("#btnbuscar").click(function () {    
      $("#tbla").empty(); 
      var radios= $('input:radio[name=rap]:checked').val();
+      $("#tbla").on("click", "td" , function(){
+      if(radios=='6'){
+
+        var cot = document.getElementById("inpt_cot").value;
+
+        var url=("{{ path('cotizaciones_detalles', { 'cot':'xxx' }) }}");
+       url = url.replace("xxx", cot);
+          $.ajax({
+              dataType: "html",
+              url: url,
+              type: "POST",
+              data: {cot: cot},
+              success: function(data)
+              {
+               location.href=url;   
+              }
+          });    
+      }else{
+         pd = $(this).text();
+        var url=("{{ path('pedidos_detalles', { 'id':'xxx' }) }}");
+         url = url.replace("xxx", pd);
+        $.ajax({
+            dataType: "html",
+            url: url,
+            type: "GET",
+            data: {id: pd},
+            success: function(data)
+            {
+             location.href=url;   
+            }
+        });  
+      }
+    });
   if (radios=='1'){
     if(document.getElementById("clt").value!='' && document.getElementById("combocta").value!='' && document.getElementById("desde").value!='' && document.getElementById("hasta").value!='' || document.getElementById("pedido").value!=''){
         var pedido= document.getElementById('pedido').value;
@@ -73,7 +108,7 @@
                     pass='activo';
                     width++;
                     elem.innerHTML = width *1 + 'Registros'; 
-                $("#tbla").append("<tr class='dev'><td style='text-align: center;'>"+mensaje[i]["pedido"]+"</td><td style='text-align: center'>"+mensaje[i]["folio"]+"</td><td style='text-align: center'>"+mensaje[i]["cliente"]+"</td><td style='text-align: center'>"+mensaje[i]["cuenta"]+"</td><td style='text-align: center'>"+mensaje[i]["fecha"]+"</td><td style='text-align: center'>"+mensaje[i]["devolucion"]+"</td><td style='text-align: center'>"+mensaje[i]["status"]+"</td></tr>");  
+                $("#tbla").append("<tr class='dev'><td style='text-align: center; color:blue; text-decoration: underline; cursor:pointer;'>"+mensaje[i]["pedido"]+"</td><td style='text-align: center'>"+mensaje[i]["folio"]+"</td><td style='text-align: center'>"+mensaje[i]["cliente"]+"</td><td style='text-align: center'>"+mensaje[i]["cuenta"]+"</td><td style='text-align: center'>"+mensaje[i]["fecha"]+"</td><td style='text-alig: center'>"+mensaje[i]["devolucion"]+"</td><td style='text-align: center'>"+mensaje[i]["status"]+"</td></tr>");  
                 }
                
               }else{
@@ -151,7 +186,7 @@
                var dia2 = mensaje[i]["fecha_pedido"].substring(8, 10);
                var mes2 = mensaje[i]["fecha_pedido"].substring(5, 7);
                var fechaped= dia2+"/"+mes2+"/"+ano2;
-            $("#tbla").append("<tr class='dev'><td style='text-align: center';>"+mensaje[i]["pedido"]+"</td><td style='text-align: center'>"+mensaje[i]["folio"]+"</td><td style='text-align: center'>"+fechaped+"</td><td style='text-align: center'>"+fechadev+"</td><td style='text-align: center'>"+mensaje[i]["saldo"]+"</td></tr>");
+            $("#tbla").append("<tr class='dev'><td style='text-align: center; color:blue; text-decoration: underline; cursor:pointer;'>"+mensaje[i]["pedido"]+"</td><td style='text-align: center'>"+mensaje[i]["folio"]+"</td><td style='text-align: center'>"+fechaped+"</td><td style='text-align: center'>"+fechadev+"</td><td style='text-align: center'>"+mensaje[i]["saldo"]+"</td></tr>");
             ulpd= mensaje[i]["pedido"];
           }
         }
@@ -180,7 +215,7 @@
         function(mensaje) {
           $("#tbla").find("tr:gt(0)").remove();
           $("#pedido").html(mensaje);
-          $("#tbla").append("<tr class='dev'><td style='text-align: center' color:'blue';>REFERENCIA</td><td style='text-align: center' color:'blue';>PEDIDO</td><td style='text-align: center' color:'blue';>FOLIO DEVOLUCION</td><td style='text-align: center' color:'blue';>CLIENTE</td><td style='text-align: center' color:'blue';>OBRA</td><td style='text-align: center' color:'blue';>FECHA DEVOLUCION</td><td style='text-align: center' color:'blue';>EQUIPO</td><td style='text-align: center' color:'blue';>CANTIDAD DEVUELTO</td></tr>");
+          $("#tbla").append("<tr class='dev'><td style='text-align: center' color:'blue';>PEDIDO</td><td style='text-align: center' color:'blue';>FOLIO DEVOLUCION</td><td style='text-align: center' color:'blue';>CLIENTE</td><td style='text-align: center' color:'blue';>OBRA</td><td style='text-align: center' color:'blue';>FECHA DEVOLUCION</td><td style='text-align: center' color:'blue';>EQUIPO</td><td style='text-align: center' color:'blue';>CANTIDAD DEVUELTO</td></tr>");
           $("#pedido").html(mensaje);
           var pass='';
             var elem = document.getElementById("myBar");   
@@ -200,7 +235,7 @@
                     pass='activo';
                 width++;
                     elem.innerHTML = width *1 + 'Registros';     
-                    $("#tbla").append("<tr class='dev'><td style='text-align: center';>"+mensaje[i]["id"]+"<td style='text-align: center';>"+mensaje[i]["pedidosistema"]+"</td><td style='text-align: center'>"+mensaje[i]["foliodevolucion"]+"</td><td style='text-align: center'>"+mensaje[i]["cliente"]+"</td><td style='text-align: center'>"+mensaje[i]["obra"]+"</td><td style='text-align: center'>"+mensaje[i]["fechamovimiento"]+"</td><td style='text-align: center'>"+mensaje[i]["equipo"]+"</td><td style='text-align: center'>"+mensaje[i]["cantidad"]+"</td></tr>");
+                    $("#tbla").append("<tr class='dev'><td style='text-align: center; color:blue; text-decoration: underline; cursor:pointer;'>"+mensaje[i]["pedidosistema"]+"</td><td style='text-align: center'>"+mensaje[i]["foliodevolucion"]+"</td><td style='text-align: center'>"+mensaje[i]["cliente"]+"</td><td style='text-align: center'>"+mensaje[i]["obra"]+"</td><td style='text-align: center'>"+mensaje[i]["fechamovimiento"]+"</td><td style='text-align: center'>"+mensaje[i]["equipo"]+"</td><td style='text-align: center'>"+mensaje[i]["cantidad"]+"</td></tr>");
                   }
                 }else{
                   width=100;
@@ -237,7 +272,7 @@
                     pass='activo';
                 width++;
                     elem.innerHTML = width *1 + 'Registros';     
-              $("#tbla").append("<tr class='dev'><td style='text-align: center';>"+mensaje[i]["pedido"]+"</td><td style='text-align: center'>"+mensaje[i]["cliente"]+"</td><td style='text-align: center'>"+mensaje[i]["obra"]+"</td><td style='text-align: center'>"+mensaje[i]["operacion"]+"</td><td style='text-align: center'>"+mensaje[i]["formas"]+"</td><td style='text-align: center'>"+mensaje[i]["fechapago"]+"</td><td style='text-align: center'>"+mensaje[i]["montopago"]+"</td></tr>");
+              $("#tbla").append("<tr class='dev'><td style='text-align: center; color:blue; text-decoration: underline; cursor:pointer;'>"+mensaje[i]["pedido"]+"</td><td style='text-align: center'>"+mensaje[i]["cliente"]+"</td><td style='text-align: center'>"+mensaje[i]["obra"]+"</td><td style='text-align: center'>"+mensaje[i]["operacion"]+"</td><td style='text-align: center'>"+mensaje[i]["formas"]+"</td><td style='text-align: center'>"+mensaje[i]["fechapago"]+"</td><td style='text-align: center'>"+mensaje[i]["montopago"]+"</td></tr>");
                        }
                 }else{
                   width=100;
@@ -275,7 +310,7 @@
                   var dia2 = mensaje[i]["fecha"].substring(8, 10);
                   var mes2 = mensaje[i]["fecha"].substring(5, 7);
                   var fecha= dia2+"/"+mes2+"/"+ano2;
-                $("#tbla").append("<tr class='dev'><td style='text-align: center';>"+mensaje[i]["pedidos"]+"</td><td style='text-align: center'>"+mensaje[i]["clientes"]+"</td><td style='text-align: center'>"+mensaje[i]["obra"]+"</td><td style='text-align: center'>"+fecha+"</td><td style='text-align: center'>"+mensaje[i]["domicilio"]+"</td><td style='text-align: center'>"+mensaje[i]["hora"]+"</td></tr>");
+                $("#tbla").append("<tr class='dev'><td style='text-align: center; color:blue; text-decoration: underline; cursor:pointer;'>"+mensaje[i]["pedidos"]+"</td><td style='text-align: center'>"+mensaje[i]["clientes"]+"</td><td style='text-align: center'>"+mensaje[i]["obra"]+"</td><td style='text-align: center'>"+fecha+"</td><td style='text-align: center'>"+mensaje[i]["domicilio"]+"</td><td style='text-align: center'>"+mensaje[i]["hora"]+"</td></tr>");
                 }
                 }else{
                   width=100;
@@ -287,6 +322,49 @@
             alert('Debe Completar todos los Campos');
           }
         }
+  if (radios=='6'){
+    if(document.getElementById("clt").value!='' && document.getElementById("combocta").value!='' && document.getElementById("desde").value!='' && document.getElementById("hasta").value!='' || document.getElementById("inpt_cot").value!=''){
+        var hastadev='';
+        var desdedev='';          
+        var cont=0;
+        var upd=0;
+        $("#tbla").append("<tr class='dev'><td style='text-align: center' color:'blue';>COTIZACIONES</td><td style='text-align: center' color:'blue';>CLIENTE</td><td style='text-align: center' color:'blue';>OBRA</td><td style='text-align: center' color:'blue';>FECHA</td><td style='text-align: center' color:'blue';>STATUS</td></tr>");
+        $.post("{{ path('consultar_cot') }}",{cotizacion:document.getElementById('inpt_cot').value,obra:document.getElementById('combocta').value,cliente:document.getElementById('clt').value,hasta:document.getElementById('hasta').value,desde:document.getElementById('desde').value,hastadev:hastadev,desdedev:desdedev},
+        function(mensaje) {
+          var pass='';
+           $("#pedido").html(mensaje);
+            var elem = document.getElementById("myBar");   
+            var width = 15;
+            var id = setInterval(frame, mensaje.length);
+
+            $("#cargando").show();
+            $("#myBar").show();
+            var upd=0;
+            function frame() {
+              if (width >= 100) {
+                clearInterval(id);
+                $("#cargando").hide();
+                $("#myBar").hide();
+                $("#cargando").append("<span>"+mensaje.length+'Registros</span>');
+              } else {
+                if(pass!='activo'){
+                  for (var i=0, total = mensaje.length; i < total; i++) { 
+                    pass='activo';
+                    width++;
+                    elem.innerHTML = width *1 + 'Registros'; 
+                $("#tbla").append("<tr class='dev'><td style='text-align: center; color:blue; text-decoration: underline; cursor:pointer;'>"+mensaje[i]["cotizacion"]+"</td><td style='text-align: center'>"+mensaje[i]["cliente"]+"</td><td style='text-align: center'>"+mensaje[i]["obra"]+"</td><td style='text-align: center'>"+mensaje[i]["fecha"]+"</td><td style='text-align: center'>"+mensaje[i]["status"]+"</td></tr>");  
+                }
+              }else{
+                  width=100;
+                }
+           }
+         }
+      });
+
+     }else{
+      alert('Debe Completar Algunos Campos');
+     }
+   }
         document.getElementById('imprimir').disabled=false;
 
     });
@@ -352,9 +430,11 @@
           if(document.getElementById("folio").value==''){
             document.getElementById("folio").value=0;
           }
-          var pd;
+          //var pd;
           if(document.getElementById("pedido").value==''){
             pd='xxx';
+          }else{
+            pd=document.getElementById("pedido").value;
           }
           if(document.getElementById("folio_dev").value==''){
             document.getElementById("folio_dev").value='0';
@@ -365,6 +445,7 @@
           window.open("impr/"+desde+"/"+hasta+"/"+cliente+"/"+cuenta);
          }
          if($("#ped").is(':checked')) {
+          alert(pd);
           window.open("sqlpd/"+cuenta+"/"+cliente+"/"+fechadesde+"/"+fechahasta+"/"+document.getElementById("folio").value+"/"+pd);   
          }
          if($("#sal").is(':checked')) {
@@ -478,6 +559,8 @@
            $("#combFP").hide();
            $("#sl").hide();
            $("#totalsuma").hide();
+            $("#lblcot").hide();
+           $("#inpt_cot").hide();
            $("#imprimir").prop("disabled",true);
   });
    $("#sal").change(function(){
@@ -508,6 +591,8 @@
            $("#combFP").hide();
            $("#sl").show();
            $("#totalsuma").show();
+            $("#lblcot").hide();
+           $("#inpt_cot").hide();
 
             }); 
   $("#devl").change(function(){
@@ -534,6 +619,12 @@
            $("#pedido").hide();
            $("#sl").hide();
            $("#totalsuma").hide();
+           $("#lbloperacion").hide();
+           $("#oper").hide();
+           $("#lblformapg").hide();
+           $("#combFP").hide();
+            $("#lblcot").hide();
+           $("#inpt_cot").hide();
             });  
   $("#ped").change(function(){
     document.getElementById('combocta').value='';
@@ -563,6 +654,8 @@
            $("#combFP").hide();
            $("#sl").hide();
            $("#totalsuma").hide();
+            $("#lblcot").hide();
+           $("#inpt_cot").hide();
             }); 
    $("#pag").change(function(){
     document.getElementById('combocta').value='';
@@ -592,6 +685,40 @@
            $("#combFP").show();
            $("#sl").hide();
            $("#totalsuma").hide();
+            $("#lblcot").hide();
+           $("#inpt_cot").hide();
+            });
+   $("#cot").change(function(){
+    document.getElementById('combocta').value='';
+    document.getElementById('clt').value='';
+    document.getElementById('desde').value='';
+    document.getElementById('hasta').value='';
+    document.getElementById('folio').value='';
+    document.getElementById('folio_dev').value='';
+    document.getElementById('pedido').value='';
+    $("#imprimir").prop("disabled",true);
+    $("#tbla").find("tr:gt(0)").remove();
+           $("#cta_comb").show();
+           $("#fac").hide();
+           $("#fctu").hide();
+           $("#for1").hide();
+           $("#forma1").hide();
+           $("#fdv").hide();
+           $("#folio_dev").hide();
+           $("#contenedor3").hide();
+           $("#flio").hide();
+           $("#folio").hide();
+           $("#lblpedido").hide();
+           $("#pedido").hide();
+           $("#lbloperacion").hide();
+           $("#oper").hide();
+           $("#lblformapg").hide();
+           $("#combFP").hide();
+           $("#sl").hide();
+           $("#totalsuma").hide();
+           $("#lblcot").show();
+           $("#inpt_cot").show();
+           
             });
 });
 
@@ -607,7 +734,7 @@
    </div>
     <div id="contenedor" style="display: block;margin:auto;">
       <div id="contenedor2">
-        <fieldset style="width: 30%; display: block;margin: auto;">
+        <fieldset style="width: 60%; display: block;margin: auto;">
           <img style="width: 30%; display: block;margin: auto;" class="logo" src="{{ asset('img/reporte.jpg')}}">   
           <legend style="text-align: center;">Buscar Por:</legend>
           <div class="radio" style="text-align: center;">
@@ -616,6 +743,7 @@
           <label><input type="radio" name="rap" id="devl" value="3">Devoluciones</label>
           <label><input type="radio" name="rap" id="pag" value="4">Pagos</label>
           <label><input type="radio" name="rap" id="rec" value="5">Recolecciones</label>
+          <label><input type="radio" name="rap" id="cot" value="6">Cotizaciones</label>
           </div>
         </fieldset>
     </div>
@@ -629,6 +757,8 @@
       </fieldset>
     </div>
    <div id="cta_comb" class="form-group" hidden="hidden" style="text-align: center; margin-top: 1%;">
+     <label id="lblcot" class="labe15" for="pedido" hidden="hidden">Cotización</label>
+      <input type="text" id="inpt_cot" hidden="hidden"></input>
       <label class="label3" for="cliente" style="margin-left: 10px">Cliente</label>
       <input name="clt" type="text" id="clt" autocomplete="off" list="categoryname" ></input>
       <datalist id="categoryname">
@@ -641,7 +771,10 @@
       <datalist id="categoryname2">
       </datalist>
       <label id="lblpedido" class="labe15" for="pedido" hidden="hidden">Pedido</label>
+      
       <input type="text" id="pedido" autocomplete="off" list="categoryname3" value="" hidden="hidden"></input>
+
+     
        <datalist id="categoryname3">
        </datalist>
       <label class="creados">Desde:</label><input id="desde" name="desde" class="pedidosdeltxt" type="text" size="10">

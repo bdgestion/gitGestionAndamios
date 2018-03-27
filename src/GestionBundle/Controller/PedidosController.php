@@ -86,7 +86,6 @@ class PedidosController extends Controller
         $stpag2=$pdconsulta2[$x]['statussaldo'];
         $stfecha2=$pdconsulta2[$x]['fecha'];
         $saldo=$pdconsulta2[$x]['saldorestante'];
-        
         $idstatus= $conn->query("SELECT * FROM home_temp  where pedido=$ped2 ")->fetchAll();
        if(empty($idstatus)) {
             $insertar2 = $conn->query("INSERT  INTO home_temp (pedido,folio,fecha_pedido,fecha_dev,cliente,status_pedido,status_pago,saldo) VALUES ($ped2,'$folio2','$stfecha2','$dev2','$cliente2','$stpdido2','$stpag2',$saldo)");     
@@ -100,46 +99,60 @@ class PedidosController extends Controller
 
     return $this->render('pedidos/home.html.twig',array('pedidosconsl' => $pedidosconsl,'factconsl' => $factconsl));
     }
+    public function detallescotizacionesAction(Request $request,$cot)
+    {
+     $session = $request->getSession(); 
+      if(!$session->get("usuarionombre")){
+          $this->get('session')->getFlashBag()->add('fall','ES NECESARIO INICIAR SESSION');
+          return $this->redirect($this->generateUrl('usuario_login'));
+      }
+
+       $manager = $this->getDoctrine()->getManager();
+       $conn = $manager->getConnection();
+       $cots = $conn->query("SELECT p.cotizacion,p.pedido, p.devolucion,p.cliente,p.obra,p.fecha,p.status,p.cantidad,p.clave,p.equipo,p.dias,p.PU,p.importe,p.direccion_entrega,p.comentarios,p.descuento,p.impuesto,p.total,p.subtotal,p.subtotal2,p.servicioentrega,p.id FROM cotizaciones p  where p.cotizacion=".$cot)->fetchAll(); 
+        return $this->render('pedidos/detallespedido.html.twig',array('cotizaciones' => $cots,'cot' => $cot));
+
+
+    }
     public function detallespedidoAction(Request $request,$id)
-        {
-            $session = $request->getSession(); 
-            if(!$session->get("usuarionombre")){
-                $this->get('session')->getFlashBag()->add('fall','ES NECESARIO INICIAR SESSION');
-                return $this->redirect($this->generateUrl('usuario_login'));
-            }
+      {
+        $session = $request->getSession(); 
+        if(!$session->get("usuarionombre")){
+            $this->get('session')->getFlashBag()->add('fall','ES NECESARIO INICIAR SESSION');
+            return $this->redirect($this->generateUrl('usuario_login'));
+        }
             $fechadevol='';
             $idpd=0;
             if($id<>0){ 
             $manager = $this->getDoctrine()->getManager();
             $conn = $manager->getConnection();
+            $datosequipos = $conn->query("SELECT p.pedido, p.folio,p.devolucion,p.cliente,p.cuenta,p.fecha,s.status,p.cant,p.clave,p.equipo,p.dias,p.PU,p.importe,p.direccion_entrega,p.comentarios,p.descuento,p.impuesto,p.total,p.subtotal,p.subtotal2,p.servicioentrega,p.id FROM pedidos p, status_entrega s where p.status_pedido=s.id AND p.pedido=".$id)->fetchAll(); 
 
-            $datosequipos = $conn->query("SELECT p.pedido, p.folio,p.devolucion,p.cliente,p.cuenta,p.fecha,s.status,p.cant,p.clave,p.equipo,p.dias,p.PU,p.importe,p.direccion_entrega,p.comentarios,p.descuento,p.impuesto,p.total,p.status_pago,p.subtotal,p.subtotal2,p.cliente2,p.montoact,p.servicioentrega,p.id,s.status FROM pedidos p, status_entrega s where p.status_pedido=s.id AND p.pedido=".$id)->fetchAll(); 
+                 // $em = $this->getDoctrine()->getManager();
+                 //    $queryc = $em->createQuery(
+                 //    'SELECT p
+                 //    FROM GestionBundle:Pedidos p
+                 //    WHERE p.pedido = :price '
+                 //    )->setParameter('price', $id);
+                 //     $idq = $queryc->getResult();
 
-                 $em = $this->getDoctrine()->getManager();
-                    $queryc = $em->createQuery(
-                    'SELECT p
-                    FROM GestionBundle:Pedidos p
-                    WHERE p.pedido = :price '
-                    )->setParameter('price', $id);
-                     $idq = $queryc->getResult();
+                 //     foreach($idq as $entity){
+                 //        $idpd= $entity->getId();
+                 //     }
 
-                     foreach($idq as $entity){
-                        $idpd= $entity->getId();
-                     }
+                 //    $em = $this->getDoctrine()->getManager();
+                 //    $queryc = $em->createQuery(
+                 //    'SELECT p
+                 //    FROM GestionBundle:Pedidos p   
+                 //    WHERE p.pedido = :price and p.statusPedido = :status '
+                 //    )->setParameter('price', $id)
+                 //     ->setParameter('status', 'Pendiente de Devolucion');
+                 //     $query2 = $queryc->getResult();
 
-                    $em = $this->getDoctrine()->getManager();
-                    $queryc = $em->createQuery(
-                    'SELECT p
-                    FROM GestionBundle:Pedidos p   
-                    WHERE p.pedido = :price and p.statusPedido = :status '
-                    )->setParameter('price', $id)
-                     ->setParameter('status', 'Pendiente de Devolucion');
-                     $query2 = $queryc->getResult();
-
-                     foreach($query2 as $entity){
-                        $fechadevol= $entity->getDevolucion();
-                     }
-    return $this->render('pedidos/detallespedido.html.twig',array('datosequipos' => $datosequipos,'query2' => $query2,'id' => $id));
+                 //     foreach($query2 as $entity){
+                 //        $fechadevol= $entity->getDevolucion();
+                 //     }
+    return $this->render('pedidos/detallespedido.html.twig',array('datosequipos' => $datosequipos,'id' => $id,'cot' => '00'));//,'query2' => $query2,));
     }if($id==0){ 
         $cont=0;
         $pedido=0;
@@ -156,7 +169,7 @@ class PedidosController extends Controller
         $datosequipos=array();
         $query2=array();
         $dts=array();
-        return $this->render('pedidos/detallespedido.html.twig',array('datosequipos' => $datosequipos,'query2' => $query2,'dts' => $dts,'id' => $id,'pd' => $pedido));
+        return $this->render('pedidos/detallespedido.html.twig',array('datosequipos' => $datosequipos,'query2' => $query2,'dts' => $dts,'id' => $id,'pd' => $pedido,'cot'=>'00'));
         }
     }  
     public function modificarpedidoAction(Request $request){
@@ -165,7 +178,7 @@ class PedidosController extends Controller
             $this->get('session')->getFlashBag()->add('fall','ES NECESARIO INICIAR SESSION');
             return $this->redirect($this->generateUrl('usuario_login'));
         }
-
+        $cot = ($_POST['cot']);
         $cantidad = ($_POST['cantidad']);
         $equipo_2 = ($_POST['equipo_2']);
         $clv = ($_POST['clv']);
@@ -190,13 +203,15 @@ class PedidosController extends Controller
 
         $manager = $this->getDoctrine()->getManager();
         $conn = $manager->getConnection();
-
+        if($cot<>0){
+          $datosequiposinsr = $conn->query("UPDATE cotizaciones SET cliente='$cliente',obra='$cuenta',fecha='$fecha_1',devolucion='$fecha_2',cantidad=$cantidad,clave='$clv',equipo='$equipo_2',dias=$dias,PU=$PU_1,importe=$importe,direccion_entrega='$direccion_entrega',comentarios='$comentario_1',descuento=$descuento,impuesto=$impuesto,total=$total,subtotal=$subtotal_1,subtotal2=$subtotal_2,servicioentrega=$sv WHERE cotizacion=$cot and clave='$clv'"); 
+        }else{
         $idstatus= $conn->query("SELECT id FROM status_entrega  where status='En Renta' ")->fetchAll();
         $idst= $idstatus[0]['id'];
 
         $idact= $conn->query("SELECT id FROM pedidos  where clave='$clv' and pedido=$pedido_1")->fetchAll();
         if (count($idact)== 0){
-          $insertar = $conn->query("INSERT INTO pedidos (pedido,folio,cliente,cuenta,fecha,devolucion,status_pedido,cant,clave,equipo,dias,PU,importe,direccion_entrega,comentarios,descuento,impuesto,total,status_pago,subtotal,subtotal2,servicioentrega) VALUES ($pedido_1,'$folio_1','$cliente','$cuenta','$fecha_1','$fecha_2',$idst,$cantidad,'$clv','$equipo_2',$dias,$PU_1,$importe,'$direccion_entrega','$comentario_1',$descuento,$impuesto,$total,'Adeudo',$subtotal_1,$subtotal_2,$sv)");    
+          $insertar = $conn->query("INSERT INTO pedidos (pedido,folio,cliente,cuenta,fecha,devolucion,status_pedido,cant,clave,equipo,dias,PU,importe,direccion_entrega,comentarios,descuento,impuesto,total,subtotal,subtotal2,servicioentrega) VALUES ($pedido_1,'$folio_1','$cliente','$cuenta','$fecha_1','$fecha_2',$idst,$cantidad,'$clv','$equipo_2',$dias,$PU_1,$importe,'$direccion_entrega','$comentario_1',$descuento,$impuesto,$total,$subtotal_1,$subtotal_2,$sv)");    
           }else{
           $datosequiposinsr = $conn->query("UPDATE pedidos SET pedido=$pedido_1,folio='$folio_1',cliente='$cliente',cuenta='$cuenta',fecha='$fecha_1',devolucion='$fecha_2',status_pedido=$idst,cant=$cantidad,clave='$clv',equipo='$equipo_2',dias=$dias,PU=$PU_1,importe=$importe,direccion_entrega='$direccion_entrega',comentarios='$comentario_1',descuento=$descuento,impuesto=$impuesto,total=$total,subtotal=$subtotal_1,subtotal2=$subtotal_2,servicioentrega=$sv WHERE pedido=$pedido_1 and clave='$clv'"); 
           }
@@ -205,7 +220,7 @@ class PedidosController extends Controller
           $tsald=($total - $totalrest);
           $t= $tsald + $totalrest;
           $cadenaact = $conn->query("UPDATE montospedidos SET montopedido=$total,statussaldo=1,saldorestante=$t WHERE pedido=$pedido_1"); 
-
+           }
         
     }
 
@@ -336,27 +351,27 @@ class PedidosController extends Controller
          }
     }
 
-    public function actpagoAction(Request $request)
-    {
-        $session = $request->getSession(); 
-        if(!$session->get("usuarionombre")){
-            $this->get('session')->getFlashBag()->add('fall','ES NECESARIO INICIAR SESSION');
-            return $this->redirect($this->generateUrl('usuario_login'));
+    // public function actpagoAction(Request $request)
+    // {
+    //     $session = $request->getSession(); 
+    //     if(!$session->get("usuarionombre")){
+    //         $this->get('session')->getFlashBag()->add('fall','ES NECESARIO INICIAR SESSION');
+    //         return $this->redirect($this->generateUrl('usuario_login'));
 
-        }
-        $pedido=$_POST['pedido'];
-        $total=$_POST['total'];
-        $statusf=$_POST['statusf'];
-        $cr_ped=$_POST['cr_ped'];
-         $manager = $this->getDoctrine()->getManager();
-        $conn = $manager->getConnection();
-        //$cadena = $conn->query("UPDATE factura SET saldo=$total,status_financiero='$statusf',cargo_pedido=$cr_ped WHERE pedido=$pedido");
-         $cadena2 = $conn->query("UPDATE pedidos SET montoact=$total,total=$cr_ped WHERE pedido=$pedido");
-        if($statusf=='Sin Adeudo'){
-            $cadena = $conn->query("UPDATE pedidos SET status_pago='Sin Adeudo',montoact=$total,total=$cr_ped WHERE pedido=$pedido");
-        }
+    //     }
+    //     $pedido=$_POST['pedido'];
+    //     $total=$_POST['total'];
+    //     $statusf=$_POST['statusf'];
+    //     $cr_ped=$_POST['cr_ped'];
+    //      $manager = $this->getDoctrine()->getManager();
+    //     $conn = $manager->getConnection();
+    //     //$cadena = $conn->query("UPDATE factura SET saldo=$total,status_financiero='$statusf',cargo_pedido=$cr_ped WHERE pedido=$pedido");
+    //      $cadena2 = $conn->query("UPDATE pedidos SET montoact=$total,total=$cr_ped WHERE pedido=$pedido");
+    //     if($statusf=='Sin Adeudo'){
+    //         $cadena = $conn->query("UPDATE pedidos SET status_pago='Sin Adeudo',montoact=$total,total=$cr_ped WHERE pedido=$pedido");
+    //     }
 
-    }
+    // }
 
 
    
@@ -468,8 +483,20 @@ public function llenardtAction(Request $request)
        
         return new JsonResponse($generardatos);
   }
-  
+  public function eliminarCotAction(Request $request)
+  {
+    $session = $request->getSession(); 
+        if(!$session->get("usuarionombre")){
+            $this->get('session')->getFlashBag()->add('fall','ES NECESARIO INICIAR SESSION');
+            return $this->redirect($this->generateUrl('usuario_login'));
+        }
+        $cotizacion = ($_POST['cotizaciones']);
+        $manager = $this->getDoctrine()->getManager();
+        $conn = $manager->getConnection();
+        $eliminar= $conn->query("DELETE FROM cotizaciones where cotizacion=$cotizacion");    
+        return new JsonResponse('Cotización Eliminada');
 
+  }
    public function registrarpedidoAction(Request $request)
   {
     $session = $request->getSession(); 
@@ -498,28 +525,34 @@ public function llenardtAction(Request $request)
     $total = ($_POST['total']);
     $comentario_1 = ($_POST['comentario_1']);
     $f = ($_POST['f']);
-
+    $radio = ($_POST['radio']);
     $direccion_entrega = ($_POST['direccion_entrega']);
     $sventrega = ($_POST['sventr']);
+    $cotz = ($_POST['cot']);
+
     $manager = $this->getDoctrine()->getManager();
     $conn = $manager->getConnection();
 
+    if($radio=='Pedido'){
+        if($cotz<>''){
+          $idct= $conn->query("SELECT id FROM cotizaciones where cotizacion=$cotz ")->fetchAll();
+          $idfiltro= $idct[0]['id'];
+          if (count($idfiltro)<> 0){
+            $conn->query("UPDATE cotizaciones SET status='En Renta',pedido=$pedido_1 where cotizacion=$cotz");
+          }     
+        }
         $idsta= $conn->query("SELECT id FROM status_entrega where status='$status' ")->fetchAll();
         $idstat= $idsta[0]['id'];
-
-         $ultimopedidos= $conn->query("SELECT pedido FROM pedidos  order by id desc limit 1")->fetchAll();
+        $ultimopedidos= $conn->query("SELECT pedido FROM pedidos  order by id desc limit 1")->fetchAll();
          if (count($ultimopedidos)== 0){
             $pdult=1;    
          }else{
             $pdult= $ultimopedidos[0]['pedido'];    
          }
-
-
          $idact= $conn->query("SELECT pedido FROM ultpedido  where pedido=$pedido_1")->fetchAll();
           if (count($idact)==0){
             $cadena4 =$conn->query("INSERT INTO ultpedido (pedido,cliente,obra) VALUES ($pedido_1,'$cliente','$cuenta')");
           }
-
           $idact= $conn->query("SELECT * FROM montospedidos  where pedido=$pedido_1")->fetchAll();
           if (count($idact)== 0){
             $cadena4 =$conn->query("INSERT INTO montospedidos (montopedido,statussaldo,pedido,saldorestante) VALUES ($total,1,$pedido_1,$total)");
@@ -531,22 +564,94 @@ public function llenardtAction(Request $request)
         }else{
           $id2= $ultpedido1[0]['id'];
         }
-
-        $cadenaP = $conn->query( "INSERT INTO pedidos (pedido,folio,cliente,cuenta,fecha,devolucion,status_pedido,cant,clave,equipo,dias,PU,importe,direccion_entrega,comentarios,descuento,impuesto,total,status_pago,subtotal,subtotal2,servicioentrega,montoact,idmontopedido,fecharg) VALUES ($pedido_1, '$folio_1', '$cliente','$cuenta','$fecha_1','$fecha_2',$idstat,'$cantidad','$clv','$equipo_2','$dias','$PU_1','$importe','$direccion_entrega','$comentario_1','$descuento','$impuesto','$total','Adeudo','$subtotal_1',$subtotal_2,$sventrega,$total,$id2,'$f')");
-
-    return new JsonResponse($ultpedido1);
+        $cadenaP = $conn->query( "INSERT INTO pedidos (pedido,folio,cliente,cuenta,fecha,devolucion,status_pedido,cant,clave,equipo,dias,PU,importe,direccion_entrega,comentarios,descuento,impuesto,total,subtotal,subtotal2,servicioentrega,idmontopedido,fecharg) VALUES ($pedido_1, '$folio_1', '$cliente','$cuenta','$fecha_1','$fecha_2',$idstat,'$cantidad','$clv','$equipo_2','$dias','$PU_1','$importe','$direccion_entrega','$comentario_1','$descuento','$impuesto','$total','$subtotal_1',$subtotal_2,$sventrega,$id2,'$f')");
+        return new JsonResponse($ultpedido1);
+    }else{
+      $cadenaP = $conn->query( "INSERT INTO cotizaciones (cliente,obra,fecha,devolucion,status,cantidad,clave,equipo,dias,PU,importe,direccion_entrega,comentarios,descuento,impuesto,total,subtotal,subtotal2,servicioentrega,fechaHoy,cotizacion) VALUES ('$cliente','$cuenta','$fecha_1','$fecha_2','Cotizacion','$cantidad','$clv','$equipo_2','$dias','$PU_1','$importe','$direccion_entrega','$comentario_1','$descuento','$impuesto','$total','$subtotal_1',$subtotal_2,$sventrega,'$f',$cotz)");
+  $ultpedido1= $conn->query("SELECT cotizacion FROM cotizaciones  order by cotizacion desc limit 1")->fetchAll();
+   return new JsonResponse($ultpedido1);
+    }
+    
   }
   public function ultipedidoAction(Request $request)
   {
+    $radio = ($_POST['radio']);
     $manager = $this->getDoctrine()->getManager();
     $conn = $manager->getConnection();
-    $ultpds= $conn->query("SELECT pedido FROM ultpedido  order by pedido desc limit 1")->fetchAll();
+    if($radio=='Pedido'){
+         $ultpds= $conn->query("SELECT pedido FROM ultpedido  order by pedido desc limit 1")->fetchAll();
          if (count($ultpds)== 0){
           $ulp= 1;
          }else{
           $ulp= $ultpds[0]['pedido'];
          }
+    }else{
+        $ultpds= $conn->query("SELECT cotizacion FROM cotizaciones  order by cotizacion desc limit 1")->fetchAll();
+         if (count($ultpds)== 0){
+          $ulp= 1;
+         }else{
+          $ulp= $ultpds[0]['cotizacion'];
+         }
+    }
          return new JsonResponse($ultpds);
+  }
+  public function consultarcotAction(Request $request)
+  {
+     $session = $request->getSession(); 
+        if(!$session->get("usuarionombre")){
+            $this->get('session')->getFlashBag()->add('fall','ES NECESARIO INICIAR SESSION');
+            return $this->redirect($this->generateUrl('usuario_login'));
+
+        }
+      $sql="SELECT DISTINCT p.cotizacion,p.cliente,p.obra,p.pedido,p.fecha,p.status FROM cotizaciones p";
+      $con=0;
+      $cliente=$_POST['cliente'];
+      $obra=$_POST['obra'];
+      $desde=$_POST['desde'];
+      $hasta=$_POST['hasta'];
+      $cotizacion=$_POST['cotizacion'];
+
+
+      if ($cliente<>'')
+        {
+          $sql= $sql." where cliente like '".$cliente."%'";
+          $con=1;
+        }
+        if ($cotizacion<>''){
+          if($con==1){
+            $sql= $sql." and cotizacion like '".$cotizacion."%'";
+          }else{
+            $sql= $sql." where cotizacion like '".$cotizacion."%'";
+          }
+          $con=2;
+        }
+        if ($desde <> '' and $hasta <> ''){
+            if($con==1 or $con==2){
+              $sql= $sql." and fecha >= '".$desde."' and fecha <= '".$hasta."'";
+          }else{
+            $sql= $sql." where fecha >= '".$desde."' and fecha <= '".$hasta."'";
+          }
+          $con=3;
+        }
+         if ($desde <> '' and $hasta == '') {
+          if($con==1 or $con==2 or $con==3){
+            $sql= $sql." and fecha = '".$desde."'";
+          }else{
+            $sql= $sql." where fecha = '".$desde."'";
+          }
+          $con=4;
+        }
+        if ($obra <> '' ){
+          if($con==1 or $con==2 or $con==3 or $con==4){
+              $sql= $sql." and obra like '".$obra."%'";
+          }else{
+            $sql= $sql." where obra like '".$obra."%'";
+          }
+        }
+         $manager = $this->getDoctrine()->getManager();
+         $conn = $manager->getConnection();
+         $dts= $conn->query($sql)->fetchAll();
+         return new JsonResponse($dts); 
   }
   public function consultaspdstablaAction(Request $request)
       {
@@ -556,7 +661,7 @@ public function llenardtAction(Request $request)
             return $this->redirect($this->generateUrl('usuario_login'));
 
         }
-      $sql="SELECT DISTINCT p.cliente,p.cuenta,p.folio,p.pedido,p.status_pago,p.fecha,p.devolucion,s.status FROM pedidos p, status_entrega s  where p.status_pedido=s.id";
+      $sql="SELECT DISTINCT p.cliente,p.cuenta,p.folio,p.pedido,p.fecha,p.devolucion,s.status FROM pedidos p, status_entrega s  where p.status_pedido=s.id";
       $con=0;
       $cliente=$_POST['cliente'];
       $folio=$_POST['folio'];
@@ -596,124 +701,7 @@ public function llenardtAction(Request $request)
          $dts= $conn->query($sql)->fetchAll();
          return new JsonResponse($dts); 
       }
-
-        
-  //    public function filtropedAction(Request $request)
-  //    {
-  //       $session = $request->getSession(); 
-  //       if(!$session->get("usuarionombre")){
-  //           $this->get('session')->getFlashBag()->add('fall','ES NECESARIO INICIAR SESSION');
-  //           return $this->redirect($this->generateUrl('usuario_login'));
-
-  //       }
-  //       $con=0;
-  //       $sql="SELECT * FROM pedidos";
-  //       $cliente=$_POST['cliente'];
-  //       $cuenta=$_POST['cuenta'];
-  //       $desde=$_POST['desde'];
-  //       $hasta=$_POST['hasta'];
-
-  //        if ($cuenta<>'')
-  //       {
-  //         $sql= $sql." where cuenta like '".$cuenta."%'";
-  //         $con=1;
-  //       }
-  //       if ($cliente<>'')
-  //       {
-  //         if ($con==1){
-  //           $sql= $sql." and cliente like '".$cliente."%'";
-  //           $con=2;
-  //         }else {
-  //           $sql=$sql. " where cliente like '".$cliente."%'"; 
-  //           $con=3;
-  //        }
-  //       }
-  // if ($desde <>'' and $hasta <>''){
-  //         if ($con==1 OR $con==2 OR $con==3 ){
-  //           $sql= $sql." and fecha >= '".$desde."' and fecha <= '".$hasta."'";
-  //           $con=4;
-  //         }else{
-  //           $sql=$sql. " where fecha >= '".$desde."' and fecha <= '".$hasta."'"; 
-  //           $con=5;
-  //         }
-  //       }
-  //        if ($desde <>'' and $hasta ==''){ 
-  //         if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5){
-  //           $sql= $sql." and fecha = '".$desde."'";
-  //           $con=6;
-  //         }else{
-  //           $sql=$sql. " where fecha = '".$desde."'"; 
-  //           $con=7;
-  //         }
-  //       }
-  //   if($filtro1=='Activo'){
-  //     if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7){
-  //           $sql= $sql." or status_pedido='Pedido'";
-  //           $con=8;
-  //         }else{
-  //           $sql=$sql. " where status_pedido='Pedido'";
-  //           $con=9;
-  //         }
-  //       }
-  //        if($filtro2=='Activo'){
-  //     if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7 OR $con==8 OR $con==9){
-  //           $sql= $sql." or status_pedido='En Renta'";
-  //           $con=10;
-  //         }else{
-  //           $sql=$sql. " where status_pedido='En Renta'";
-  //           $con=11;
-  //         }
-  //       }
-  //       if($filtro3=='Activo'){
-  //       if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7 OR $con==8 OR $con==9 OR $con==10 OR $con==11){
-  //           $sql= $sql." or status_pedido='Pendiente de Devolucion'";
-  //           $con=12;
-  //         }else{
-  //           $sql=$sql. " where status_pedido='Pendiente de Devolucion'";
-  //           $con=13;
-  //         }
-  //       }
-  //       if($filtro4=='Activo'){
-  //       if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7 OR $con==8 OR $con==9 OR $con==10 OR $con==11 OR $con==12 OR $con==13){
-  //           $sql= $sql." or status_pedido='Devuelto'";
-  //           $con=14;
-  //         }else{
-  //           $sql=$sql. " where status_pedido='Devuelto'";
-  //           $con=15;
-  //         }
-  //       }
-  //       if($filtro5=='Activo'){
-  //       if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7 OR $con==8 OR $con==9 OR $con==10 OR $con==11 OR $con==12 OR $con==13 OR $con==14 OR $con==15){
-  //           $sql= $sql." or status_pago='Adeudo'";
-  //           $con=16;
-  //         }else{
-  //           $sql=$sql. " where status_pago='Adeudo'";
-  //           $con=17;
-  //         }
-  //       }
-  //     if($filtro6=='Activo'){
-  //       if ($con==1 OR $con==2 OR $con==3 OR $con==4 OR $con==5 OR $con==6 OR $con==7 OR $con==8 OR $con==9 OR $con==10 OR $con==11 OR $con==12 OR $con==13 OR $con==14 OR $con==15 OR $con==16 OR $con==17){
-  //           $sql= $sql." or status_pago='Sin Adeudo'";
-  //           $con=18;
-  //         }else{
-  //           $sql=$sql. " where status_pago='Sin Adeudo'";
-  //           $con=19;
-  //         }
-  //       }
-
-       
-  //       $manager = $this->getDoctrine()->getManager();
-  //       $conn = $manager->getConnection();
-          
-  //       $peds= $conn->query($sql)->fetchAll();
-  //   //    var_dump($peds);
-  //    //   exit();
-  //       return new JsonResponse($peds);
-
-  //    }
-
-     
-
+      
      public function sqlpedAction($cuenta,$cliente,$desde,$hasta,$folio,$pedido,Request $request)
      { 
         $session = $request->getSession(); 

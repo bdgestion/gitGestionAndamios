@@ -141,13 +141,6 @@ class Pedidos
     private $total;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="status_pago", type="string", length=100, nullable=false)
-     */
-    private $statusPago;
-
-    /**
      * @var float
      *
      * @ORM\Column(name="subtotal", type="float", precision=10, scale=0, nullable=false)
@@ -160,20 +153,6 @@ class Pedidos
      * @ORM\Column(name="subtotal2", type="float", precision=10, scale=0, nullable=false)
      */
     private $subtotal2;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="cliente2", type="string", length=100, nullable=false)
-     */
-    private $cliente2;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="montoact", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $montoact;
 
     /**
      * @var float
@@ -630,30 +609,6 @@ class Pedidos
     }
 
     /**
-     * Set statusPago
-     *
-     * @param string $statusPago
-     *
-     * @return Pedidos
-     */
-    public function setStatusPago($statusPago)
-    {
-        $this->statusPago = $statusPago;
-
-        return $this;
-    }
-
-    /**
-     * Get statusPago
-     *
-     * @return string
-     */
-    public function getStatusPago()
-    {
-        return $this->statusPago;
-    }
-
-    /**
      * Set subtotal
      *
      * @param float $subtotal
@@ -699,54 +654,6 @@ class Pedidos
     public function getSubtotal2()
     {
         return $this->subtotal2;
-    }
-
-    /**
-     * Set cliente2
-     *
-     * @param string $cliente2
-     *
-     * @return Pedidos
-     */
-    public function setCliente2($cliente2)
-    {
-        $this->cliente2 = $cliente2;
-
-        return $this;
-    }
-
-    /**
-     * Get cliente2
-     *
-     * @return string
-     */
-    public function getCliente2()
-    {
-        return $this->cliente2;
-    }
-
-    /**
-     * Set montoact
-     *
-     * @param float $montoact
-     *
-     * @return Pedidos
-     */
-    public function setMontoact($montoact)
-    {
-        $this->montoact = $montoact;
-
-        return $this;
-    }
-
-    /**
-     * Get montoact
-     *
-     * @return float
-     */
-    public function getMontoact()
-    {
-        return $this->montoact;
     }
 
     /**
