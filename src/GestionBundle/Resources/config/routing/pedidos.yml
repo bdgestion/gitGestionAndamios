@@ -110,9 +110,9 @@ obtener_pedido2:
     path:     /obtpd2
     defaults: { _controller: "GestionBundle:Pedidos:obtpd2" }
     methods:  [POST, GET]
-imprimir_dev:
-    path:     /detallespedido/imprdev/{pedido}
-    defaults: { _controller: "GestionBundle:Pedidos:imprdev" }
+imprimir_Pedido:
+    path:     /detallespedido/reportepedido/{pedido}
+    defaults: { _controller: "GestionBundle:Pedidos:reportepedido" }
     methods:  [POST, GET]
 consulta_foliopago:
     path:     /cnlfolio

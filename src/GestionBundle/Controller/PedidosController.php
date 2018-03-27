@@ -701,7 +701,126 @@ public function llenardtAction(Request $request)
          $dts= $conn->query($sql)->fetchAll();
          return new JsonResponse($dts); 
       }
-      
+
+
+ public function imprimircotAction($cuenta,$cliente,$desde,$hasta,$cotizacion,Request $request)
+     { 
+        $session = $request->getSession(); 
+        if(!$session->get("usuarionombre")){
+            $this->get('session')->getFlashBag()->add('fall','ES NECESARIO INICIAR SESSION');
+            return $this->redirect($this->generateUrl('usuario_login'));
+
+        }
+        $sql="SELECT DISTINCT p.cotizacion,p.cliente,p.obra,p.pedido,p.fecha,p.status,p.devolucion FROM cotizaciones p";
+        $con=0;
+        $desde= str_replace("-", "/", $desde);
+        $hasta= str_replace("-", "/", $hasta);
+
+      if ($cliente<>'0')
+        {
+          $sql= $sql." where cliente like '".$cliente."%'";
+          $con=1;
+        }
+        if ($cotizacion<>'xxx'){
+          if($con==1){
+            $sql= $sql." and cotizacion like '".$cotizacion."%'";
+          }else{
+            $sql= $sql." where cotizacion like '".$cotizacion."%'";
+          }
+          $con=2;
+        }
+        if ($desde <> '0' and $hasta <> '0'){
+            if($con==1 or $con==2){
+              $sql= $sql." and fecha >= '".$desde."' and fecha <= '".$hasta."'";
+          }else{
+            $sql= $sql." where fecha >= '".$desde."' and fecha <= '".$hasta."'";
+          }
+          $con=3;
+        }
+         if ($desde <> '0' and $hasta == '0') {
+          if($con==1 or $con==2 or $con==3){
+            $sql= $sql." and fecha = '".$desde."'";
+          }else{
+            $sql= $sql." where fecha = '".$desde."'";
+          }
+          $con=4;
+        }
+        if ($cuenta <> '0' ){
+          if($con==1 or $con==2 or $con==3 or $con==4){
+              $sql= $sql." and obra like '".$cuenta."%'";
+          }else{
+            $sql= $sql." where obra like '".$cuenta."%'";
+          }
+        }
+        //var_dump($sql);
+         $manager = $this->getDoctrine()->getManager();
+         $conn = $manager->getConnection();
+         $peds= $conn->query($sql);
+        
+        $con=0;
+        
+        $pdf = $this->get("white_october.tcpdf")->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $pdf->SetAuthor('JJC');
+        $pdf->SetTitle(('Reporte_Pedidos'));
+        $pdf->SetSubject('Our Code World Subject');
+        $pdf->setFontSubsetting(true);
+        $pdf->SetFont('Helvetica', '', 10); 
+        $pdf->AddPage();
+        
+        $content = ''; 
+        $content .= ' 
+
+        <div class=""> 
+          <h3 style="color:#00BFFF">Fecha de Impresión:'.date("d-m-Y").' </h3>
+        </div>
+            <div class="col-md-12"> 
+                <h1 style="text-align:center;">REPORTE DE COTIZACIONES</h1> 
+            
+                    <table border="1" cellpadding="5"> 
+                      <thead> 
+                        <tr align="center"> 
+                         <th bgcolor="#00BFFF" style="font-size:100%;">Cotizacion</th>
+                         <th bgcolor="#00BFFF" style="font-size:100%;">Cliente</th>
+                         <th bgcolor="#00BFFF" style="font-size:100%;">Obra</th>
+                         <th bgcolor="#00BFFF" style="font-size:100%;">Fecha</th>
+                         <th bgcolor="#00BFFF" style="font-size:100%;">Status</th>
+                         <th bgcolor="#00BFFF" style="font-size:100%;">Devolución</th>
+                        </tr> 
+                      </thead> 
+                      '; 
+
+                      while($row = $peds->fetch()) {
+
+                      $content .= ' 
+                              <tr> 
+                          <td style= "text-align:center;">'.$row['cotizacion'].'</td> 
+                          <td style= "text-align:center;">'.$row['cliente'].'</td> 
+                          <td style= "text-align:center;">'.$row['obra'].'</td> 
+                          <td style= "text-align:center;">'.$row['fecha'].'</td>
+                          <td style= "text-align:center;">'.$row['status'].'</td> 
+                          <td style= "text-align:center;">'.$row['devolucion'].'</td> 
+                      </tr> 
+                      '; 
+                      } 
+
+                      $content .= '</table>'; 
+     
+    $content .= ' 
+        <div class="row padding"> 
+            <div class="col-md-12" style="text-align:center;"> 
+                 
+                </div> 
+                </div> 
+         
+    '; 
+     
+       $pdf->writeHTML($content, true, 0, true, 0); 
+       $pdf->lastPage(); 
+       $pdf->output('Reporte_Cotizaciones.pdf', 'I');
+
+     }
+
+
      public function sqlpedAction($cuenta,$cliente,$desde,$hasta,$folio,$pedido,Request $request)
      { 
         $session = $request->getSession(); 
@@ -805,7 +924,7 @@ public function llenardtAction(Request $request)
 
      }
 
-     public function imprdevAction($pedido,Request $request)
+     public function ReportepedidoAction($pedido,Request $request)
      {
         $session = $request->getSession(); 
         if(!$session->get("usuarionombre")){

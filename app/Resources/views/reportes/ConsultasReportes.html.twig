@@ -436,8 +436,14 @@
           }else{
             pd=document.getElementById("pedido").value;
           }
+         
           if(document.getElementById("folio_dev").value==''){
             document.getElementById("folio_dev").value='0';
+          }
+            if(document.getElementById("inpt_cot").value==''){
+            cotizacion='xxx';
+          }else{
+            cotizacion=document.getElementById("inpt_cot").value;
           }
          if($("#rec").is(':checked')) {
           var desde= ano+"-"+mes+"-"+dia;
@@ -445,7 +451,6 @@
           window.open("impr/"+desde+"/"+hasta+"/"+cliente+"/"+cuenta);
          }
          if($("#ped").is(':checked')) {
-          alert(pd);
           window.open("sqlpd/"+cuenta+"/"+cliente+"/"+fechadesde+"/"+fechahasta+"/"+document.getElementById("folio").value+"/"+pd);   
          }
          if($("#sal").is(':checked')) {
@@ -458,6 +463,9 @@
          }
          if($("#pag").is(':checked')) {
           window.open("rptpago/"+pd+"/"+document.getElementById("folio_dev").value+"/"+fechadesde+"/"+fechahasta+"/"+cliente+"/"+cuenta);
+         }
+         if($("#cot").is(':checked')) {
+          window.open("imprcot/"+cuenta+"/"+cliente+"/"+fechadesde+"/"+fechahasta+"/"+cotizacion);
          }
       }
       

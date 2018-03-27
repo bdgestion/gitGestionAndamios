@@ -86,7 +86,7 @@
     }
     var radiocotpd='';
 $(document).ready(function() {
-
+var boton='';
   if(document.getElementById('inptcot').value !=''){
    // $("#btn_detalles").show();
     $("#btn_modificar").hide();
@@ -140,12 +140,16 @@ $(document).ready(function() {
         $("#lblcot").show();
         $("#btn6cancelar").hide();
         $("#btneliminarcotizacion").show();
+         $("#span1").hide();
+    $("#span2").show();
         
   });
 
 
   $("#radioped").change(function(){
     limpiar();
+    $("#span1").show();
+    $("#span2").hide();
       radiocotpd='Pedido';
       $("#btneliminarcotizacion").hide();
       $("#botones_func").show();
@@ -215,7 +219,6 @@ $(document).ready(function() {
         }
         if(document.getElementById('flio').value !='' && totaldiff == 0 ){
         }
-        
 
       var dto=0;
       var totalimp=0;
@@ -483,9 +486,17 @@ var pedid = document.getElementById("ped").value;
     }
 
        function imprimir(){
+        if (document.getElementById("cot").checked){
+            
+            
+
+        }else{
            var pedido_id = $("input#ped").val();
-           window.open("imprdev/"+pedido_id);
+           window.open("reportepedido/"+pedido_id);
         }
+           
+        }
+
         function ultpedido() {
            $.post("{{ path('ultpedido') }}", {radio:radiocotpd}, function(mensaje) {
               $("#txtpu").html(mensaje);
@@ -563,6 +574,7 @@ var pedid = document.getElementById("ped").value;
       document.getElementById('btneliminarfila').disabled=true;
       document.getElementById('btn3').disabled=true;
       document.getElementById('btn2').disabled=true;
+
       
     for (var i=1;i<document.getElementById('tbla').rows.length;i++) { 
          document.getElementById('inpst').value='En Renta';
@@ -918,15 +930,27 @@ function agregarfilamodf(){
                       document.getElementById('inpt4').disabled=true;
                       document.getElementById('inpt5').value=0;
                     }
-          }
-          function generarorden() {
+      }
+          function convertir() {
+
+            document.getElementById('inpst').value='';
             radiocotpd='Pedido';
-            ultpedido();
-            $("#btn_orden").hide();
-            $("#botones_func").show();
-            $("#btn2_entregar").show();
-            $("#btn3_pagos").show();
-            $("#btn4").show();
+              $("#btn_orden").hide();
+              $("#btneliminarcotizacion").hide();
+              $("#botones_func").show();
+              $("#btn2_entregar").show();
+              $("#btn3_pagos").show();
+              $("#btn4").show();
+              $("#lblcot").hide();
+              $("#inptcot").hide();
+              $("#btn6cancelar").show();  
+              $("#btn").show();
+              $("#btn2_entregar").prop("disabled",true);
+              $("#btn5").prop("disabled",true);
+              $("#btn_modificar").prop("disabled",true);
+              $("#btn2").prop("disabled",false);
+              $("#btn").prop("disabled",false);
+              $("#radioped").prop("checked", true);
           }
           function eliminarcot() {
             $.post("{{ path('eliminar_cotizacion') }}", {cotizaciones:document.getElementById('inptcot').value}, function(mensaje)  {
@@ -1089,9 +1113,9 @@ function agregarfilamodf(){
     </div>
   </div>
   <fieldset style="display: block;margin: auto; text-align: center; margin-top: -2%;" >
-    <legend style="text-align: center;"> DATOS DEL PEDIDO/COTIZACION <span class="glyphicon glyphicon-pencil"></span></legend> <div id="radios">
-        <label><input type="radio" name="rad" id="radioped" value="1">Pedidos</label>
-        <label><input type="radio" name="rad" id="cot" value="2">Cotización</label>
+    <legend style="text-align: center; color: blue;"> DATOS DEL PEDIDO/COTIZACION <span class="glyphicon glyphicon-pencil"></span></legend> <div id="radios">
+        <label style="font-size: 150%;"><input type="radio" name="rad" id="radioped" value="1" >Pedidos <span id="span1" style="color: blue; display: none;" class="glyphicon glyphicon-pencil"></span></label>
+        <label style="font-size: 150%;"><input type="radio" name="rad" id="cot" value="2">Cotización <span id="span2" style="color: blue; display: none;" class="glyphicon glyphicon-pencil"></span></label>
     </div>
     <div id="datos" hidden="hidden">
       <label class="label1" for="pedido" id="lblpedido">Pedido</label><input id="ped" type="text" name="pedido" disabled="true" value="{{pedidoinput}}">
@@ -1127,7 +1151,7 @@ function agregarfilamodf(){
         <button class="btn btn-info" id="btn5" type="submit"  onclick="imprimir()" style="margin-top: -1px" {{botones}}>Imprimir  <span class="glyphicon glyphicon-print"></span></button>
         <button class="btn btn-danger" id="btn6cancelar" type="submit" onclick="cancelarped();" style="margin-top: -1px"
          disabled="true">Cancelar <span class="glyphicon glyphicon-trash"></span></button>
-        <button class="btn btn-info" id="btn_orden" type="submit" onclick="generarorden();" {{botones}} disabled="true" >Convertir en Pedido <span class="glyphicon glyphicon-retweet"></span></button>
+        <button class="btn btn-info" id="btn_orden" type="submit" onclick="convertit();" {{botones}} disabled="true" >Convertir en Pedido <span class="glyphicon glyphicon-retweet"></span></button>
         <button class="btn btn-danger" id="btneliminarcotizacion" type="button" value="Eliminar Fila" onclick="eliminarcot();" disabled="true">Eliminar Cotizacion <span class="glyphicon glyphicon-trash"></span></button></button>
     </div> 
       <div id="div1" class="table table-striped" style="width: 80%;">

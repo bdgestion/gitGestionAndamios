@@ -26,6 +26,10 @@ imprimir_general:
     path:     /impr/{desde}/{hasta}/{cliente}/{cuenta}
     defaults: { _controller: "GestionBundle:Recolecciones:filtrogeneral" }
     methods:  [POST, GET]
+imprimir_cotizacion:
+    path:     /imprcot/{cuenta}/{cliente}/{desde}/{hasta}/{cotizacion}
+    defaults: { _controller: "GestionBundle:Pedidos:imprimircot" }
+    methods:  [POST, GET]
 imprimirdevolucion:
     path:     /rptdev/{pedido}/{folio}/{desde}/{hasta}
     defaults: { _controller: "GestionBundle:DetallesDevoluciones:imprimirdevolucion" }
