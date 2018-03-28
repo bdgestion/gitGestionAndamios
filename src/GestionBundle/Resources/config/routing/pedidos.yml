@@ -114,6 +114,10 @@ imprimir_Pedido:
     path:     /detallespedido/reportepedido/{pedido}
     defaults: { _controller: "GestionBundle:Pedidos:reportepedido" }
     methods:  [POST, GET]
+imprimir_cotizaciones:
+    path:     /detallespedido/reportecotizacion/{cotizacion}
+    defaults: { _controller: "GestionBundle:Pedidos:reportecotizacion" }
+    methods:  [POST, GET]
 consulta_foliopago:
     path:     /cnlfolio
     defaults: { _controller: "GestionBundle:Pedidos:conslfoliopago" }

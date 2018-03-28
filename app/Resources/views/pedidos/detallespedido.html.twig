@@ -487,7 +487,8 @@ var pedid = document.getElementById("ped").value;
 
        function imprimir(){
         if (document.getElementById("cot").checked){
-            
+            var cotizacion_id = $("input#inptcot").val();
+            window.open("reportecotizacion/"+cotizacion_id);
             
 
         }else{
