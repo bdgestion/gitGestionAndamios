@@ -88,6 +88,7 @@
 $(document).ready(function() {
 var boton='';
   if(document.getElementById('inptcot').value !=''){
+   // $("#btn_detalles").show();
     $("#btn_modificar").hide();
     $("#btn2_entregar").hide();
     $("#btn3_pagos").hide();
@@ -109,7 +110,6 @@ var boton='';
   function limpiar() {
    document.getElementById('ped').value='';
    document.getElementById('inptcot').value='';
-   document.getElementById('flio').value='';
    document.getElementById('inptcliente').value='';
    document.getElementById('combocta').value='';
    document.getElementById('inpst').value='';
@@ -132,10 +132,6 @@ var boton='';
         $("#botones_func").show();
         $("#datos").show();
         $("#btn_modificar").hide();
-        $("#flio").hide();
-        $("#ped").hide();
-        $("#lblpedido").hide();
-        $("#lblfolio").hide();
         $("#btn2_entregar").hide();
         $("#btn3_pagos").hide();
         $("#btn4").hide();
@@ -146,26 +142,18 @@ var boton='';
         $("#btneliminarcotizacion").show();
          $("#span1").hide();
     $("#span2").show();
-    $("#btn").prop("disabled",true);
-    $("#calcular").prop("disabled",true);
-    
         
   });
 
 
   $("#radioped").change(function(){
-    
     limpiar();
-      $("#span1").show();
-      $("#span2").hide();
+    $("#span1").show();
+    $("#span2").hide();
       radiocotpd='Pedido';
       $("#btneliminarcotizacion").hide();
       $("#botones_func").show();
       $("#datos").show();
-       $("#flio").show();
-        $("#ped").show();
-        $("#lblpedido").show();
-        $("#lblfolio").show();
       $("#inptcot").hide();
       $("#lblcot").hide();
       $("#btn_orden").hide();
@@ -175,8 +163,6 @@ var boton='';
       $("#btn2_entregar").show();
       $("#btn6cancelar").show();
       $("#btn4").show();
-      $("#btn").prop("disabled",true);
-      $("#calcular").prop("disabled",true);
     });
     if(document.getElementById('inpt1').value!=0){
       document.getElementById('calcular').disabled=false;
@@ -502,7 +488,7 @@ var pedid = document.getElementById("ped").value;
        function imprimir(){
         if (document.getElementById("cot").checked){
             
-
+            
 
         }else{
            var pedido_id = $("input#ped").val();
@@ -946,13 +932,9 @@ function agregarfilamodf(){
                     }
       }
           function convertir() {
+
             document.getElementById('inpst').value='';
             radiocotpd='Pedido';
-              //$("#datos").show();
-               $("#flio").show();
-        $("#ped").show();
-        $("#lblpedido").show();
-        $("#lblfolio").show();
               $("#btn_orden").hide();
               $("#btneliminarcotizacion").hide();
               $("#botones_func").show();
@@ -1137,7 +1119,7 @@ function agregarfilamodf(){
     </div>
     <div id="datos" hidden="hidden">
       <label class="label1" for="pedido" id="lblpedido">Pedido</label><input id="ped" type="text" name="pedido" disabled="true" value="{{pedidoinput}}">
-      <label class="label2" for="folio" id="lblfolio">Folio</label><input id="flio" type="text" name="folio" value="{{ folioinpt }}" disabled></input>
+      <label class="label2" for="folio">Folio</label><input id="flio" type="text" name="folio" value="{{ folioinpt }}" disabled></input>
       <label class="label3">Cliente</label>
       <span  id="restriccion" style="background-color:red; display: none">RESTRINGIDO</span>
       <input type="text" id="inptcliente" autocomplete="off" list="categoryname"  value="{{ clienteinpt }}" {{estado}}></input>
@@ -1169,7 +1151,7 @@ function agregarfilamodf(){
         <button class="btn btn-info" id="btn5" type="submit"  onclick="imprimir()" style="margin-top: -1px" {{botones}}>Imprimir  <span class="glyphicon glyphicon-print"></span></button>
         <button class="btn btn-danger" id="btn6cancelar" type="submit" onclick="cancelarped();" style="margin-top: -1px"
          disabled="true">Cancelar <span class="glyphicon glyphicon-trash"></span></button>
-        <button class="btn btn-info" id="btn_orden" type="submit" onclick="convertir();" {{botones}} disabled="true" >Convertir en Pedido <span class="glyphicon glyphicon-retweet"></span></button>
+        <button class="btn btn-info" id="btn_orden" type="submit" onclick="convertit();" {{botones}} disabled="true" >Convertir en Pedido <span class="glyphicon glyphicon-retweet"></span></button>
         <button class="btn btn-danger" id="btneliminarcotizacion" type="button" value="Eliminar Fila" onclick="eliminarcot();" disabled="true">Eliminar Cotizacion <span class="glyphicon glyphicon-trash"></span></button></button>
     </div> 
       <div id="div1" class="table table-striped" style="width: 80%;">
