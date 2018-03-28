@@ -923,7 +923,7 @@ public function llenardtAction(Request $request)
        $pdf->output('Reporte_Pedidos.pdf', 'I');
 
      }
-
+ 
      public function ReportepedidoAction($pedido,Request $request)
      {
         $session = $request->getSession(); 
