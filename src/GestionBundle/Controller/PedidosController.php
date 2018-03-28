@@ -1052,6 +1052,136 @@ public function llenardtAction(Request $request)
          
      }
 
+     public function ReportecotizacionAction($cotizacion,Request $request)
+     {
+        $session = $request->getSession(); 
+        if(!$session->get("usuarionombre")){
+            $this->get('session')->getFlashBag()->add('fall','ES NECESARIO INICIAR SESSION');
+            return $this->redirect($this->generateUrl('usuario_login'));
+
+        }
+
+      $sql="SELECT * from cotizaciones where cotizacion='".$cotizacion."'";
+
+        $pdf = $this->get("white_october.tcpdf")->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $pdf->SetAuthor('JJC');
+        $pdf->SetTitle(('Reporte_Cotización'));
+        $pdf->SetSubject('Our Code World Subject');
+        $pdf->setFontSubsetting(true);
+        $pdf->SetFont('Helvetica', '', 10); 
+        $pdf->AddPage();
+
+        $manager = $this->getDoctrine()->getManager();
+        $conn = $manager->getConnection();
+          
+        $peds= $conn->query($sql);
+
+    while($row = $peds->fetch()) {
+         
+    $cliente = ($row['cliente']);
+    $fecha_1 = ($row['fecha']);
+    $cuenta = ($row['obra']);
+    $fecha_2 = ($row['devolucion']);
+    $cotizacion = ($row['cotizacion']);
+    $status = ($row['status']);
+    $subtotal_1 = ($row['subtotal']);
+    $subtotal_2 = ($row['subtotal2']);
+    $descuento =($row['descuento']);
+    $impuesto = ($row['impuesto']);
+    $total = ($row['total']);
+    $comentario_1 = ($row['comentarios']);
+    $direccion_entrega = ($row['direccion_entrega']);
+    $servicio = $row['servicioentrega'];
+    }
+
+    $content = ''; 
+     
+    $content .= ' 
+
+        
+        <div class="row"> 
+        <label class="label6" for="" bgcolor="#E4DBDA">Cliente: '.$cliente.'</label>&nbsp;&nbsp;<label class="label7" for="" bgcolor="#E4DBDA">Cuenta:       '.$cuenta.'</label><br/>
+        <br/>
+        <label class="label8" for="" bgcolor="#E4DBDA">Cotización:     '.$cotizacion.'</label>&nbsp;&nbsp;<label class="label9" for="" bgcolor="#E4DBDA">Fecha:     '.$fecha_1.'</label><br/>
+           <br/>
+        <label class="label10" for="" bgcolor="#E4DBDA">Devolucion:     '.$fecha_2.'</label>&nbsp;&nbsp;<br/>
+           <br/>
+           <label class="label12" for="" bgcolor="#E4DBDA">Status:     '.$status.'</label>&nbsp;&nbsp;
+            <br/>
+              <br/>
+           <label class="label13" for="" bgcolor="#E4DBDA">Direccion de Entrega:     '.$direccion_entrega.'</label><br/>
+
+
+
+            <div class="col-md-12"> 
+                <h1 style="text-align:center;">REPORTE DE COTIZACIÓN</h1> 
+            
+                    <table border="1" cellpadding="5"> 
+                      <thead> 
+                        <tr align="center"> 
+                         <th bgcolor="#E4DBDA">cantidad</th>
+                         <th bgcolor="#E4DBDA">Equipo</th>
+                         <th bgcolor="#E4DBDA">Clave</th>
+                         <th bgcolor="#E4DBDA">Días</th>
+                         <th bgcolor="#E4DBDA">PU</th>
+                         <th bgcolor="#E4DBDA">Importe</th>
+                        </tr> 
+                      </thead> 
+                      '; 
+                      $sql2="SELECT * from cotizaciones where cotizacion='".$cotizacion."'";
+                      $manager = $this->getDoctrine()->getManager();
+                      $conn = $manager->getConnection();
+                      $peds= $conn->query($sql2);
+                      while($row = $peds->fetch()){ 
+
+                      $content .= ' 
+                              <tr> 
+                          <td>'.$row['cantidad'].'</td> 
+                          <td>'.$row['equipo'].'</td> 
+                          <td>'.$row['clave'].'</td> 
+                          <td>'.$row['dias'].'</td> 
+                          <td>'.$row['PU'].'</td> 
+                          <td>'.$row['importe'].'</td> 
+                      </tr> 
+                      '; 
+                      } 
+
+                      $content .= '</table>'; 
+     
+    $content .= ' 
+        <div class="row padding"> 
+            <div class="col-md-12" style="text-align:center;"> 
+                </div> 
+               
+                </div> 
+                Comentarios:<input class="inp" id="inpt1" type="text" value="">'.$comentario_1.'</input>
+
+                 <div class="col-md-12_total" style="text-align:right;"> 
+                Subtotal:<input class="inp" id="inpt1" type="text" value="">'.$subtotal_1.'</input>
+                </br>
+                </div>
+                 <div class="col-md-12_total2" style="text-align:right;"> 
+                Descuento %:<input class="inp" id="inpt2" type="text" value="">'.$descuento.'</input>
+                </br></div>
+                 <div class="col-md-12_total3" style="text-align:right;"> 
+                Subtotal:<input class="inp" id="inpt3" type="text" value="">'.$subtotal_2.'</input>
+                </br></div>
+                <div class="col-md-12_total3" style="text-align:right;"> 
+                Servicio Entrega:<input class="inp" id="inpt10" type="text" value="">'.$servicio.'</input>
+                </br></div>
+                 <div class="col-md-12_total4" style="text-align:right;"> 
+                Impuestos:<input class="inp" id="inpt4" type="text" value="">'.$impuesto.'</input>
+                </br></div>
+                 <div class="col-md-12_total5" style="text-align:right;"> 
+                Total:<input class="inp" id="inpt5" type="text" value="">'.$total.'</input></br></div>
+         
+    '; 
+    $pdf->writeHTML($content, true, 0, true, 0); 
+    $pdf->lastPage(); 
+    $pdf->output('Reporte_Cotización.pdf', 'I'); 
+         
+     }
+
      public function actstatusdevAction(Request $request)
      {
          $session = $request->getSession(); 
