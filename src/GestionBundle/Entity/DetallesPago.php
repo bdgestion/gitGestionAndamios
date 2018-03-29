@@ -13,18 +13,18 @@ use Doctrine\ORM\Mapping as ORM;
 class DetallesPago
 {
     /**
-     * @var integer
+     * @var int
      *
-     * @ORM\Column(name="id", type="bigint", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @var integer
+     * @var int|null
      *
-     * @ORM\Column(name="pedido", type="integer", nullable=false)
+     * @ORM\Column(name="pedido", type="integer", nullable=true)
      */
     private $pedido;
 
@@ -93,9 +93,9 @@ class DetallesPago
 
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -103,13 +103,13 @@ class DetallesPago
     }
 
     /**
-     * Set pedido
+     * Set pedido.
      *
-     * @param integer $pedido
+     * @param int|null $pedido
      *
      * @return DetallesPago
      */
-    public function setPedido($pedido)
+    public function setPedido($pedido = null)
     {
         $this->pedido = $pedido;
 
@@ -117,9 +117,9 @@ class DetallesPago
     }
 
     /**
-     * Get pedido
+     * Get pedido.
      *
-     * @return integer
+     * @return int|null
      */
     public function getPedido()
     {
@@ -127,7 +127,7 @@ class DetallesPago
     }
 
     /**
-     * Set fechapago
+     * Set fechapago.
      *
      * @param string $fechapago
      *
@@ -141,7 +141,7 @@ class DetallesPago
     }
 
     /**
-     * Get fechapago
+     * Get fechapago.
      *
      * @return string
      */
@@ -151,7 +151,7 @@ class DetallesPago
     }
 
     /**
-     * Set montopago
+     * Set montopago.
      *
      * @param float $montopago
      *
@@ -165,7 +165,7 @@ class DetallesPago
     }
 
     /**
-     * Get montopago
+     * Get montopago.
      *
      * @return float
      */
@@ -175,7 +175,7 @@ class DetallesPago
     }
 
     /**
-     * Set comentariopago
+     * Set comentariopago.
      *
      * @param string $comentariopago
      *
@@ -189,7 +189,7 @@ class DetallesPago
     }
 
     /**
-     * Get comentariopago
+     * Get comentariopago.
      *
      * @return string
      */
@@ -199,7 +199,7 @@ class DetallesPago
     }
 
     /**
-     * Set foliofactura
+     * Set foliofactura.
      *
      * @param string $foliofactura
      *
@@ -213,7 +213,7 @@ class DetallesPago
     }
 
     /**
-     * Get foliofactura
+     * Get foliofactura.
      *
      * @return string
      */
@@ -223,7 +223,7 @@ class DetallesPago
     }
 
     /**
-     * Set operacion
+     * Set operacion.
      *
      * @param string $operacion
      *
@@ -237,7 +237,7 @@ class DetallesPago
     }
 
     /**
-     * Get operacion
+     * Get operacion.
      *
      * @return string
      */
@@ -247,7 +247,7 @@ class DetallesPago
     }
 
     /**
-     * Set saldoRestante
+     * Set saldoRestante.
      *
      * @param float $saldoRestante
      *
@@ -261,7 +261,7 @@ class DetallesPago
     }
 
     /**
-     * Get saldoRestante
+     * Get saldoRestante.
      *
      * @return float
      */
@@ -271,9 +271,9 @@ class DetallesPago
     }
 
     /**
-     * Set statusfacturacion
+     * Set statusfacturacion.
      *
-     * @param \GestionBundle\Entity\StatusFacturacion $statusfacturacion
+     * @param \GestionBundle\Entity\StatusFacturacion|null $statusfacturacion
      *
      * @return DetallesPago
      */
@@ -285,9 +285,9 @@ class DetallesPago
     }
 
     /**
-     * Get statusfacturacion
+     * Get statusfacturacion.
      *
-     * @return \GestionBundle\Entity\StatusFacturacion
+     * @return \GestionBundle\Entity\StatusFacturacion|null
      */
     public function getStatusfacturacion()
     {
@@ -295,9 +295,9 @@ class DetallesPago
     }
 
     /**
-     * Set formapago
+     * Set formapago.
      *
-     * @param \GestionBundle\Entity\FormasPagos $formapago
+     * @param \GestionBundle\Entity\FormasPagos|null $formapago
      *
      * @return DetallesPago
      */
@@ -309,9 +309,9 @@ class DetallesPago
     }
 
     /**
-     * Get formapago
+     * Get formapago.
      *
-     * @return \GestionBundle\Entity\FormasPagos
+     * @return \GestionBundle\Entity\FormasPagos|null
      */
     public function getFormapago()
     {

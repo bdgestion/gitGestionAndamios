@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class CuentasCliente
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
@@ -22,21 +22,21 @@ class CuentasCliente
     private $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="cliente", type="integer", nullable=false)
      */
     private $cliente;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="comentarios", type="string", length=120, nullable=true)
      */
     private $comentarios;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="status", type="string", length=100, nullable=true)
      */
@@ -58,4 +58,3 @@ class CuentasCliente
 
 
 }
-

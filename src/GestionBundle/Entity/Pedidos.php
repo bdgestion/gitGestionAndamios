@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Pedidos
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
@@ -22,7 +22,7 @@ class Pedidos
     private $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="pedido", type="integer", nullable=false)
      */
@@ -64,7 +64,7 @@ class Pedidos
     private $devolucion;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="cant", type="integer", nullable=false)
      */
@@ -85,7 +85,7 @@ class Pedidos
     private $equipo;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="dias", type="integer", nullable=false)
      */
@@ -191,9 +191,9 @@ class Pedidos
 
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -201,9 +201,9 @@ class Pedidos
     }
 
     /**
-     * Set pedido
+     * Set pedido.
      *
-     * @param integer $pedido
+     * @param int $pedido
      *
      * @return Pedidos
      */
@@ -215,9 +215,9 @@ class Pedidos
     }
 
     /**
-     * Get pedido
+     * Get pedido.
      *
-     * @return integer
+     * @return int
      */
     public function getPedido()
     {
@@ -225,7 +225,7 @@ class Pedidos
     }
 
     /**
-     * Set folio
+     * Set folio.
      *
      * @param string $folio
      *
@@ -239,7 +239,7 @@ class Pedidos
     }
 
     /**
-     * Get folio
+     * Get folio.
      *
      * @return string
      */
@@ -249,7 +249,7 @@ class Pedidos
     }
 
     /**
-     * Set cliente
+     * Set cliente.
      *
      * @param string $cliente
      *
@@ -263,7 +263,7 @@ class Pedidos
     }
 
     /**
-     * Get cliente
+     * Get cliente.
      *
      * @return string
      */
@@ -273,7 +273,7 @@ class Pedidos
     }
 
     /**
-     * Set cuenta
+     * Set cuenta.
      *
      * @param string $cuenta
      *
@@ -287,7 +287,7 @@ class Pedidos
     }
 
     /**
-     * Get cuenta
+     * Get cuenta.
      *
      * @return string
      */
@@ -297,7 +297,7 @@ class Pedidos
     }
 
     /**
-     * Set fecha
+     * Set fecha.
      *
      * @param string $fecha
      *
@@ -311,7 +311,7 @@ class Pedidos
     }
 
     /**
-     * Get fecha
+     * Get fecha.
      *
      * @return string
      */
@@ -321,7 +321,7 @@ class Pedidos
     }
 
     /**
-     * Set devolucion
+     * Set devolucion.
      *
      * @param string $devolucion
      *
@@ -335,7 +335,7 @@ class Pedidos
     }
 
     /**
-     * Get devolucion
+     * Get devolucion.
      *
      * @return string
      */
@@ -345,9 +345,9 @@ class Pedidos
     }
 
     /**
-     * Set cant
+     * Set cant.
      *
-     * @param integer $cant
+     * @param int $cant
      *
      * @return Pedidos
      */
@@ -359,9 +359,9 @@ class Pedidos
     }
 
     /**
-     * Get cant
+     * Get cant.
      *
-     * @return integer
+     * @return int
      */
     public function getCant()
     {
@@ -369,7 +369,7 @@ class Pedidos
     }
 
     /**
-     * Set clave
+     * Set clave.
      *
      * @param string $clave
      *
@@ -383,7 +383,7 @@ class Pedidos
     }
 
     /**
-     * Get clave
+     * Get clave.
      *
      * @return string
      */
@@ -393,7 +393,7 @@ class Pedidos
     }
 
     /**
-     * Set equipo
+     * Set equipo.
      *
      * @param string $equipo
      *
@@ -407,7 +407,7 @@ class Pedidos
     }
 
     /**
-     * Get equipo
+     * Get equipo.
      *
      * @return string
      */
@@ -417,9 +417,9 @@ class Pedidos
     }
 
     /**
-     * Set dias
+     * Set dias.
      *
-     * @param integer $dias
+     * @param int $dias
      *
      * @return Pedidos
      */
@@ -431,9 +431,9 @@ class Pedidos
     }
 
     /**
-     * Get dias
+     * Get dias.
      *
-     * @return integer
+     * @return int
      */
     public function getDias()
     {
@@ -441,7 +441,7 @@ class Pedidos
     }
 
     /**
-     * Set pu
+     * Set pu.
      *
      * @param float $pu
      *
@@ -455,7 +455,7 @@ class Pedidos
     }
 
     /**
-     * Get pu
+     * Get pu.
      *
      * @return float
      */
@@ -465,7 +465,7 @@ class Pedidos
     }
 
     /**
-     * Set importe
+     * Set importe.
      *
      * @param float $importe
      *
@@ -479,7 +479,7 @@ class Pedidos
     }
 
     /**
-     * Get importe
+     * Get importe.
      *
      * @return float
      */
@@ -489,7 +489,7 @@ class Pedidos
     }
 
     /**
-     * Set direccionEntrega
+     * Set direccionEntrega.
      *
      * @param string $direccionEntrega
      *
@@ -503,7 +503,7 @@ class Pedidos
     }
 
     /**
-     * Get direccionEntrega
+     * Get direccionEntrega.
      *
      * @return string
      */
@@ -513,7 +513,7 @@ class Pedidos
     }
 
     /**
-     * Set comentarios
+     * Set comentarios.
      *
      * @param string $comentarios
      *
@@ -527,7 +527,7 @@ class Pedidos
     }
 
     /**
-     * Get comentarios
+     * Get comentarios.
      *
      * @return string
      */
@@ -537,7 +537,7 @@ class Pedidos
     }
 
     /**
-     * Set descuento
+     * Set descuento.
      *
      * @param float $descuento
      *
@@ -551,7 +551,7 @@ class Pedidos
     }
 
     /**
-     * Get descuento
+     * Get descuento.
      *
      * @return float
      */
@@ -561,7 +561,7 @@ class Pedidos
     }
 
     /**
-     * Set impuesto
+     * Set impuesto.
      *
      * @param float $impuesto
      *
@@ -575,7 +575,7 @@ class Pedidos
     }
 
     /**
-     * Get impuesto
+     * Get impuesto.
      *
      * @return float
      */
@@ -585,7 +585,7 @@ class Pedidos
     }
 
     /**
-     * Set total
+     * Set total.
      *
      * @param float $total
      *
@@ -599,7 +599,7 @@ class Pedidos
     }
 
     /**
-     * Get total
+     * Get total.
      *
      * @return float
      */
@@ -609,7 +609,7 @@ class Pedidos
     }
 
     /**
-     * Set subtotal
+     * Set subtotal.
      *
      * @param float $subtotal
      *
@@ -623,7 +623,7 @@ class Pedidos
     }
 
     /**
-     * Get subtotal
+     * Get subtotal.
      *
      * @return float
      */
@@ -633,7 +633,7 @@ class Pedidos
     }
 
     /**
-     * Set subtotal2
+     * Set subtotal2.
      *
      * @param float $subtotal2
      *
@@ -647,7 +647,7 @@ class Pedidos
     }
 
     /**
-     * Get subtotal2
+     * Get subtotal2.
      *
      * @return float
      */
@@ -657,7 +657,7 @@ class Pedidos
     }
 
     /**
-     * Set servicioentrega
+     * Set servicioentrega.
      *
      * @param float $servicioentrega
      *
@@ -671,7 +671,7 @@ class Pedidos
     }
 
     /**
-     * Get servicioentrega
+     * Get servicioentrega.
      *
      * @return float
      */
@@ -681,7 +681,7 @@ class Pedidos
     }
 
     /**
-     * Set fecharg
+     * Set fecharg.
      *
      * @param string $fecharg
      *
@@ -695,7 +695,7 @@ class Pedidos
     }
 
     /**
-     * Get fecharg
+     * Get fecharg.
      *
      * @return string
      */
@@ -705,9 +705,9 @@ class Pedidos
     }
 
     /**
-     * Set idmontopedido
+     * Set idmontopedido.
      *
-     * @param \GestionBundle\Entity\Montospedidos $idmontopedido
+     * @param \GestionBundle\Entity\Montospedidos|null $idmontopedido
      *
      * @return Pedidos
      */
@@ -719,9 +719,9 @@ class Pedidos
     }
 
     /**
-     * Get idmontopedido
+     * Get idmontopedido.
      *
-     * @return \GestionBundle\Entity\Montospedidos
+     * @return \GestionBundle\Entity\Montospedidos|null
      */
     public function getIdmontopedido()
     {
@@ -729,9 +729,9 @@ class Pedidos
     }
 
     /**
-     * Set statusPedido
+     * Set statusPedido.
      *
-     * @param \GestionBundle\Entity\StatusEntrega $statusPedido
+     * @param \GestionBundle\Entity\StatusEntrega|null $statusPedido
      *
      * @return Pedidos
      */
@@ -743,9 +743,9 @@ class Pedidos
     }
 
     /**
-     * Get statusPedido
+     * Get statusPedido.
      *
-     * @return \GestionBundle\Entity\StatusEntrega
+     * @return \GestionBundle\Entity\StatusEntrega|null
      */
     public function getStatusPedido()
     {

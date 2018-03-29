@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class CuentasCliente
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
@@ -22,21 +22,21 @@ class CuentasCliente
     private $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="cliente", type="integer", nullable=false)
      */
     private $cliente;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="comentarios", type="string", length=120, nullable=true)
      */
     private $comentarios;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="status", type="string", length=100, nullable=true)
      */
@@ -59,9 +59,9 @@ class CuentasCliente
 
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -69,9 +69,9 @@ class CuentasCliente
     }
 
     /**
-     * Set cliente
+     * Set cliente.
      *
-     * @param integer $cliente
+     * @param int $cliente
      *
      * @return CuentasCliente
      */
@@ -83,9 +83,9 @@ class CuentasCliente
     }
 
     /**
-     * Get cliente
+     * Get cliente.
      *
-     * @return integer
+     * @return int
      */
     public function getCliente()
     {
@@ -93,13 +93,13 @@ class CuentasCliente
     }
 
     /**
-     * Set comentarios
+     * Set comentarios.
      *
-     * @param string $comentarios
+     * @param string|null $comentarios
      *
      * @return CuentasCliente
      */
-    public function setComentarios($comentarios)
+    public function setComentarios($comentarios = null)
     {
         $this->comentarios = $comentarios;
 
@@ -107,9 +107,9 @@ class CuentasCliente
     }
 
     /**
-     * Get comentarios
+     * Get comentarios.
      *
-     * @return string
+     * @return string|null
      */
     public function getComentarios()
     {
@@ -117,13 +117,13 @@ class CuentasCliente
     }
 
     /**
-     * Set status
+     * Set status.
      *
-     * @param string $status
+     * @param string|null $status
      *
      * @return CuentasCliente
      */
-    public function setStatus($status)
+    public function setStatus($status = null)
     {
         $this->status = $status;
 
@@ -131,9 +131,9 @@ class CuentasCliente
     }
 
     /**
-     * Get status
+     * Get status.
      *
-     * @return string
+     * @return string|null
      */
     public function getStatus()
     {
@@ -141,7 +141,7 @@ class CuentasCliente
     }
 
     /**
-     * Set domicilio
+     * Set domicilio.
      *
      * @param string $domicilio
      *
@@ -155,7 +155,7 @@ class CuentasCliente
     }
 
     /**
-     * Get domicilio
+     * Get domicilio.
      *
      * @return string
      */
@@ -165,7 +165,7 @@ class CuentasCliente
     }
 
     /**
-     * Set cuentaId
+     * Set cuentaId.
      *
      * @param string $cuentaId
      *
@@ -179,7 +179,7 @@ class CuentasCliente
     }
 
     /**
-     * Get cuentaId
+     * Get cuentaId.
      *
      * @return string
      */

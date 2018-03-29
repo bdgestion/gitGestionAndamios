@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class PedidosEntregados
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
@@ -22,7 +22,7 @@ class PedidosEntregados
     private $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="foliofisico", type="integer", nullable=false)
      */
@@ -36,7 +36,7 @@ class PedidosEntregados
     private $fechafolio;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="pedido", type="integer", nullable=false)
      */
@@ -54,4 +54,3 @@ class PedidosEntregados
 
 
 }
-

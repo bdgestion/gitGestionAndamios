@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class StatusSaldos
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
@@ -31,9 +31,9 @@ class StatusSaldos
 
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -41,7 +41,7 @@ class StatusSaldos
     }
 
     /**
-     * Set statussaldos
+     * Set statussaldos.
      *
      * @param string $statussaldos
      *
@@ -55,7 +55,7 @@ class StatusSaldos
     }
 
     /**
-     * Get statussaldos
+     * Get statussaldos.
      *
      * @return string
      */

@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Catalogo
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
@@ -36,7 +36,7 @@ class Catalogo
     private $categoria;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="status", type="string", length=200, nullable=true)
      */
@@ -59,9 +59,9 @@ class Catalogo
 
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -69,7 +69,7 @@ class Catalogo
     }
 
     /**
-     * Set equipo
+     * Set equipo.
      *
      * @param string $equipo
      *
@@ -83,7 +83,7 @@ class Catalogo
     }
 
     /**
-     * Get equipo
+     * Get equipo.
      *
      * @return string
      */
@@ -93,7 +93,7 @@ class Catalogo
     }
 
     /**
-     * Set categoria
+     * Set categoria.
      *
      * @param string $categoria
      *
@@ -107,7 +107,7 @@ class Catalogo
     }
 
     /**
-     * Get categoria
+     * Get categoria.
      *
      * @return string
      */
@@ -117,13 +117,13 @@ class Catalogo
     }
 
     /**
-     * Set status
+     * Set status.
      *
-     * @param string $status
+     * @param string|null $status
      *
      * @return Catalogo
      */
-    public function setStatus($status)
+    public function setStatus($status = null)
     {
         $this->status = $status;
 
@@ -131,9 +131,9 @@ class Catalogo
     }
 
     /**
-     * Get status
+     * Get status.
      *
-     * @return string
+     * @return string|null
      */
     public function getStatus()
     {
@@ -141,7 +141,7 @@ class Catalogo
     }
 
     /**
-     * Set clave
+     * Set clave.
      *
      * @param string $clave
      *
@@ -155,7 +155,7 @@ class Catalogo
     }
 
     /**
-     * Get clave
+     * Get clave.
      *
      * @return string
      */
@@ -165,7 +165,7 @@ class Catalogo
     }
 
     /**
-     * Set precio
+     * Set precio.
      *
      * @param float $precio
      *
@@ -179,7 +179,7 @@ class Catalogo
     }
 
     /**
-     * Get precio
+     * Get precio.
      *
      * @return float
      */

@@ -13,9 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
 class Ultpedido
 {
     /**
-     * @var integer
+     * @var int
      *
-     * @ORM\Column(name="pedido", type="integer", nullable=false)
+     * @ORM\Column(name="pedido", type="integer", nullable=false, options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -38,9 +38,9 @@ class Ultpedido
 
 
     /**
-     * Get pedido
+     * Get pedido.
      *
-     * @return integer
+     * @return int
      */
     public function getPedido()
     {
@@ -48,7 +48,7 @@ class Ultpedido
     }
 
     /**
-     * Set cliente
+     * Set cliente.
      *
      * @param string $cliente
      *
@@ -62,7 +62,7 @@ class Ultpedido
     }
 
     /**
-     * Get cliente
+     * Get cliente.
      *
      * @return string
      */
@@ -72,7 +72,7 @@ class Ultpedido
     }
 
     /**
-     * Set obra
+     * Set obra.
      *
      * @param string $obra
      *
@@ -86,7 +86,7 @@ class Ultpedido
     }
 
     /**
-     * Get obra
+     * Get obra.
      *
      * @return string
      */

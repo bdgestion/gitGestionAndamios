@@ -13,18 +13,18 @@ use Doctrine\ORM\Mapping as ORM;
 class DetallesPago
 {
     /**
-     * @var integer
+     * @var int
      *
-     * @ORM\Column(name="id", type="bigint", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @var integer
+     * @var int|null
      *
-     * @ORM\Column(name="pedido", type="integer", nullable=false)
+     * @ORM\Column(name="pedido", type="integer", nullable=true)
      */
     private $pedido;
 
@@ -92,4 +92,3 @@ class DetallesPago
 
 
 }
-

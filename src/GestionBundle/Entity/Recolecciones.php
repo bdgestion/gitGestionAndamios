@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Recolecciones
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
@@ -22,7 +22,7 @@ class Recolecciones
     private $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="pedidos", type="integer", nullable=false)
      */
@@ -66,9 +66,9 @@ class Recolecciones
 
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -76,9 +76,9 @@ class Recolecciones
     }
 
     /**
-     * Set pedidos
+     * Set pedidos.
      *
-     * @param integer $pedidos
+     * @param int $pedidos
      *
      * @return Recolecciones
      */
@@ -90,9 +90,9 @@ class Recolecciones
     }
 
     /**
-     * Get pedidos
+     * Get pedidos.
      *
-     * @return integer
+     * @return int
      */
     public function getPedidos()
     {
@@ -100,7 +100,7 @@ class Recolecciones
     }
 
     /**
-     * Set clientes
+     * Set clientes.
      *
      * @param string $clientes
      *
@@ -114,7 +114,7 @@ class Recolecciones
     }
 
     /**
-     * Get clientes
+     * Get clientes.
      *
      * @return string
      */
@@ -124,7 +124,7 @@ class Recolecciones
     }
 
     /**
-     * Set obra
+     * Set obra.
      *
      * @param string $obra
      *
@@ -138,7 +138,7 @@ class Recolecciones
     }
 
     /**
-     * Get obra
+     * Get obra.
      *
      * @return string
      */
@@ -148,7 +148,7 @@ class Recolecciones
     }
 
     /**
-     * Set domicilio
+     * Set domicilio.
      *
      * @param string $domicilio
      *
@@ -162,7 +162,7 @@ class Recolecciones
     }
 
     /**
-     * Get domicilio
+     * Get domicilio.
      *
      * @return string
      */
@@ -172,7 +172,7 @@ class Recolecciones
     }
 
     /**
-     * Set fecha
+     * Set fecha.
      *
      * @param string $fecha
      *
@@ -186,7 +186,7 @@ class Recolecciones
     }
 
     /**
-     * Get fecha
+     * Get fecha.
      *
      * @return string
      */
@@ -196,7 +196,7 @@ class Recolecciones
     }
 
     /**
-     * Set hora
+     * Set hora.
      *
      * @param string $hora
      *
@@ -210,7 +210,7 @@ class Recolecciones
     }
 
     /**
-     * Get hora
+     * Get hora.
      *
      * @return string
      */
