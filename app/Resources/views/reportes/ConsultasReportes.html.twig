@@ -40,11 +40,10 @@
      var radios= $('input:radio[name=rap]:checked').val();
       $("#tbla").on("click", "td" , function(){
       if(radios=='6'){
-
-        var cot = document.getElementById("inpt_cot").value;
-
+        var cot = $(this).parents("tr").find("td").eq(0).html();
+        //var cot = document.getElementById("inpt_cot").value;
         var url=("{{ path('cotizaciones_detalles', { 'cot':'xxx' }) }}");
-       url = url.replace("xxx", cot);
+         url = url.replace("xxx", cot);
           $.ajax({
               dataType: "html",
               url: url,
@@ -323,7 +322,7 @@
           }
         }
   if (radios=='6'){
-    if(document.getElementById("clt").value!='' && document.getElementById("combocta").value!='' && document.getElementById("desde").value!='' && document.getElementById("hasta").value!='' || document.getElementById("inpt_cot").value!=''){
+    //if(document.getElementById("clt").value!='' && document.getElementById("combocta").value!='' && document.getElementById("desde").value!='' && document.getElementById("hasta").value!='' || document.getElementById("inpt_cot").value!=''){
         var hastadev='';
         var desdedev='';          
         var cont=0;
@@ -361,9 +360,9 @@
          }
       });
 
-     }else{
-      alert('Debe Completar Algunos Campos');
-     }
+     // }else{
+     //  alert('Debe Completar Algunos Campos');
+     // }
    }
         document.getElementById('imprimir').disabled=false;
 

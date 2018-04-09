@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class StatusEntrega
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
@@ -31,9 +31,9 @@ class StatusEntrega
 
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -41,7 +41,7 @@ class StatusEntrega
     }
 
     /**
-     * Set status
+     * Set status.
      *
      * @param string $status
      *
@@ -55,7 +55,7 @@ class StatusEntrega
     }
 
     /**
-     * Get status
+     * Get status.
      *
      * @return string
      */

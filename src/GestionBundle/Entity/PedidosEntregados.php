@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class PedidosEntregados
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
@@ -22,7 +22,7 @@ class PedidosEntregados
     private $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="foliofisico", type="integer", nullable=false)
      */
@@ -36,7 +36,7 @@ class PedidosEntregados
     private $fechafolio;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="pedido", type="integer", nullable=false)
      */
@@ -55,9 +55,9 @@ class PedidosEntregados
 
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -65,9 +65,9 @@ class PedidosEntregados
     }
 
     /**
-     * Set foliofisico
+     * Set foliofisico.
      *
-     * @param integer $foliofisico
+     * @param int $foliofisico
      *
      * @return PedidosEntregados
      */
@@ -79,9 +79,9 @@ class PedidosEntregados
     }
 
     /**
-     * Get foliofisico
+     * Get foliofisico.
      *
-     * @return integer
+     * @return int
      */
     public function getFoliofisico()
     {
@@ -89,7 +89,7 @@ class PedidosEntregados
     }
 
     /**
-     * Set fechafolio
+     * Set fechafolio.
      *
      * @param string $fechafolio
      *
@@ -103,7 +103,7 @@ class PedidosEntregados
     }
 
     /**
-     * Get fechafolio
+     * Get fechafolio.
      *
      * @return string
      */
@@ -113,9 +113,9 @@ class PedidosEntregados
     }
 
     /**
-     * Set pedido
+     * Set pedido.
      *
-     * @param integer $pedido
+     * @param int $pedido
      *
      * @return PedidosEntregados
      */
@@ -127,9 +127,9 @@ class PedidosEntregados
     }
 
     /**
-     * Get pedido
+     * Get pedido.
      *
-     * @return integer
+     * @return int
      */
     public function getPedido()
     {
@@ -137,9 +137,9 @@ class PedidosEntregados
     }
 
     /**
-     * Set statuspedido
+     * Set statuspedido.
      *
-     * @param \GestionBundle\Entity\StatusEntrega $statuspedido
+     * @param \GestionBundle\Entity\StatusEntrega|null $statuspedido
      *
      * @return PedidosEntregados
      */
@@ -151,9 +151,9 @@ class PedidosEntregados
     }
 
     /**
-     * Get statuspedido
+     * Get statuspedido.
      *
-     * @return \GestionBundle\Entity\StatusEntrega
+     * @return \GestionBundle\Entity\StatusEntrega|null
      */
     public function getStatuspedido()
     {

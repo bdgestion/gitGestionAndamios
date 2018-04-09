@@ -13,9 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
 class Ultpedido
 {
     /**
-     * @var integer
+     * @var int
      *
-     * @ORM\Column(name="pedido", type="integer", nullable=false)
+     * @ORM\Column(name="pedido", type="integer", nullable=false, options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -37,4 +37,3 @@ class Ultpedido
 
 
 }
-

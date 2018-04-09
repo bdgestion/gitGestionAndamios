@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Clientes
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="cliente", type="bigint", nullable=false)
      * @ORM\Id
@@ -78,7 +78,7 @@ class Clientes
     private $telefono2;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="restringir", type="string", length=20, nullable=true)
      */
@@ -94,9 +94,9 @@ class Clientes
 
 
     /**
-     * Get cliente
+     * Get cliente.
      *
-     * @return integer
+     * @return int
      */
     public function getCliente()
     {
@@ -104,7 +104,7 @@ class Clientes
     }
 
     /**
-     * Set razonSocial
+     * Set razonSocial.
      *
      * @param string $razonSocial
      *
@@ -118,7 +118,7 @@ class Clientes
     }
 
     /**
-     * Get razonSocial
+     * Get razonSocial.
      *
      * @return string
      */
@@ -128,7 +128,7 @@ class Clientes
     }
 
     /**
-     * Set rfc
+     * Set rfc.
      *
      * @param string $rfc
      *
@@ -142,7 +142,7 @@ class Clientes
     }
 
     /**
-     * Get rfc
+     * Get rfc.
      *
      * @return string
      */
@@ -152,7 +152,7 @@ class Clientes
     }
 
     /**
-     * Set domicilioFiscal
+     * Set domicilioFiscal.
      *
      * @param string $domicilioFiscal
      *
@@ -166,7 +166,7 @@ class Clientes
     }
 
     /**
-     * Get domicilioFiscal
+     * Get domicilioFiscal.
      *
      * @return string
      */
@@ -176,7 +176,7 @@ class Clientes
     }
 
     /**
-     * Set ciudad
+     * Set ciudad.
      *
      * @param string $ciudad
      *
@@ -190,7 +190,7 @@ class Clientes
     }
 
     /**
-     * Get ciudad
+     * Get ciudad.
      *
      * @return string
      */
@@ -200,7 +200,7 @@ class Clientes
     }
 
     /**
-     * Set comentarios
+     * Set comentarios.
      *
      * @param string $comentarios
      *
@@ -214,7 +214,7 @@ class Clientes
     }
 
     /**
-     * Get comentarios
+     * Get comentarios.
      *
      * @return string
      */
@@ -224,7 +224,7 @@ class Clientes
     }
 
     /**
-     * Set correo
+     * Set correo.
      *
      * @param string $correo
      *
@@ -238,7 +238,7 @@ class Clientes
     }
 
     /**
-     * Get correo
+     * Get correo.
      *
      * @return string
      */
@@ -248,7 +248,7 @@ class Clientes
     }
 
     /**
-     * Set telefono
+     * Set telefono.
      *
      * @param string $telefono
      *
@@ -262,7 +262,7 @@ class Clientes
     }
 
     /**
-     * Get telefono
+     * Get telefono.
      *
      * @return string
      */
@@ -272,7 +272,7 @@ class Clientes
     }
 
     /**
-     * Set telefono2
+     * Set telefono2.
      *
      * @param string $telefono2
      *
@@ -286,7 +286,7 @@ class Clientes
     }
 
     /**
-     * Get telefono2
+     * Get telefono2.
      *
      * @return string
      */
@@ -296,13 +296,13 @@ class Clientes
     }
 
     /**
-     * Set restringir
+     * Set restringir.
      *
-     * @param string $restringir
+     * @param string|null $restringir
      *
      * @return Clientes
      */
-    public function setRestringir($restringir)
+    public function setRestringir($restringir = null)
     {
         $this->restringir = $restringir;
 
@@ -310,9 +310,9 @@ class Clientes
     }
 
     /**
-     * Get restringir
+     * Get restringir.
      *
-     * @return string
+     * @return string|null
      */
     public function getRestringir()
     {
@@ -320,7 +320,7 @@ class Clientes
     }
 
     /**
-     * Set razonRestriccion
+     * Set razonRestriccion.
      *
      * @param string $razonRestriccion
      *
@@ -334,7 +334,7 @@ class Clientes
     }
 
     /**
-     * Get razonRestriccion
+     * Get razonRestriccion.
      *
      * @return string
      */

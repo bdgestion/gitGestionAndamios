@@ -1,5 +1,4 @@
 <?php
-
 namespace GestionBundle\Controller;
 
 use GestionBundle\Entity\Pedidos;
@@ -40,7 +39,7 @@ class PedidosController extends Controller
         ));
     }
     public function homeAction(Request $request)
-    {
+    {/*
         $fecha=date("d/m/Y");
         $session = $request->getSession(); 
         if(!$session->get("usuarionombre")){
@@ -97,7 +96,8 @@ class PedidosController extends Controller
       $pedidosconsl= $conn->query(" SELECT h.pedido,h.folio,h.fecha_pedido,h.fecha_dev,h.cliente, s.status,l.statussaldos,h.saldo FROM home_temp h, status_entrega s, status_saldos l WHERE h.status_pedido=s.id AND h.status_pago=l.id ORDER BY h.pedido ASC")->fetchAll();
   
 
-    return $this->render('pedidos/home.html.twig',array('pedidosconsl' => $pedidosconsl,'factconsl' => $factconsl));
+    return $this->render('pedidos/home.html.twig',array('pedidosconsl' => $pedidosconsl,'factconsl' => $factconsl));*/
+     return $this->render('pedidos/home.html.twig');
     }
     public function detallescotizacionesAction(Request $request,$cot)
     {
@@ -924,7 +924,7 @@ public function llenardtAction(Request $request)
 
      }
 
-     public function ReportepedidoAction($pedido,Request $request)
+     public function reportepedidoAction($pedido,Request $request)
      {
         $session = $request->getSession(); 
         if(!$session->get("usuarionombre")){
@@ -1052,7 +1052,7 @@ public function llenardtAction(Request $request)
          
      }
 
-     public function ReportecotizacionAction($cotizacion,Request $request)
+    public function ReportecotizacionAction($cotizacion,Request $request)
      {
         $session = $request->getSession(); 
         if(!$session->get("usuarionombre")){
@@ -1097,20 +1097,25 @@ public function llenardtAction(Request $request)
     $content = ''; 
      
     $content .= ' 
-
         
         <div class="row"> 
-        <label class="label6" for="" bgcolor="#E4DBDA">Cliente: '.$cliente.'</label>&nbsp;&nbsp;<label class="label7" for="" bgcolor="#E4DBDA">Cuenta:       '.$cuenta.'</label><br/>
-        <br/>
-        <label class="label8" for="" bgcolor="#E4DBDA">Cotización:     '.$cotizacion.'</label>&nbsp;&nbsp;<label class="label9" for="" bgcolor="#E4DBDA">Fecha:     '.$fecha_1.'</label><br/>
-           <br/>
-        <label class="label10" for="" bgcolor="#E4DBDA">Devolucion:     '.$fecha_2.'</label>&nbsp;&nbsp;<br/>
-           <br/>
-           <label class="label12" for="" bgcolor="#E4DBDA">Status:     '.$status.'</label>&nbsp;&nbsp;
-            <br/>
-              <br/>
-           <label class="label13" for="" bgcolor="#E4DBDA">Direccion de Entrega:     '.$direccion_entrega.'</label><br/>
-
+          <label class="label6"  style="color:#00BFFF; font-size:12;">Cliente: '.$cliente.'</label>
+        </div>
+        <div class="row"> 
+          <label class="label7" for="" style="color:#00BFFF; font-size:12;">Cuenta: '.$cuenta.'</label>
+        </div>
+        <div class="row"> 
+        <  label class="label8" for="" style="color:#00BFFF; font-size:12;">Cotización: '.$cotizacion.'</label>
+        </div>
+        <div class="row"> 
+          <  label class="label9" for="" style="color:#00BFFF; font-size:12;">Fecha: '.$fecha_1.'</label>
+        </div>
+        <div class="row"> 
+          <  label class="label10" for="" style="color:#00BFFF; font-size:12;">Devolucion: '.$fecha_2.'</label>
+        </div>
+        <div class="row"> 
+           <label class="label12" for="" style="color:#00BFFF; font-size:12;">Direccion de Entrega: '.$direccion_entrega.'</label>
+        </div>
 
 
             <div class="col-md-12"> 
@@ -1119,12 +1124,12 @@ public function llenardtAction(Request $request)
                     <table border="1" cellpadding="5"> 
                       <thead> 
                         <tr align="center"> 
-                         <th bgcolor="#E4DBDA">cantidad</th>
-                         <th bgcolor="#E4DBDA">Equipo</th>
-                         <th bgcolor="#E4DBDA">Clave</th>
-                         <th bgcolor="#E4DBDA">Días</th>
-                         <th bgcolor="#E4DBDA">PU</th>
-                         <th bgcolor="#E4DBDA">Importe</th>
+                         <th bgcolor="#00BFFF" style="font-size:100%;text-align:center;">Cantidad</th>
+                         <th bgcolor="#00BFFF" style="font-size:100%;text-align:center;">Equipo</th>
+                         <th bgcolor="#00BFFF" style="font-size:100%;text-align:center;">Clave</th>
+                         <th bgcolor="#00BFFF" style="font-size:100%;text-align:center;">Días</th>
+                         <th bgcolor="#00BFFF" style="font-size:100%;text-align:center;">PU</th>
+                         <th bgcolor="#00BFFF" style="font-size:100%;text-align:center;">Importe</th>
                         </tr> 
                       </thead> 
                       '; 
@@ -1136,12 +1141,12 @@ public function llenardtAction(Request $request)
 
                       $content .= ' 
                               <tr> 
-                          <td>'.$row['cantidad'].'</td> 
-                          <td>'.$row['equipo'].'</td> 
-                          <td>'.$row['clave'].'</td> 
-                          <td>'.$row['dias'].'</td> 
-                          <td>'.$row['PU'].'</td> 
-                          <td>'.$row['importe'].'</td> 
+                          <td style= "text-align:center;">'.$row['cantidad'].'</td> 
+                          <td style= "text-align:center;">'.$row['equipo'].'</td> 
+                          <td style= "text-align:center;">'.$row['clave'].'</td> 
+                          <td style= "text-align:center;">'.$row['dias'].'</td> 
+                          <td style= "text-align:center;">'.$row['PU'].'</td> 
+                          <td style= "text-align:center;">'.$row['importe'].'</td> 
                       </tr> 
                       '; 
                       } 
@@ -1152,28 +1157,32 @@ public function llenardtAction(Request $request)
         <div class="row padding"> 
             <div class="col-md-12" style="text-align:center;"> 
                 </div> 
-               
-                </div> 
                 Comentarios:<input class="inp" id="inpt1" type="text" value="">'.$comentario_1.'</input>
+                </div> 
 
-                 <div class="col-md-12_total" style="text-align:right;"> 
-                Subtotal:<input class="inp" id="inpt1" type="text" value="">'.$subtotal_1.'</input>
-                </br>
-                </div>
-                 <div class="col-md-12_total2" style="text-align:right;"> 
-                Descuento %:<input class="inp" id="inpt2" type="text" value="">'.$descuento.'</input>
-                </br></div>
-                 <div class="col-md-12_total3" style="text-align:right;"> 
-                Subtotal:<input class="inp" id="inpt3" type="text" value="">'.$subtotal_2.'</input>
-                </br></div>
-                <div class="col-md-12_total3" style="text-align:right;"> 
-                Servicio Entrega:<input class="inp" id="inpt10" type="text" value="">'.$servicio.'</input>
-                </br></div>
-                 <div class="col-md-12_total4" style="text-align:right;"> 
-                Impuestos:<input class="inp" id="inpt4" type="text" value="">'.$impuesto.'</input>
-                </br></div>
-                 <div class="col-md-12_total5" style="text-align:right;"> 
-                Total:<input class="inp" id="inpt5" type="text" value="">'.$total.'</input></br></div>
+              <div class="col-md-12_total" style="text-align:right;"> 
+                <label class="label13"  style="font-size:12;">Subtotal: '.$subtotal_1.'</label>
+              </div>
+              
+              <div class="col-md-12_total2" style="text-align:right;"> 
+                <label class="label14"  style="font-size:12;">Descuento: '.$descuento.'</label>
+              </div>
+
+              <div class="col-md-12_total3" style="text-align:right;"> 
+                <label class="label15"  style="font-size:12;">Subtotal: '.$subtotal_2.'</label>
+              </div>
+
+              <div class="col-md-12_total3" style="text-align:right;"> 
+                <label class="label16"  style="font-size:12;">Servicio de Entrega: '.$servicio.'</label>
+              </div>
+
+              <div class="col-md-12_total4" style="text-align:right;"> 
+                <label class="label17"  style="font-size:12;">Impuestos: '.$impuesto.'</label>
+              </div>
+              
+              <div class="col-md-12_total5" style="text-align:right;"> 
+                <label class="label18"  style="font-size:16;color:red">Total a Pagar: '.$total.'$</label>
+              </div>
          
     '; 
     $pdf->writeHTML($content, true, 0, true, 0); 

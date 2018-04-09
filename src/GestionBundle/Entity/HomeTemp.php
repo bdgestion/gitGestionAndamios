@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class HomeTemp
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
@@ -22,7 +22,7 @@ class HomeTemp
     private $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="pedido", type="integer", nullable=false)
      */
@@ -86,9 +86,9 @@ class HomeTemp
 
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -96,9 +96,9 @@ class HomeTemp
     }
 
     /**
-     * Set pedido
+     * Set pedido.
      *
-     * @param integer $pedido
+     * @param int $pedido
      *
      * @return HomeTemp
      */
@@ -110,9 +110,9 @@ class HomeTemp
     }
 
     /**
-     * Get pedido
+     * Get pedido.
      *
-     * @return integer
+     * @return int
      */
     public function getPedido()
     {
@@ -120,7 +120,7 @@ class HomeTemp
     }
 
     /**
-     * Set folio
+     * Set folio.
      *
      * @param string $folio
      *
@@ -134,7 +134,7 @@ class HomeTemp
     }
 
     /**
-     * Get folio
+     * Get folio.
      *
      * @return string
      */
@@ -144,7 +144,7 @@ class HomeTemp
     }
 
     /**
-     * Set fechaPedido
+     * Set fechaPedido.
      *
      * @param string $fechaPedido
      *
@@ -158,7 +158,7 @@ class HomeTemp
     }
 
     /**
-     * Get fechaPedido
+     * Get fechaPedido.
      *
      * @return string
      */
@@ -168,7 +168,7 @@ class HomeTemp
     }
 
     /**
-     * Set fechaDev
+     * Set fechaDev.
      *
      * @param string $fechaDev
      *
@@ -182,7 +182,7 @@ class HomeTemp
     }
 
     /**
-     * Get fechaDev
+     * Get fechaDev.
      *
      * @return string
      */
@@ -192,7 +192,7 @@ class HomeTemp
     }
 
     /**
-     * Set cliente
+     * Set cliente.
      *
      * @param string $cliente
      *
@@ -206,7 +206,7 @@ class HomeTemp
     }
 
     /**
-     * Get cliente
+     * Get cliente.
      *
      * @return string
      */
@@ -216,7 +216,7 @@ class HomeTemp
     }
 
     /**
-     * Set saldo
+     * Set saldo.
      *
      * @param float $saldo
      *
@@ -230,7 +230,7 @@ class HomeTemp
     }
 
     /**
-     * Get saldo
+     * Get saldo.
      *
      * @return float
      */
@@ -240,9 +240,9 @@ class HomeTemp
     }
 
     /**
-     * Set statusPedido
+     * Set statusPedido.
      *
-     * @param \GestionBundle\Entity\StatusEntrega $statusPedido
+     * @param \GestionBundle\Entity\StatusEntrega|null $statusPedido
      *
      * @return HomeTemp
      */
@@ -254,9 +254,9 @@ class HomeTemp
     }
 
     /**
-     * Get statusPedido
+     * Get statusPedido.
      *
-     * @return \GestionBundle\Entity\StatusEntrega
+     * @return \GestionBundle\Entity\StatusEntrega|null
      */
     public function getStatusPedido()
     {
@@ -264,9 +264,9 @@ class HomeTemp
     }
 
     /**
-     * Set statusPago
+     * Set statusPago.
      *
-     * @param \GestionBundle\Entity\StatusSaldos $statusPago
+     * @param \GestionBundle\Entity\StatusSaldos|null $statusPago
      *
      * @return HomeTemp
      */
@@ -278,9 +278,9 @@ class HomeTemp
     }
 
     /**
-     * Get statusPago
+     * Get statusPago.
      *
-     * @return \GestionBundle\Entity\StatusSaldos
+     * @return \GestionBundle\Entity\StatusSaldos|null
      */
     public function getStatusPago()
     {

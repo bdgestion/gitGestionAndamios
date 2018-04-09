@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Impuestos
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
@@ -59,9 +59,9 @@ class Impuestos
 
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -69,7 +69,7 @@ class Impuestos
     }
 
     /**
-     * Set descripcion
+     * Set descripcion.
      *
      * @param string $descripcion
      *
@@ -83,7 +83,7 @@ class Impuestos
     }
 
     /**
-     * Get descripcion
+     * Get descripcion.
      *
      * @return string
      */
@@ -93,7 +93,7 @@ class Impuestos
     }
 
     /**
-     * Set valor
+     * Set valor.
      *
      * @param float $valor
      *
@@ -107,7 +107,7 @@ class Impuestos
     }
 
     /**
-     * Get valor
+     * Get valor.
      *
      * @return float
      */
@@ -117,7 +117,7 @@ class Impuestos
     }
 
     /**
-     * Set tipo
+     * Set tipo.
      *
      * @param string $tipo
      *
@@ -131,7 +131,7 @@ class Impuestos
     }
 
     /**
-     * Get tipo
+     * Get tipo.
      *
      * @return string
      */
@@ -141,7 +141,7 @@ class Impuestos
     }
 
     /**
-     * Set calculo
+     * Set calculo.
      *
      * @param string $calculo
      *
@@ -155,7 +155,7 @@ class Impuestos
     }
 
     /**
-     * Get calculo
+     * Get calculo.
      *
      * @return string
      */
@@ -165,7 +165,7 @@ class Impuestos
     }
 
     /**
-     * Set status
+     * Set status.
      *
      * @param string $status
      *
@@ -179,7 +179,7 @@ class Impuestos
     }
 
     /**
-     * Get status
+     * Get status.
      *
      * @return string
      */

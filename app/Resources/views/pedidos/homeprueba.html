@@ -1,0 +1,86 @@
+{% block body %}
+{% set cont='-1' %}
+{% set cont2='-1' %}
+<style type="text/css">
+table th {
+  background-color: #D3D3D3;
+	font-size: 16px;
+   }
+table tr:nth-child(odd) {background-color:   #F5F5F5;}
+table tr:nth-child(even) {background-color: #ADD8E6;}
+
+	#divtbl,#divtbl1{
+     overflow:scroll;
+     height:150px;
+     width: 950px;
+     margin: auto;
+}
+</style>
+<form  id="adeudos" method="get">
+	  <h2 align="center">Pedidos Pendientes de Devolver y Adeudos</h1>
+		<div id="divtbl1"> 
+    		<table id="tbl1" width="100%" align="center">
+    			<thead>
+				     <tr id="columnas_pedidos" align="center">
+				         <th style="text-align: center;">Pedido</th>
+				         <th style="text-align: center;">Folio</th>
+				         <th style="text-align: center;">Fecha de Pedido</th>
+				         <th style="text-align: center;">Fecha Pactada Devolucion</th>
+				         <th style="text-align: center;">Cliente</th>
+				         <th style="text-align: center;">Status Pedido</th>
+				         <th style="text-align: center;">Status Pago</th>
+				         <th style="text-align: center;">Saldo</th>
+				     </tr>
+				</thead>
+				<tbody>
+			        {% for home_temp in pedidosconsl %}
+			        	{% if cont2 !=  home_temp.pedido %}
+			            <tr>
+			            	<td style="text-align: center;"><a href="{{ path('pedidos_detalles', { 'id': home_temp.pedido }) }}">{{ home_temp.pedido }}</a></td>
+			                <td style="text-align: center;">{{ home_temp.folio }}</td>
+			                <td style="text-align: center;">{{ home_temp.fecha_pedido }}</td>
+			                <td style="text-align: center;">{{ home_temp.fecha_dev }}</td>
+			                <td style="text-align: center;">{{ home_temp.cliente }}</td>
+			                <td style="text-align: center;">{{ home_temp.status }}</td>
+			                <td style="text-align: center;">{{ home_temp.statussaldos }}</td>
+			                <td style="text-align: center;">{{ home_temp.saldo }}</td>
+			            </tr>
+			             {% endif %}
+			            {% set cont2=  home_temp.pedido %}
+			        {% endfor %}
+       			</tbody>
+		    </table>
+		</div>
+   <h2 align="center">Pagos Pendientes de Facturar</h2>
+		<div id="divtbl"> 
+    		<table width="100%" align="center">
+    			<thead>
+			     <tr align="center">
+			         <th style="text-align: center;">Pedido</th>
+			         <th style="text-align: center;">OP ID</th>
+			         <th style="text-align: center;">Fecha Pago</th>
+			         <th style="text-align: center;">Monto</th>
+			         <th style="text-align: center;">Forma de Pago</th>
+			         <th style="text-align: center;">Facturación</th>
+			      </tr>
+			     </thead>
+			     <tbody>
+			        {% for detalles_pago in factconsl %}
+			        {% if cont != detalles_pago.pedido %}
+			            <tr>
+			            	<td style="text-align: center;"><a href="{{ path('pedidos_detalles', { 'id': detalles_pago.pedido }) }}">{{ detalles_pago.pedido }}</a></td>
+			                <td style="text-align: center;">{{ detalles_pago.id }}</td>
+			                <td style="text-align: center;">{{ detalles_pago.fechapago }}</td>
+			                <td style="text-align: center;">{{ detalles_pago.montopago }}</td>
+			                <td style="text-align: center;">{{ detalles_pago.formas }}</td>
+			                <td style="text-align: center;">{{ detalles_pago.foliofactura }}</td>
+			                
+			            </tr>
+			            {% endif %}
+			            {% set cont= detalles_pago.pedido %}
+			        {% endfor %}
+       			</tbody>
+			    </table>
+			</div>
+</form>
+{% endblock %}

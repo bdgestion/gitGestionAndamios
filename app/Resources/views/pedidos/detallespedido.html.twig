@@ -88,7 +88,10 @@
 $(document).ready(function() {
 var boton='';
   if(document.getElementById('inptcot').value !=''){
-   // $("#btn_detalles").show();
+    $("#lblpedido").hide();
+    $("#ped").hide();
+    $("#lblfolio").hide();
+    $("#flio").hide();
     $("#btn_modificar").hide();
     $("#btn2_entregar").hide();
     $("#btn3_pagos").hide();
@@ -104,14 +107,18 @@ var boton='';
       $("#btn_orden").prop("disabled",false);
 
     }
-
-
+  }else{
+    $("#btn_orden").hide();
+    $("#btneliminarcotizacion").hide();
+    $("#lblcot").hide();
+    $("#inptcot").hide();
   }
   function limpiar() {
    document.getElementById('ped').value='';
    document.getElementById('inptcot').value='';
    document.getElementById('inptcliente').value='';
    document.getElementById('combocta').value='';
+   document.getElementById('flio').value='';
    document.getElementById('inpst').value='';
    document.getElementById('fecha1').value='';
    document.getElementById('fecha2').value='';
@@ -140,8 +147,14 @@ var boton='';
         $("#lblcot").show();
         $("#btn6cancelar").hide();
         $("#btneliminarcotizacion").show();
-         $("#span1").hide();
-    $("#span2").show();
+        $("#span1").hide();
+        $("#flio").hide();
+        $("#ped").hide();
+        $("#lblpedido").hide();
+        $("#lblfolio").hide();
+        $("#span2").show();
+        $("#btn").prop("disabled",true);
+        $("#calcular").prop("disabled",true);
         
   });
 
@@ -162,7 +175,13 @@ var boton='';
       $("#btn3_pagos").show();
       $("#btn2_entregar").show();
       $("#btn6cancelar").show();
+      $("#flio").show();
+      $("#ped").show();
+      $("#lblpedido").show();
+      $("#lblfolio").show();
       $("#btn4").show();
+      $("#btn").prop("disabled",true);
+      $("#calcular").prop("disabled",true);
     });
     if(document.getElementById('inpt1').value!=0){
       document.getElementById('calcular').disabled=false;
@@ -486,17 +505,19 @@ var pedid = document.getElementById("ped").value;
     }
 
        function imprimir(){
-        if (document.getElementById("cot").checked){
-            var cotizacion_id = $("input#inptcot").val();
-            window.open("reportecotizacion/"+cotizacion_id);
-            
-
-        }else{
-           var pedido_id = $("input#ped").val();
+        if($('#inptcot').css('display') == 'none'){
+          var pedido_id = $("input#ped").val();
            window.open("reportepedido/"+pedido_id);
+        }else{
+           var cotizacion_id = $("input#inptcot").val();
+           var cot = document.getElementById("inptcot").value;
+           var url=("{{ path('imprimir_cotizaciones', { 'cotizacion':'xxx' }) }}");
+           url = url.replace("xxx", cot);
+           window.open(url);
+             
         }
-           
-        }
+         
+       }
 
         function ultpedido() {
            $.post("{{ path('ultpedido') }}", {radio:radiocotpd}, function(mensaje) {
@@ -936,6 +957,10 @@ function agregarfilamodf(){
 
             document.getElementById('inpst').value='';
             radiocotpd='Pedido';
+              $("#flio").show();
+              $("#ped").show();
+              $("#lblpedido").show();
+              $("#lblfolio").show();
               $("#btn_orden").hide();
               $("#btneliminarcotizacion").hide();
               $("#botones_func").show();
@@ -1120,7 +1145,7 @@ function agregarfilamodf(){
     </div>
     <div id="datos" hidden="hidden">
       <label class="label1" for="pedido" id="lblpedido">Pedido</label><input id="ped" type="text" name="pedido" disabled="true" value="{{pedidoinput}}">
-      <label class="label2" for="folio">Folio</label><input id="flio" type="text" name="folio" value="{{ folioinpt }}" disabled></input>
+      <label class="label2" for="folio" id="lblfolio">Folio</label><input id="flio" type="text" name="folio" value="{{ folioinpt }}" disabled></input>
       <label class="label3">Cliente</label>
       <span  id="restriccion" style="background-color:red; display: none">RESTRINGIDO</span>
       <input type="text" id="inptcliente" autocomplete="off" list="categoryname"  value="{{ clienteinpt }}" {{estado}}></input>
@@ -1152,7 +1177,7 @@ function agregarfilamodf(){
         <button class="btn btn-info" id="btn5" type="submit"  onclick="imprimir()" style="margin-top: -1px" {{botones}}>Imprimir  <span class="glyphicon glyphicon-print"></span></button>
         <button class="btn btn-danger" id="btn6cancelar" type="submit" onclick="cancelarped();" style="margin-top: -1px"
          disabled="true">Cancelar <span class="glyphicon glyphicon-trash"></span></button>
-        <button class="btn btn-info" id="btn_orden" type="submit" onclick="convertit();" {{botones}} disabled="true" >Convertir en Pedido <span class="glyphicon glyphicon-retweet"></span></button>
+        <button class="btn btn-info" id="btn_orden" type="submit" onclick="convertir();" {{botones}} disabled="true" >Convertir en Pedido <span class="glyphicon glyphicon-retweet"></span></button>
         <button class="btn btn-danger" id="btneliminarcotizacion" type="button" value="Eliminar Fila" onclick="eliminarcot();" disabled="true">Eliminar Cotizacion <span class="glyphicon glyphicon-trash"></span></button></button>
     </div> 
       <div id="div1" class="table table-striped" style="width: 80%;">

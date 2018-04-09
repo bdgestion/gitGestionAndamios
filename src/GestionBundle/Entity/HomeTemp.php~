@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class HomeTemp
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
@@ -22,7 +22,7 @@ class HomeTemp
     private $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="pedido", type="integer", nullable=false)
      */
@@ -85,4 +85,3 @@ class HomeTemp
 
 
 }
-

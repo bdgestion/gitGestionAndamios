@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Montospedidos
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
@@ -29,7 +29,7 @@ class Montospedidos
     private $montopedido;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="pedido", type="integer", nullable=false)
      */
@@ -55,9 +55,9 @@ class Montospedidos
 
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -65,7 +65,7 @@ class Montospedidos
     }
 
     /**
-     * Set montopedido
+     * Set montopedido.
      *
      * @param float $montopedido
      *
@@ -79,7 +79,7 @@ class Montospedidos
     }
 
     /**
-     * Get montopedido
+     * Get montopedido.
      *
      * @return float
      */
@@ -89,9 +89,9 @@ class Montospedidos
     }
 
     /**
-     * Set pedido
+     * Set pedido.
      *
-     * @param integer $pedido
+     * @param int $pedido
      *
      * @return Montospedidos
      */
@@ -103,9 +103,9 @@ class Montospedidos
     }
 
     /**
-     * Get pedido
+     * Get pedido.
      *
-     * @return integer
+     * @return int
      */
     public function getPedido()
     {
@@ -113,7 +113,7 @@ class Montospedidos
     }
 
     /**
-     * Set saldorestante
+     * Set saldorestante.
      *
      * @param float $saldorestante
      *
@@ -127,7 +127,7 @@ class Montospedidos
     }
 
     /**
-     * Get saldorestante
+     * Get saldorestante.
      *
      * @return float
      */
@@ -137,9 +137,9 @@ class Montospedidos
     }
 
     /**
-     * Set statussaldo
+     * Set statussaldo.
      *
-     * @param \GestionBundle\Entity\StatusSaldos $statussaldo
+     * @param \GestionBundle\Entity\StatusSaldos|null $statussaldo
      *
      * @return Montospedidos
      */
@@ -151,9 +151,9 @@ class Montospedidos
     }
 
     /**
-     * Get statussaldo
+     * Get statussaldo.
      *
-     * @return \GestionBundle\Entity\StatusSaldos
+     * @return \GestionBundle\Entity\StatusSaldos|null
      */
     public function getStatussaldo()
     {

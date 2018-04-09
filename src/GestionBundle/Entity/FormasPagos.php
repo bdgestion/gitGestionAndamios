@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class FormasPagos
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
@@ -31,9 +31,9 @@ class FormasPagos
 
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -41,7 +41,7 @@ class FormasPagos
     }
 
     /**
-     * Set formas
+     * Set formas.
      *
      * @param string $formas
      *
@@ -55,7 +55,7 @@ class FormasPagos
     }
 
     /**
-     * Get formas
+     * Get formas.
      *
      * @return string
      */

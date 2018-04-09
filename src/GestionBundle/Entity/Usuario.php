@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Usuario
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
@@ -87,9 +87,9 @@ class Usuario
 
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -97,7 +97,7 @@ class Usuario
     }
 
     /**
-     * Set clave
+     * Set clave.
      *
      * @param string $clave
      *
@@ -111,7 +111,7 @@ class Usuario
     }
 
     /**
-     * Get clave
+     * Get clave.
      *
      * @return string
      */
@@ -121,7 +121,7 @@ class Usuario
     }
 
     /**
-     * Set nombreUsuario
+     * Set nombreUsuario.
      *
      * @param string $nombreUsuario
      *
@@ -135,7 +135,7 @@ class Usuario
     }
 
     /**
-     * Get nombreUsuario
+     * Get nombreUsuario.
      *
      * @return string
      */
@@ -145,7 +145,7 @@ class Usuario
     }
 
     /**
-     * Set nombre
+     * Set nombre.
      *
      * @param string $nombre
      *
@@ -159,7 +159,7 @@ class Usuario
     }
 
     /**
-     * Get nombre
+     * Get nombre.
      *
      * @return string
      */
@@ -169,7 +169,7 @@ class Usuario
     }
 
     /**
-     * Set apellido
+     * Set apellido.
      *
      * @param string $apellido
      *
@@ -183,7 +183,7 @@ class Usuario
     }
 
     /**
-     * Get apellido
+     * Get apellido.
      *
      * @return string
      */
@@ -193,7 +193,7 @@ class Usuario
     }
 
     /**
-     * Set status
+     * Set status.
      *
      * @param string $status
      *
@@ -207,7 +207,7 @@ class Usuario
     }
 
     /**
-     * Get status
+     * Get status.
      *
      * @return string
      */
@@ -217,7 +217,7 @@ class Usuario
     }
 
     /**
-     * Set fechaCreacion
+     * Set fechaCreacion.
      *
      * @param string $fechaCreacion
      *
@@ -231,7 +231,7 @@ class Usuario
     }
 
     /**
-     * Get fechaCreacion
+     * Get fechaCreacion.
      *
      * @return string
      */
@@ -241,7 +241,7 @@ class Usuario
     }
 
     /**
-     * Set fechaUltimoIngreso
+     * Set fechaUltimoIngreso.
      *
      * @param string $fechaUltimoIngreso
      *
@@ -255,7 +255,7 @@ class Usuario
     }
 
     /**
-     * Get fechaUltimoIngreso
+     * Get fechaUltimoIngreso.
      *
      * @return string
      */
@@ -265,7 +265,7 @@ class Usuario
     }
 
     /**
-     * Set tipo
+     * Set tipo.
      *
      * @param string $tipo
      *
@@ -279,7 +279,7 @@ class Usuario
     }
 
     /**
-     * Get tipo
+     * Get tipo.
      *
      * @return string
      */
@@ -289,7 +289,7 @@ class Usuario
     }
 
     /**
-     * Set comentario
+     * Set comentario.
      *
      * @param string $comentario
      *
@@ -303,7 +303,7 @@ class Usuario
     }
 
     /**
-     * Get comentario
+     * Get comentario.
      *
      * @return string
      */

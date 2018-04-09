@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class DetallesDevoluciones
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
@@ -22,21 +22,21 @@ class DetallesDevoluciones
     private $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="pedidosistema", type="integer", nullable=false)
      */
     private $pedidosistema;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="foliopadre", type="integer", nullable=false)
      */
     private $foliopadre;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="foliodevolucion", type="integer", nullable=false)
      */
@@ -73,9 +73,9 @@ class DetallesDevoluciones
 
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -83,9 +83,9 @@ class DetallesDevoluciones
     }
 
     /**
-     * Set pedidosistema
+     * Set pedidosistema.
      *
-     * @param integer $pedidosistema
+     * @param int $pedidosistema
      *
      * @return DetallesDevoluciones
      */
@@ -97,9 +97,9 @@ class DetallesDevoluciones
     }
 
     /**
-     * Get pedidosistema
+     * Get pedidosistema.
      *
-     * @return integer
+     * @return int
      */
     public function getPedidosistema()
     {
@@ -107,9 +107,9 @@ class DetallesDevoluciones
     }
 
     /**
-     * Set foliopadre
+     * Set foliopadre.
      *
-     * @param integer $foliopadre
+     * @param int $foliopadre
      *
      * @return DetallesDevoluciones
      */
@@ -121,9 +121,9 @@ class DetallesDevoluciones
     }
 
     /**
-     * Get foliopadre
+     * Get foliopadre.
      *
-     * @return integer
+     * @return int
      */
     public function getFoliopadre()
     {
@@ -131,9 +131,9 @@ class DetallesDevoluciones
     }
 
     /**
-     * Set foliodevolucion
+     * Set foliodevolucion.
      *
-     * @param integer $foliodevolucion
+     * @param int $foliodevolucion
      *
      * @return DetallesDevoluciones
      */
@@ -145,9 +145,9 @@ class DetallesDevoluciones
     }
 
     /**
-     * Get foliodevolucion
+     * Get foliodevolucion.
      *
-     * @return integer
+     * @return int
      */
     public function getFoliodevolucion()
     {
@@ -155,7 +155,7 @@ class DetallesDevoluciones
     }
 
     /**
-     * Set fechamovimiento
+     * Set fechamovimiento.
      *
      * @param string $fechamovimiento
      *
@@ -169,7 +169,7 @@ class DetallesDevoluciones
     }
 
     /**
-     * Get fechamovimiento
+     * Get fechamovimiento.
      *
      * @return string
      */
@@ -179,7 +179,7 @@ class DetallesDevoluciones
     }
 
     /**
-     * Set cantidad
+     * Set cantidad.
      *
      * @param float $cantidad
      *
@@ -193,7 +193,7 @@ class DetallesDevoluciones
     }
 
     /**
-     * Get cantidad
+     * Get cantidad.
      *
      * @return float
      */
@@ -203,7 +203,7 @@ class DetallesDevoluciones
     }
 
     /**
-     * Set claveequipo
+     * Set claveequipo.
      *
      * @param string $claveequipo
      *
@@ -217,7 +217,7 @@ class DetallesDevoluciones
     }
 
     /**
-     * Get claveequipo
+     * Get claveequipo.
      *
      * @return string
      */
@@ -227,7 +227,7 @@ class DetallesDevoluciones
     }
 
     /**
-     * Set equipo
+     * Set equipo.
      *
      * @param string $equipo
      *
@@ -241,7 +241,7 @@ class DetallesDevoluciones
     }
 
     /**
-     * Get equipo
+     * Get equipo.
      *
      * @return string
      */
