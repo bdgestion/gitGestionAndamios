@@ -575,6 +575,7 @@ public function llenardtAction(Request $request)
   }
   public function ultipedidoAction(Request $request)
   {
+
     $radio = ($_POST['radio']);
     $manager = $this->getDoctrine()->getManager();
     $conn = $manager->getConnection();
@@ -588,9 +589,9 @@ public function llenardtAction(Request $request)
     }else{
         $ultpds= $conn->query("SELECT cotizacion FROM cotizaciones  order by cotizacion desc limit 1")->fetchAll();
          if (count($ultpds)== 0){
-          $ulp= 1;
+          $ultpds= 1;
          }else{
-          $ulp= $ultpds[0]['cotizacion'];
+          $ultpds= $ultpds[0]['cotizacion']+1;
          }
     }
          return new JsonResponse($ultpds);
@@ -1116,6 +1117,10 @@ public function llenardtAction(Request $request)
         <div class="row"> 
            <label class="label12" for="" style="color:#00BFFF; font-size:12;">Direccion de Entrega: '.$direccion_entrega.'</label>
         </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0aa17be247dff26b6ff897bba0f7e06438537884
 
 
             <div class="col-md-12"> 

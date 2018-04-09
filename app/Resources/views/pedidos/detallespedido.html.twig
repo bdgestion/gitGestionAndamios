@@ -526,7 +526,7 @@ var pedid = document.getElementById("ped").value;
                 document.getElementById('ped').value=(parseInt(mensaje[0]['pedido']) + parseInt(1));            
                 dato=document.getElementById('ped').value;
               }else{
-              document.getElementById('inptcot').value=(parseInt(mensaje[0]['cotizacion']) + parseInt(1));            
+              document.getElementById('inptcot').value=mensaje;            
               dato=document.getElementById('inptcot').value;
               $("#btn_modificar").show();
               $("#btneliminarcotizacion").prop("disabled",false);
